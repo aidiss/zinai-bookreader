@@ -1,2 +1,340 @@
-"use strict";(self.webpackChunk_internetarchive_bookreader=self.webpackChunk_internetarchive_bookreader||[]).push([[529],{8586:function(e,t,n){n(9600),n(7327),n(2222),n(9826),n(5069),n(4553);var a,o=n(3609),r=n(3609);o.extend(BookReader.defaultOptions,{olHost:"https://openlibrary.org",enableChaptersPlugin:!0,bookId:""}),BookReader.prototype.setup=(a=BookReader.prototype.setup,function(e){a.call(this,e),this.olHost=e.olHost,this.enableChaptersPlugin=e.enableChaptersPlugin,this.bookId=e.bookId}),BookReader.prototype.init=function(e){return function(){var t=this;e.call(this),this.enableChaptersPlugin&&"embed"!==this.ui&&this.getOpenLibraryRecord(),this.enableMobileNav&&(this.bind(BookReader.eventNames.mobileNavOpen,(function(){t.updateTOCState(t.firstIndex,t._tocEntries),r("table-contents-list").parent().hasClass("mm-opened")&&t.updateTOCState(t.firstIndex,t._tocEntries)})),r(".BRmobileMenu__tableContents").on("click",(function(){t.updateTOCState(t.firstIndex,t._tocEntries)})))}}(BookReader.prototype.init),BookReader.prototype.addChapter=function(e,t,n){var a=this,o=BookReader.util.cssPercentage(n,this.getNumLeafs()-1),s=function(e){a.jumpToIndex(r(e.delegateTarget).data("pageIndex")),r(".current-chapter").removeClass("current-chapter"),r(e.delegateTarget).addClass("current-chapter")},i="".concat(e," | "),l="".concat("Page"," ").concat(t),c=r("<li></li>").append(r("<span class='BRTOCElementTitle'></span>").text(i)).append(r("<span class='BRTOCElementPage'></span>").text(l));c.addClass("BRtable-contents-el").appendTo(this.$(".table-contents-list")).data({pageIndex:n}),null!=n&&(r("<div></div>").append(r("<div />").text(i+l)).addClass("BRchapter").css({left:o}).appendTo(this.$(".BRnavline")).data({pageIndex:n}).on("mouseenter",(function(e){var t=e.currentTarget,n=t.querySelector("div"),o=n.getBoundingClientRect(),s=t.getBoundingClientRect(),i=2*parseInt(getComputedStyle(n).paddingLeft);o.x-i<0&&n.style.setProperty("transform","translateX(-".concat(s.left-i,"px)")),a.$(".BRsearch,.BRchapter").removeClass("front"),r(e.target).addClass("front")})).on("mouseleave",(function(e){return r(e.target).removeClass("front")})).on("click",s),c.bind("click",s).addClass("chapter-clickable").attr("data-event-click-tracking","BRTOCPanel|GoToChapter"))},BookReader.prototype.removeChapters=function(){this.$(".BRnavpos .BRchapter").remove()},BookReader.prototype.updateTOC=function(e){this.removeChapters(),this.enableMobileNav&&e.length>0&&this.$(".BRmobileMenu__tableContents").show();for(var t=0;t<e.length;t++)this.addChapterFromEntry(e[t]);this._tocEntries=e,r(".table-contents-list").children().each((function(t,n){e[t].mobileHTML=n}))},BookReader.prototype.addChapterFromEntry=function(e){e.pageIndex=this.getPageIndex(e.pagenum);var t=[e.label,e.title].filter((function(e){return e})).join(" ");this.addChapter(t,e.pagenum,e.pageIndex),this.$(".BRchapter, .BRsearch").each((function(e,t){var n=r(t);n.on("mouseenter",(function(){return n.addClass("front")})).on("mouseleave",(function(){return n.removeClass("front")}))}))},BookReader.prototype.getOpenLibraryRecord=function(){var e=this,t="".concat(this.olHost,"/query.json?type=/type/edition&*="),n="".concat(t,"&ocaid=").concat(this.bookId);r.ajax({url:n,dataType:"jsonp"}).then((function(n){return n&&n.length>0?n:r.ajax({url:"".concat(t,"&source_records=ia:").concat(e.bookId),dataType:"jsonp"})})).then((function(t){var n;t&&t.length>0&&(n=t[0])&&n.table_of_contents&&e.updateTOC(n.table_of_contents)}))},BookReader.prototype.buildMobileDrawerElement=function(e){return function(){var t=e.call(this);return this.enableMobileNav&&this.options.enableChaptersPlugin&&t.find(".BRmobileMenu__moreInfoRow").after(r('\n        <li class="BRmobileMenu__tableContents" data-event-click-tracking="BRSidebar|TOCPanel">\n            <span>\n                <span class="DrawerIconWrapper">\n                  <img class="DrawerIcon" src="'.concat(this.imagesBaseURL,'icon_toc.svg" alt="toc-icon"/>\n                </span>\n                Table of Contents\n            </span>\n            <div>\n                <ol class="table-contents-list">\n                </ol>\n            </div>\n        </li>')).hide()),t}}(BookReader.prototype.buildMobileDrawerElement),BookReader.prototype.updateTOCState=function(e,t){if(t){r(".current-chapter").removeClass("current-chapter");var n=t.filter((function(e){return null!=e.pageIndex})).reverse(),a=n[n.findIndex((function(t){return t.pageIndex<=e}))];null!=a&&r(a.mobileHTML).addClass("current-chapter")}}},5069:function(e,t,n){var a=n(2109),o=n(3157),r=[].reverse,s=[1,2];a({target:"Array",proto:!0,forced:String(s)===String(s.reverse())},{reverse:function(){return o(this)&&(this.length=this.length),r.call(this)}})}},function(e){e(e.s=8586)}]);
+"use strict";
+(self["webpackChunk_internetarchive_bookreader"] = self["webpackChunk_internetarchive_bookreader"] || []).push([["plugins/plugin.chapters.js"],{
+
+/***/ "./src/plugins/plugin.chapters.js":
+/*!****************************************!*\
+  !*** ./src/plugins/plugin.chapters.js ***!
+  \****************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_join_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.join.js */ "./node_modules/core-js/modules/es.array.join.js");
+/* harmony import */ var core_js_modules_es_array_join_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_join_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_array_filter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.array.filter.js */ "./node_modules/core-js/modules/es.array.filter.js");
+/* harmony import */ var core_js_modules_es_array_filter_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_filter_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.array.concat.js */ "./node_modules/core-js/modules/es.array.concat.js");
+/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.array.find.js */ "./node_modules/core-js/modules/es.array.find.js");
+/* harmony import */ var core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_array_reverse_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.array.reverse.js */ "./node_modules/core-js/modules/es.array.reverse.js");
+/* harmony import */ var core_js_modules_es_array_reverse_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_reverse_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_array_find_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/es.array.find-index.js */ "./node_modules/core-js/modules/es.array.find-index.js");
+/* harmony import */ var core_js_modules_es_array_find_index_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_find_index_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_8__);
+/* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "jquery");
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "jquery");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+
+
+
+
+
+/* global BookReader */
+
+/**
+ * Plugin for chapter markers in BookReader. Fetches from openlibrary.org
+ * Could be forked, or extended to alter behavior
+ */
+jQuery.extend(BookReader.defaultOptions, {
+  olHost: 'https://openlibrary.org',
+  enableChaptersPlugin: true,
+  bookId: ''
+});
+/** @override Extend the constructor to add search properties */
+
+BookReader.prototype.setup = function (super_) {
+  return function (options) {
+    super_.call(this, options);
+    this.olHost = options.olHost;
+    this.enableChaptersPlugin = options.enableChaptersPlugin;
+    this.bookId = options.bookId;
+  };
+}(BookReader.prototype.setup);
+/** @override Extend to call Open Library for TOC */
+
+
+BookReader.prototype.init = function (super_) {
+  return function () {
+    var _this = this;
+
+    super_.call(this);
+
+    if (this.enableChaptersPlugin && this.ui !== 'embed') {
+      this.getOpenLibraryRecord();
+    }
+
+    if (this.enableMobileNav) {
+      this.bind(BookReader.eventNames.mobileNavOpen, function () {
+        _this.updateTOCState(_this.firstIndex, _this._tocEntries);
+
+        if ($('table-contents-list').parent().hasClass('mm-opened')) {
+          _this.updateTOCState(_this.firstIndex, _this._tocEntries);
+        }
+      });
+      $(".BRmobileMenu__tableContents").on("click", function () {
+        _this.updateTOCState(_this.firstIndex, _this._tocEntries);
+      });
+    }
+  };
+}(BookReader.prototype.init);
+/**
+ * Adds chapter marker to navigation scrubber
+ *
+ * @param {string} chapterTitle
+ * @param {string} pageNumber
+ * @param {number} pageIndex
+ */
+
+
+BookReader.prototype.addChapter = function (chapterTitle, pageNumber, pageIndex) {
+  var _this2 = this;
+
+  var uiStringPage = 'Page'; // i18n
+
+  var percentThrough = BookReader.util.cssPercentage(pageIndex, this.getNumLeafs() - 1);
+
+  var jumpToChapter = function jumpToChapter(event) {
+    _this2.jumpToIndex($(event.delegateTarget).data('pageIndex'));
+
+    $('.current-chapter').removeClass('current-chapter');
+    $(event.delegateTarget).addClass('current-chapter');
+  };
+
+  var title = "".concat(chapterTitle, " | ");
+  var pageStr = "".concat(uiStringPage, " ").concat(pageNumber); //adding items to mobile table of contents
+
+  var mobileChapter = $("<li></li>").append($("<span class='BRTOCElementTitle'></span>").text(title)).append($("<span class='BRTOCElementPage'></span>").text(pageStr));
+  mobileChapter.addClass('BRtable-contents-el').appendTo(this.$('.table-contents-list')).data({
+    pageIndex: pageIndex
+  }); //adds .BRchapters to the slider only if pageIndex exists
+
+  if (pageIndex != undefined) {
+    $("<div></div>").append($('<div />').text(title + pageStr)).addClass('BRchapter').css({
+      left: percentThrough
+    }).appendTo(this.$('.BRnavline')).data({
+      pageIndex: pageIndex
+    }).on("mouseenter", function (event) {
+      // remove hover effect from other markers then turn on just for this
+      var marker = event.currentTarget;
+      var tooltip = marker.querySelector('div');
+      var tooltipOffset = tooltip.getBoundingClientRect();
+      var targetOffset = marker.getBoundingClientRect();
+      var boxSizeAdjust = parseInt(getComputedStyle(tooltip).paddingLeft) * 2;
+
+      if (tooltipOffset.x - boxSizeAdjust < 0) {
+        tooltip.style.setProperty('transform', "translateX(-".concat(targetOffset.left - boxSizeAdjust, "px)"));
+      }
+
+      _this2.$('.BRsearch,.BRchapter').removeClass('front');
+
+      $(event.target).addClass('front');
+    }).on("mouseleave", function (event) {
+      return $(event.target).removeClass('front');
+    }).on('click', jumpToChapter); //adding clickable properties to mobile chapters
+
+    mobileChapter.bind('click', jumpToChapter).addClass('chapter-clickable').attr("data-event-click-tracking", "BRTOCPanel|GoToChapter");
+  }
+};
+/*
+ * Remove all chapters.
+ */
+
+
+BookReader.prototype.removeChapters = function () {
+  this.$('.BRnavpos .BRchapter').remove();
+};
+/**
+ * Update the table of contents based on array of TOC entries.
+ * @param {TocEntry[]} tocEntries
+ */
+
+
+BookReader.prototype.updateTOC = function (tocEntries) {
+  this.removeChapters();
+
+  if (this.enableMobileNav && tocEntries.length > 0) {
+    this.$(".BRmobileMenu__tableContents").show();
+  }
+
+  for (var i = 0; i < tocEntries.length; i++) {
+    this.addChapterFromEntry(tocEntries[i]);
+  }
+
+  this._tocEntries = tocEntries;
+  $('.table-contents-list').children().each(function (i, el) {
+    tocEntries[i].mobileHTML = el;
+  });
+};
+/**
+ * @typedef {Object} TocEntry
+ * Table of contents entry as defined -- format is defined by Open Library
+ * @property {string} pagenum
+ * @property {number} level
+ * @property {string} label
+ * @property {{type: '/type/toc_item'}} type
+ * @property {string} title
+ * @property {HTMLElement} mobileHTML
+ * @property {number} pageIndex
+
+ *
+ * @example {
+ *   "pagenum": "17",
+ *   "level": 1,
+ *   "label": "CHAPTER I",
+ *   "type": {"key": "/type/toc_item"},
+ *   "title": "THE COUNTRY AND THE MISSION"
+ * }
+ */
+
+/**
+ * @param {TocEntry} tocEntryObject
+ */
+
+
+BookReader.prototype.addChapterFromEntry = function (tocEntryObject) {
+  tocEntryObject.pageIndex = this.getPageIndex(tocEntryObject['pagenum']); //creates a string with non-void tocEntryObject.label and tocEntryObject.title
+
+  var chapterStr = [tocEntryObject.label, tocEntryObject.title].filter(function (x) {
+    return x;
+  }).join(' ');
+  this.addChapter(chapterStr, tocEntryObject['pagenum'], tocEntryObject.pageIndex);
+  this.$('.BRchapter, .BRsearch').each(function (i, el) {
+    var $el = $(el);
+    $el.on("mouseenter", function () {
+      return $el.addClass('front');
+    }).on("mouseleave", function () {
+      return $el.removeClass('front');
+    });
+  });
+};
+/**
+ * getOpenLibraryRecord
+ *
+ * The bookreader is designed to call openlibrary API and constructs the
+ * "Return book" button using the response.
+ *
+ * This makes a call to OL API and calls the given callback function with the
+ * response from the API.
+ */
+
+
+BookReader.prototype.getOpenLibraryRecord = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+  var _this3 = this;
+
+  var baseURL, fetchUrlByBookId, setUpChapterMarkers, data;
+  return regeneratorRuntime.wrap(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          // Try looking up by ocaid first, then by source_record
+          baseURL = "".concat(this.olHost, "/query.json?type=/type/edition&*=");
+          fetchUrlByBookId = "".concat(baseURL, "&ocaid=").concat(this.bookId);
+          /*
+          * Update Chapter markers based on received record from Open Library.
+          * Notes that Open Library record is used for extra metadata, and also for lending
+          */
+
+          setUpChapterMarkers = function setUpChapterMarkers(olObject) {
+            if (olObject && olObject.table_of_contents) {
+              // XXX check here that TOC is valid
+              _this3.updateTOC(olObject.table_of_contents);
+            }
+          };
+
+          _context.next = 5;
+          return $.ajax({
+            url: fetchUrlByBookId,
+            dataType: 'jsonp'
+          });
+
+        case 5:
+          data = _context.sent;
+
+          if (!(!data || !data.length)) {
+            _context.next = 10;
+            break;
+          }
+
+          _context.next = 9;
+          return $.ajax({
+            url: "".concat(baseURL, "&source_records=ia:").concat(this.bookId),
+            dataType: 'jsonp'
+          });
+
+        case 9:
+          data = _context.sent;
+
+        case 10:
+          if (data && data.length > 0) {
+            setUpChapterMarkers(data[0]);
+          }
+
+        case 11:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _callee, this);
+})); // Extend buildMobileDrawerElement with table of contents list
+
+BookReader.prototype.buildMobileDrawerElement = function (super_) {
+  return function () {
+    var $el = super_.call(this);
+
+    if (this.enableMobileNav && this.options.enableChaptersPlugin) {
+      $el.find('.BRmobileMenu__moreInfoRow').after($("\n        <li class=\"BRmobileMenu__tableContents\" data-event-click-tracking=\"BRSidebar|TOCPanel\">\n            <span>\n                <span class=\"DrawerIconWrapper\">\n                  <img class=\"DrawerIcon\" src=\"".concat(this.imagesBaseURL, "icon_toc.svg\" alt=\"toc-icon\"/>\n                </span>\n                Table of Contents\n            </span>\n            <div>\n                <ol class=\"table-contents-list\">\n                </ol>\n            </div>\n        </li>")).hide());
+    }
+
+    return $el;
+  };
+}(BookReader.prototype.buildMobileDrawerElement);
+/**
+ * highlights the current chapter based on current page
+ * @private
+ * @param {TocEntry[]} tocEntries
+ * @param {number} tocEntries
+ */
+
+
+BookReader.prototype.updateTOCState = function (currIndex, tocEntries) {
+  //this function won't have any effects if called before OpenLibrary request is finished
+  if (!tocEntries) {
+    return;
+  }
+
+  $('.current-chapter').removeClass('current-chapter');
+  var tocEntriesIndexed = tocEntries.filter(function (el) {
+    return el.pageIndex != undefined;
+  }).reverse();
+  var currChapter = tocEntriesIndexed[tocEntriesIndexed.findIndex(function (el) {
+    return el.pageIndex <= currIndex;
+  })];
+
+  if (currChapter != undefined) {
+    $(currChapter.mobileHTML).addClass('current-chapter');
+  }
+};
+
+/***/ })
+
+},
+/******/ function(__webpack_require__) { // webpackRuntimeModules
+/******/ var __webpack_exec__ = function(moduleId) { return __webpack_require__(__webpack_require__.s = moduleId); }
+/******/ var __webpack_exports__ = (__webpack_exec__("./src/plugins/plugin.chapters.js"));
+/******/ }
+]);
 //# sourceMappingURL=plugin.chapters.js.map

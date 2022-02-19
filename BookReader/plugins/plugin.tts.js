@@ -1,3 +1,9290 @@
-/*! For license information please see plugin.tts.js.LICENSE.txt */
-(self.webpackChunk_internetarchive_bookreader=self.webpackChunk_internetarchive_bookreader||[]).push([[34],{2862:function(e,t,n){"use strict";n(5666),n(1539),n(9714),n(4916),n(4723),n(9826),n(2222),n(1249),n(8309),n(8674),n(9720),n(4747),n(2526),n(1817),n(2165),n(6992),n(8783),n(3948),n(7042),n(1038),n(489),n(2419),n(4819),n(5003),n(7327),n(6755),n(5306),n(9601);var o=n(3609);function i(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var n=null==e?null:"undefined"!=typeof Symbol&&e[Symbol.iterator]||e["@@iterator"];if(null!=n){var o,i,a=[],r=!0,s=!1;try{for(n=n.call(e);!(r=(o=n.next()).done)&&(a.push(o.value),!t||a.length!==t);r=!0);}catch(e){s=!0,i=e}finally{try{r||null==n.return||n.return()}finally{if(s)throw i}}return a}}(e,t)||function(e,t){if(e){if("string"==typeof e)return a(e,t);var n=Object.prototype.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(e):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?a(e,t):void 0}}(e,t)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function a(e,t){(null==t||t>e.length)&&(t=e.length);for(var n=0,o=new Array(t);n<t;n++)o[n]=e[n];return o}function r(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}var s=function(){function e(t,n,o,i){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.leafIndex=t,this.chunkIndex=n,this.text=o,this.lineRects=i}var t,n;return t=e,n=[{key:"fetch",value:function(t,n,i){return new Promise((function(a,r){o.ajax({type:"GET",url:"https://".concat(t,"/BookReader/BookReaderGetTextWrapper.php"),dataType:"jsonp",cache:!0,data:{path:"".concat(n,"_djvu.xml"),page:i},error:r}).then((function(t){a(e._fromTextWrapperResponse(i,t))}))}))}},{key:"_fromTextWrapperResponse",value:function(t,n){return n.map((function(n,o){var i=e._fixChunkRects(n.slice(1)),a=e._removeDanglingHyphens(n[0]);return new e(t,o,a,i)}))}},{key:"_fixChunkRects",value:function(e){if(e.length<2)return e;var t=i(e,2),n=t[0],o=t[1],a=i(n,3),r=a[0],s=a[1],u=a[2]-r,l=o[1]-o[3],c=o[2]-o[0],d=o[2];return u>30*c&&(n[2]=d,n[3]=s-l),e}},{key:"_removeDanglingHyphens",value:function(e){return e.replace(/[-¬]\s+/g,"")}}],null&&r(t.prototype,null),n&&r(t,n),e}();function u(e,t,n,o,i,a,r){try{var s=e[a](r),u=s.value}catch(e){return void n(e)}s.done?t(u):Promise.resolve(u).then(o,i)}function l(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}var c=function(){function e(t,n,o){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.pageCount=t,this.opts=Object.assign({},d,o),this._cursor={page:n,chunk:0},this._bufferedPages={},this._bufferingPages={},this._cursorLock=Promise.resolve()}var t,n,o,i;return t=e,(n=[{key:"next",value:function(){var e=this;return this._cursorLock=this._cursorLock.then((function(){return e._nextUncontrolled()}))}},{key:"decrement",value:function(){var e=this;return this._cursorLock=this._cursorLock.then((function(){return e._decrementUncontrolled()}))}},{key:"_nextUncontrolled",value:(o=regeneratorRuntime.mark((function t(){var n;return regeneratorRuntime.wrap((function(t){for(;;)switch(t.prev=t.next){case 0:if(this._cursor.page!=this.pageCount){t.next=2;break}return t.abrupt("return",Promise.resolve(e.AT_END));case 2:return this._recenterBuffer(this._cursor.page),t.next=5,this._fetchPageChunks(this._cursor.page);case 5:if(n=t.sent,this._cursor.chunk!=n.length){t.next=10;break}return this._cursor.page++,this._cursor.chunk=0,t.abrupt("return",this._nextUncontrolled());case 10:return t.abrupt("return",n[this._cursor.chunk++]);case 11:case"end":return t.stop()}}),t,this)})),i=function(){var e=this,t=arguments;return new Promise((function(n,i){var a=o.apply(e,t);function r(e){u(a,n,i,r,s,"next",e)}function s(e){u(a,n,i,r,s,"throw",e)}r(void 0)}))},function(){return i.apply(this,arguments)})},{key:"_decrementUncontrolled",value:function(){var e=this,t=Promise.resolve();return this._cursor.chunk>0?this._cursor.chunk--:this._cursor.page>0&&(this._cursor.page--,t=this._fetchPageChunks(this._cursor.page).then((function(t){if(0==t.length)return e._decrementUncontrolled();e._cursor.chunk=t.length-1}))),t.then((function(){return e._fetchPageChunks(e._cursor.page)}))}},{key:"_recenterBuffer",value:function(e){for(var t=Math.max(0,e-this.opts.pageBufferSize),n=Math.min(this.pageCount,e+this.opts.pageBufferSize+1),o=t;o<n;o++)this._fetchPageChunks(o);this._removePageFromBuffer(t-1),this._removePageFromBuffer(n+1)}},{key:"_removePageFromBuffer",value:function(e){delete this._bufferingPages[e],delete this._bufferedPages[e]}},{key:"_fetchPageChunks",value:function(e){var t=this;return e in this._bufferingPages?this._bufferingPages[e]:e in this._bufferedPages?Promise.resolve(this._bufferedPages[e]):(this._bufferingPages[e]=this._fetchPageChunksDirect(e).then((function(n){return delete t._bufferingPages[e],t._bufferedPages[e]=n,n})),this._bufferingPages[e])}},{key:"_fetchPageChunksDirect",value:function(e){return s.fetch(this.opts.server,this.opts.bookPath,e)}}])&&l(t.prototype,n),e}();c.AT_END="__PageChunkIterator.AT_END__";var d={server:null,bookPath:null,pageBufferSize:2},h=n(3609);function f(e){return(f="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function p(e,t){(null==t||t>e.length)&&(t=e.length);for(var n=0,o=new Array(t);n<t;n++)o[n]=e[n];return o}function A(e,t,n,o,i,a,r){try{var s=e[a](r),u=s.value}catch(e){return void n(e)}s.done?t(u):Promise.resolve(u).then(o,i)}function m(e){return function(){var t=this,n=arguments;return new Promise((function(o,i){var a=e.apply(t,n);function r(e){A(a,o,i,r,s,"next",e)}function s(e){A(a,o,i,r,s,"throw",e)}r(void 0)}))}}function g(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}var y=function(){function e(t){var n=this;!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.playing=!1,this.paused=!1,this.opts=t,this._chunkIterator=null,this.activeSound=null,this.playbackRate=1,this.events=h({}),this.voice=null,this.events.on("voiceschanged",(function(){n.voice=e.getBestBookVoice(n.getVoices(),n.opts.bookLanguage)})),this.events.trigger("voiceschanged")}var t,n,o,i,a;return t=e,o=[{key:"isSupported",value:function(){throw new Error("Unimplemented abstract class")}},{key:"getBestBookVoice",value:function(t,n){var o=arguments.length>2&&void 0!==arguments[2]?arguments[2]:navigator.languages,i=t.filter((function(e){return e.lang.startsWith(n)})),a=(o=o||(navigator.language?[navigator.language]:[])).filter((function(e){return e.startsWith(n)}));return e.getMatchingVoice(a,i)||i.find((function(e){return e.default}))||i[0]||e.getMatchingVoice(o,t)||t.find((function(e){return e.default}))||t[0]}},{key:"getMatchingVoice",value:function(e,t){var n,o=function(e,t){var n="undefined"!=typeof Symbol&&e[Symbol.iterator]||e["@@iterator"];if(!n){if(Array.isArray(e)||(n=function(e,t){if(e){if("string"==typeof e)return p(e,t);var n=Object.prototype.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(e):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?p(e,t):void 0}}(e))||t&&e&&"number"==typeof e.length){n&&(e=n);var o=0,i=function(){};return{s:i,n:function(){return o>=e.length?{done:!0}:{done:!1,value:e[o++]}},e:function(e){throw e},f:i}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var a,r=!0,s=!1;return{s:function(){n=n.call(e)},n:function(){var e=n.next();return r=e.done,e},e:function(e){s=!0,a=e},f:function(){try{r||null==n.return||n.return()}finally{if(s)throw a}}}}(e);try{var i=function(){var e=n.value,o=t.filter((function(t){return t.lang.replace("_","-").startsWith(e)}));if(o.length)return{v:o.find((function(e){return e.default}))||o[0]}};for(o.s();!(n=o.n()).done;){var a=i();if("object"===f(a))return a.v}}catch(e){o.e(e)}finally{o.f()}}}],(n=[{key:"getVoices",value:function(){throw new Error("Unimplemented abstract class")}},{key:"init",value:function(){return null}},{key:"start",value:function(e,t){this.playing=!0,this.opts.onLoadingStart(),this._chunkIterator=new c(t,e,{server:this.opts.server,bookPath:this.opts.bookPath,pageBufferSize:5}),this.step(),this.events.trigger("start")}},{key:"stop",value:function(){this.activeSound&&this.activeSound.stop(),this.playing=!1,this._chunkIterator=null,this.activeSound=null,this.events.trigger("stop")}},{key:"pause",value:function(){var e=!this.paused&&this.activeSound;this.paused=!0,this.activeSound&&this.activeSound.pause(),e&&this.events.trigger("pause")}},{key:"resume",value:function(){var e=this.paused&&this.activeSound;this.paused=!1,this.activeSound&&this.activeSound.resume(),e&&this.events.trigger("resume")}},{key:"togglePlayPause",value:function(){this.paused?this.resume():this.pause()}},{key:"jumpForward",value:function(){this.activeSound&&this.activeSound.finish()}},{key:"jumpBackward",value:(a=m(regeneratorRuntime.mark((function e(){var t=this;return regeneratorRuntime.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,Promise.all([this.activeSound.stop(),this._chunkIterator.decrement().then((function(){return t._chunkIterator.decrement()}))]);case 2:this.step();case 3:case"end":return e.stop()}}),e,this)}))),function(){return a.apply(this,arguments)})},{key:"setVoice",value:function(e){this.voice=this.getVoices().find((function(t){return t.voiceURI===e})),this.activeSound&&this.activeSound.setVoice(this.voice)}},{key:"setPlaybackRate",value:function(e){this.playbackRate=e,this.activeSound&&this.activeSound.setPlaybackRate(e)}},{key:"step",value:(i=m(regeneratorRuntime.mark((function e(){var t,n,o,i=this;return regeneratorRuntime.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,this._chunkIterator.next();case 2:if((t=e.sent)!=c.AT_END){e.next=7;break}return this.stop(),this.opts.onDone(),e.abrupt("return");case 7:return this.opts.onLoadingStart(),(n=this.createSound(t)).chunk=t,n.rate=this.playbackRate,n.voice=this.voice,n.load((function(){return i.opts.onLoadingComplete()})),this.opts.onLoadingComplete(),e.next=16,this.opts.beforeChunkPlay(t);case 16:if(this.playing){e.next=18;break}return e.abrupt("return");case 18:return e.next=20,this.playSound(n).then((function(){return i.opts.afterChunkPlay(n.chunk)}));case 20:return o=e.sent,this.paused&&this.pause(),e.next=24,o;case 24:if(!this.playing){e.next=26;break}return e.abrupt("return",this.step());case 26:case"end":return e.stop()}}),e,this)}))),function(){return i.apply(this,arguments)})},{key:"createSound",value:function(e){throw new Error("Unimplemented abstract class")}},{key:"playSound",value:function(e){return this.activeSound=e,this.activeSound.loaded||this.opts.onLoadingStart(),this.activeSound.play()}},{key:"getBestVoice",value:function(){return e.getBestBookVoice(this.getVoices(),this.opts.bookLanguage)}}])&&g(t.prototype,n),o&&g(t,o),e}(),v=(n(3123),n(1030));function b(e,t){return new Promise((function(n){e.addEventListener(t,(function o(i){e.removeEventListener(t,o),n(i)}))}))}function w(e){return new Promise((function(t){return setTimeout(t,e)}))}function V(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:navigator.userAgent;return/android/i.test(e)}var k={Name:0,Endonym:1,"ISO 639-1":2,"ISO 639-2/T":3,"ISO 639-2/B":4};function _(e,t){for(var n=0;n<v.Z.length;n++)for(var o=0;o<t.length;o++){var i=t[o];if(-1!=v.Z[n][k[i]].split(", ").map((function(e){return e.toLowerCase()})).indexOf(e))return v.Z[n][k["ISO 639-1"]]}return null}n(5529),n(4371);var M=n(3609);function S(e){return(S="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function O(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function P(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}function I(e,t,n){return t&&P(e.prototype,t),n&&P(e,n),e}function x(e,t,n){return(x="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(e,t,n){var o=function(e,t){for(;!Object.prototype.hasOwnProperty.call(e,t)&&null!==(e=q(e)););return e}(e,t);if(o){var i=Object.getOwnPropertyDescriptor(o,t);return i.get?i.get.call(n):i.value}})(e,t,n||e)}function E(e,t){return(E=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}function L(e,t){if(t&&("object"===S(t)||"function"==typeof t))return t;if(void 0!==t)throw new TypeError("Derived constructors may only return object or undefined");return function(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}(e)}function q(e){return(q=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}var R=function(e){!function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&E(e,t)}(i,e);var t,n,o=(t=i,n=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],(function(){}))),!0}catch(e){return!1}}(),function(){var e,o=q(t);if(n){var i=q(this).constructor;e=Reflect.construct(o,arguments,i)}else e=o.apply(this,arguments);return L(this,e)});function i(e){var t,n;return O(this,i),(n=o.call(this,e)).audioFormat=null!==(t=M.browser)&&void 0!==t&&t.mozilla?"ogg":"mp3",n}return I(i,[{key:"getVoices",value:function(){return[{default:!0,lang:"en-US",localService:!1,name:"Festival - English (US)",voiceURI:null}]}},{key:"init",value:function(){soundManager.setup({debugMode:!1,preferFlash:!0,url:"/bookreader/BookReader/soundmanager/swf",useHTML5Audio:!0,flashVersion:9})}},{key:"start",value:function(e,t){var n=this,o=null;navigator.userAgent.match(/mobile/i)&&(o=this.iOSCaptureUserIntentHack()),(o=o||Promise.resolve()).then((function(){return x(q(i.prototype),"start",n).call(n,e,t)}))}},{key:"createSound",value:function(e){return new T(this.getSoundUrl(e.text))}},{key:"getSoundUrl",value:function(e){return"https://"+this.opts.server+"/BookReader/BookReaderGetTTS.php?string="+encodeURIComponent(e)+"&format=."+this.audioFormat}},{key:"iOSCaptureUserIntentHack",value:function(){var e=soundManager.createSound({url:C[this.audioFormat]});return new Promise((function(t){return e.play({onfinish:t})})).then((function(){return e.destruct()}))}}],[{key:"isSupported",value:function(){return"undefined"!=typeof soundManager&&soundManager.supported()}}]),i}(y),T=function(){function e(t){O(this,e),this.soundUrl=t,this.sound=null,this.rate=1,this._finishResolver=null}return I(e,[{key:"loaded",get:function(){return this.sound&&this.sound.loaded}},{key:"load",value:function(e){var t=this;return this.sound=soundManager.createSound({url:this.soundUrl,onload:function(){1!=t.rate&&t.sound.setPlaybackRate(t.rate),e()},onresume:function(){w(25).then((function(){1!=t.rate&&t.sound.setPlaybackRate(t.rate)}))}}),this.sound.load()}},{key:"play",value:function(){var e=this;return new Promise((function(t){e._finishResolver=t,e.sound.play({onfinish:t})})).then((function(){return e.sound.destruct()}))}},{key:"stop",value:function(){return this.sound.stop(),Promise.resolve()}},{key:"pause",value:function(){this.sound.pause()}},{key:"resume",value:function(){this.sound.resume()}},{key:"setPlaybackRate",value:function(e){this.rate=e,this.sound.setPlaybackRate(e)}},{key:"finish",value:function(){this.sound.stop(),this._finishResolver()}}]),e}(),C={mp3:"data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA//////////////////////////////////////////////////////////////////8AAAAeTEFNRTMuOTlyBJwAAAAAAAAAADUgJAaUQQABrgAAAnHIf8sZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//sQxAADwlwBKGAAACAAAD/AAAAEAAAAH///////////////+UBAMExBTUUzLjk5LjOqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr/+xDEIAPAAAGkAAAAIAAANIAAAASqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqg==",ogg:"data:audio/ogg;base64,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"},D=n(7775);function F(e){return(F="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function B(e,t,n,o,i,a,r){try{var s=e[a](r),u=s.value}catch(e){return void n(e)}s.done?t(u):Promise.resolve(u).then(o,i)}function U(e){return function(){var t=this,n=arguments;return new Promise((function(o,i){var a=e.apply(t,n);function r(e){B(a,o,i,r,s,"next",e)}function s(e){B(a,o,i,r,s,"throw",e)}r(void 0)}))}}function H(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function j(e,t){for(var n=0;n<t.length;n++){var o=t[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}function Q(e,t,n){return t&&j(e.prototype,t),n&&j(e,n),e}function N(e,t,n){return(N="undefined"!=typeof Reflect&&Reflect.get?Reflect.get:function(e,t,n){var o=function(e,t){for(;!Object.prototype.hasOwnProperty.call(e,t)&&null!==(e=K(e)););return e}(e,t);if(o){var i=Object.getOwnPropertyDescriptor(o,t);return i.get?i.get.call(n):i.value}})(e,t,n||e)}function Y(e,t){return(Y=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}function z(e,t){if(t&&("object"===F(t)||"function"==typeof t))return t;if(void 0!==t)throw new TypeError("Derived constructors may only return object or undefined");return function(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}(e)}function K(e){return(K=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}var Z,W=function(e){!function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&Y(e,t)}(i,e);var t,n,o=(t=i,n=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],(function(){}))),!0}catch(e){return!1}}(),function(){var e,o=K(t);if(n){var i=K(this).constructor;e=Reflect.construct(o,arguments,i)}else e=o.apply(this,arguments);return z(this,e)});function i(e){var t;return H(this,i),t=o.call(this,e),speechSynthesis.addEventListener&&speechSynthesis.addEventListener("voiceschanged",(function(){return t.events.trigger("voiceschanged")})),t}return Q(i,[{key:"start",value:function(e,t){var n=this;if("mediaSession"in navigator){var o=new Audio(X);o.loop=!0,this.events.on("pause",(function(){return o.pause()})),this.events.on("resume",(function(){return o.play()})),this.events.on("stop",(function(){return o.src=""})),o.play().then((function(){navigator.mediaSession.metadata=new MediaMetadata({title:br.bookTitle,artist:br.options.metadata.filter((function(e){return"Author"==e.label})).map((function(e){return e.value}))[0],artwork:[{src:br.options.thumbnail,type:"image/jpg"}]}),navigator.mediaSession.setActionHandler("play",(function(){o.play(),n.resume()})),navigator.mediaSession.setActionHandler("pause",(function(){o.pause(),n.pause()})),navigator.mediaSession.setActionHandler("previoustrack",(function(){return n.jumpBackward()})),navigator.mediaSession.setActionHandler("nexttrack",(function(){return n.jumpForward()}))}))}return N(K(i.prototype),"start",this).call(this,e,t)}},{key:"getVoices",value:function(){return speechSynthesis.getVoices()}},{key:"createSound",value:function(e){return new G(e.text)}}],[{key:"isSupported",value:function(){return void 0!==window.speechSynthesis&&!/samsungbrowser/i.test(navigator.userAgent)}}]),i}(y),G=function(){function e(t){H(this,e),this.text=t,this.loaded=!1,this.paused=!1,this.started=!1,this.stopped=!1,this.rate=1,this.utterance=null,this.voice=null,this._lastEvents={pause:null,boundary:null,start:null},this._charIndex=0,this._finishResolver=null,this._finishPromise=null}var t,n;return Q(e,[{key:"load",value:function(e){var t=this;this.loaded=!1,this.started=!1,this.utterance=new SpeechSynthesisUtterance(this.text.slice(this._charIndex)),this.utterance.voice=this.voice,this.voice&&(this.utterance.lang=this.voice.lang),this.utterance.rate=this.rate,-1!=location.toString().indexOf("_debugReadAloud=true")&&(this.utterance.addEventListener("pause",(function(){return console.log("pause")})),this.utterance.addEventListener("resume",(function(){return console.log("resume")})),this.utterance.addEventListener("start",(function(){return console.log("start")})),this.utterance.addEventListener("end",(function(){return console.log("end")})),this.utterance.addEventListener("error",(function(){return console.log("error")})),this.utterance.addEventListener("boundary",(function(){return console.log("boundary")})),this.utterance.addEventListener("mark",(function(){return console.log("mark")})),this.utterance.addEventListener("finish",(function(){return console.log("finish")}))),this.utterance.addEventListener("start",(function(e){return t._lastEvents.start=e})),this.utterance.addEventListener("boundary",(function(e){return t._lastEvents.boundary=e})),this.utterance.addEventListener("pause",(function(e){return t._lastEvents.pause=e})),this.utterance.addEventListener("start",(function(){t.started=!0,t.stopped=!1,t.paused=!1})),this.utterance.addEventListener("pause",(function(){return t.paused=!0})),this.utterance.addEventListener("resume",(function(){return t.paused=!1})),this.utterance.addEventListener("end",(function(e){t.paused||t.stopped||t.utterance.dispatchEvent(new CustomEvent("finish",e))})),this.loaded=!0,e&&e()}},{key:"reload",value:function(){var e=this,t=this.paused,n=this._lastEvents.boundary||this._lastEvents.pause;return n&&(this._charIndex=this.text.indexOf(n.target.text)+n.charIndex),this.stop().then((function(){e.load(),t||e.play()}))}},{key:"play",value:function(){var e=this;this._finishPromise=this._finishPromise||new Promise((function(t){return e._finishResolver=t})),this.utterance.addEventListener("finish",this._finishResolver),speechSynthesis.cancel(),speechSynthesis.resume(),speechSynthesis.speak(this.utterance);var t=this.utterance.voice&&this.utterance.voice.localService;return(0,D.i7)()&&!t&&this._chromePausingBugFix(),this._finishPromise}},{key:"stop",value:function(){var e=Promise.resolve();return this.stopped||(e=Promise.race([b(this.utterance,"end"),b(this.utterance,"error")])),this.stopped=!0,speechSynthesis.cancel(),e}},{key:"finish",value:function(){var e=this;this.stop().then((function(){return e.utterance.dispatchEvent(new Event("finish"))}))}},{key:"pause",value:function(){var e=this;if(!this.paused){var t=b(this.utterance,"pause");speechSynthesis.pause();var n=(0,D.vU)()&&V();if((0,D.i7)()||n){var o=w(100).then((function(){return"timeout"}));Promise.race([t,o]).then((function(t){"timeout"==t&&(e.utterance.dispatchEvent(new CustomEvent("pause",e._lastEvents.start)),n&&e.stop())}))}}}},{key:"resume",value:(n=U(regeneratorRuntime.mark((function e(){var t,n,o;return regeneratorRuntime.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(this.started){e.next=3;break}return this.play(),e.abrupt("return");case 3:if(this.paused){e.next=5;break}return e.abrupt("return");case 5:if(t=(0,D.i7)()&&V()||(0,D.vU)()&&V(),n=(0,D.i7)()||t,o=b(this.utterance,"resume"),speechSynthesis.resume(),!n){e.next=20;break}return e.next=12,Promise.race([o,w(100).then((function(){return"timeout"}))]);case 12:if("timeout"==e.sent){e.next=15;break}return e.abrupt("return");case 15:if(this.utterance.dispatchEvent(new CustomEvent("resume",{})),!t){e.next=20;break}return e.next=19,this.reload();case 19:this.play();case 20:case"end":return e.stop()}}),e,this)}))),function(){return n.apply(this,arguments)})},{key:"setPlaybackRate",value:function(e){this.rate=e,this.reload()}},{key:"setVoice",value:function(e){this.voice=e,this.reload()}},{key:"_chromePausingBugFix",value:(t=U(regeneratorRuntime.mark((function e(){var t,n,o,i,a=this;return regeneratorRuntime.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return t=w(14e3).then((function(){return"timeout"})),n=b(this.utterance,"pause").then((function(){return"paused"})),o=b(this.utterance,"end").then((function(){return"ended"})),e.next=5,Promise.race([t,n,o]);case 5:i=e.sent,-1!=location.toString().indexOf("_debugReadAloud=true")&&console.log("CHROME-PAUSE-HACK: ".concat(i)),e.t0=i,e.next="ended"===e.t0?10:"paused"===e.t0?11:"timeout"===e.t0?13:19;break;case 10:return e.abrupt("break",19);case 11:return Promise.race([b(this.utterance,"resume"),w(14e3).then((function(){return"timeout"}))]).then((function(e){"timeout"==e?a.reload():a._chromePausingBugFix()})),e.abrupt("break",19);case 13:return speechSynthesis.pause(),e.next=16,w(25);case 16:return speechSynthesis.resume(),this._chromePausingBugFix(),e.abrupt("break",19);case 19:case"end":return e.stop()}}),e,this)}))),function(){return t.apply(this,arguments)})}]),e}(),X="data:audio/mp3;base64,/+MYxAAMEAISSAhElhIpJYzz1vz9mUdlHvJwTP/n3FJesPxB9/8mp0oGaz9+7+T//8oCDhJqOMqLh4o4uhUAUUDaf//3r+///+MYxAoKy2ImKAgEqbfr/t///27/+n3s32/////+b5qMsq7vnXCKh2By3ZcIqyrUYbbRH0fp+ljtf+n2Uo72PHX/03f0df///+MYxBkKUAYmQAhEAL+2l44oKFjZMwJAOJnhguMqokFAqBKl/5f1/+f+3/v////9GT//r+//v+//////b1VvucaRChqnMqsY/+MYxCoLo2IiSAgEpRrgIRVq//p////25nlpVFbQ9kuXtrpt+n//3ZUZNKHVTHdJk3Q6h961DAU8loFlsfTnTZYLLQ1xiIYC/+MYxDYLa2YYAACNFAKKv5swEnqSccBoi//xVP9R/q/370r02////7VpaiWWLrDaF//X8+Rf/6ys2irmURCrI/Lr7///+m1t/+MYxEMKqAI2SAhElh7vNPmHrKdmMPFMimBI5xYQEiIRxh1gk0pKvfo7nezMyH6P67uKW+z/7NusoS/4//STUtCUiwASccAQ/+MYxFMKs2IcIABFEFRhEOUCgACs//l3/6df///+qZf6V9X2t69f/p////+v97UOY7UyyIxZWPa1inCgyCDq//pXpSia2v23/+MYxGMK6AYqSABEAl70RfX2+nu6///v+rfdWCLKMhUBmZhIDqt23LQGBjyNGEjBCnI5JGjRWkU2a8b29z/+n6/9SnN7LUfo/+MYxHILg2IiQAgEUPpX9//96jShqxUCtNiIeCAcmxc3/tn18pTBRmaNzgUvIqropQvPf/Fy99+z9/8/bx43Xn95kr6QHFQp/+MYxH8LG2IcAACNMTZjQ1mIlAyLi1r7PBeeff3WH/rB/r/2/7a/+6/0/0b19F5lfb/p////9qWyzOGqY5WlRoqAGuCOp1Dm/+MYxI0KuAIuSAhElhZ6kDcciBDa1gec/T1uqXsq/0Pf+z/9tf0fbV8Jf//xrqJs4BnZgPhibbcDkhvrmd9q9s+3XL+2X+9e/+MYxJ0MK14UAABNLG/7/dfT6f/1Rt+v/0/09f///1fZbWuR7ohD7JuzWZRbVe5Or5lVUWrunn1/Z+v/v//p9Ozvqh6OoMKb/+MYxKcMo2YhgAgExmatD1TeZuDdxZACD6ZEipG5JWjTNJZ16WIitt4yx3+/3fud9dFaG/7fdRQ///2a8PsCLxIDokWAam24/+MYxK8JsAYuSAhEAtxow+XubpX85GAu+/8z//2cpeR+xf/KXOZchkyy8//P5f+X/////edcJFIEjHFNBB0OtjXoQIEUm8mx/+MYxMMMi14mKAgEpmaRQYFFM5jChhMBskKSnLHwMz8jUiTb6rq////Pf0u6p038KcqLh8tFIDPK0waRwBJBSIFgBH+eAMDT/+MYxMsKG2IYAACNTf///9P/////5/+f9ZKCZazujkeQGA+RIYDEc4oApsX+dz5P//O5+WXJWPpLGoNdAyEtBgspdF5FUbFU/+MYxN0KUAIuSAhElphZOtQNqKkTl6///B7L9f//5//5fz+V1/L5f++f3/qD/n3//+3svyOlCl52VRRE7iVvgaFRcAxZVbe0/+MYxO4Og2ImSAhG3+lb683WpVSNSyNspd0UzsyTkRVqjsj0ej//1rZG9Co1Go8hSlgMjhQucpg9Fp6+uL06ZdcfIdD1ckrm/+MYxO8Os14QAABNLaj9X+YufyaKj/L1t//8H/qi//5+RF+LQjyw2+XDjO2/Oaj///93+ja45qSmWYIJQEc0bZqkTcr7IVep/+MYxO8QI2YVgAjNoNrP+QIELy/8t6XR+eyorh/f//lg2WZf/7/5e//fR+/3n+YOX5f///owB5uJ2AJjUjMSRgzRqNJV/rUZ/+MYxOkNS2oiSAiHoCRFe8nrl2Pvi15/JiyX/5T+vecv8z17/L5R9F5k5Z3b+YC6yr8fP+3q1m0TMZjrAnSg0CCBw7EjjUWC/+MYxO4OY14QAAFTMVFqv0w2rN+YPGceXOXn/+XP//8v/n//9fy/35BrF///f/////yI08yQDwI+dXQ0HJERuhH+9xIkWcvm/+MYxO8Pq2YaQAiNoPYT38z3LPn/X//1v32IRy49cz/5f9Lnzfz5/InIzKD/1+Xp1/0ar6I8YqlQQZkzYJLkIcO6sDjmwHuv/+MYxOsNi14lqAhG3//33Ln8vBl/P9Kf/8/+X2UpVxaJV+kYMsr9dtFr///l//3SQ2v1CRbHIPKziXzJVEkeHFBQADHVjccc/+MYxO8P214dqAiHoohQ8T6PXm5mjvzJirn9X//eX/5r/5fykE3Ni12f/185fn+v/8/6e//TaqOoNyZTiIJc8YEAygzxf//P/+MYxOoMez4iQAhG3fry//////8v//Kf7ckWwdjU6uAlPIxG5Tl6VM4PV/5f55eZylFPOPd8+pBCJZ/XpEmmNSwmYOHpl+8l/+MYxPMO62YhqAiHomIQPMfzYfl//Lr/YkBd3APxQ/z3//5ctVrMPakfyqebn//T////TkqS/QylsGVd48YSy46YoyMkuz/T/+MYxPIPW2IaQAhGvcsh/D/M/+9+ll//Oyz/88v5//+y5v/yk3nL8pTl////8+f5FlWkpuw22NXIjbfSLWc61WWWHynCuQIe/+MYxO8OGz4mSAiHo5f/+fl+6PQReMvX//PaIhL//fN/sqD6zWhL/V65v73///f+YCU4yRtDLIwg1XBowhGBB9hrgDTcaBER/+MYxPEPg2IVYAjNoU///15+ZcFdV//eSL/y//l1+i+vPy/kfv/rl////+JaajzwMYMAghvUbHiBQQIPAbC1ssAgiBYf57+v/+MYxO4Og0IhqAiHh//3////z/Oz7+W3lNll+U07IIZZzqTh3M8nFman/H///JZ7yZNkaLB0Jm7sJc+SMA55lhJMhxxWD//3/+MYxO8Og2IdgAjNoxkk379d8j1rs5dfLbn/8nP/6/fI96P9df/z4r//9ecXX89H+6aUs2dmtayGHP0pclEjszX4HMJuF/65/+MYxPAOO2IdoAhG3j/XzN0ullhGsszM/ozztvKpndTslEpKj2PdL6fT+7s2V7EMsIZjAR3CNdSEIWWkxGnEVitwwSIE0yNv/+MYxPIN42IiSAhG32r/XVk9VVG107IY5j6q57Gc/pXT+eX//+u/PR8s7s6FI5zlEKGJVKLKV40qeS1MtkxKW2ro9xEXn7/P/+MYxPUQg14WQAjNof1Q3Xr4q2XJfy//y//l/z+EveR/6GLX/8K////6fbT9CoRyDsdHMIn279+ZuHuOFIvVt//e1pVZ1Sju/+MYxO4Oe2YhqAiNorOaY+51MxL2UoMIjmcxjQdFRyNVVa1LUd6/172a9VbR1U4VCCXA1HkcQMoC0U/SoACSMRAUgYdoKEGU/+MYxO8Pk2oQIACTFIGGIGiRxzP/iH/vP+A5r///z/838v36n//7//P//6P33///+IWZyzRmB+SBvm5THMSlFEL/+Rk4Zi9+/+MYxOsMk2oUAACTMIu5BP9fIxC7h//3y/+pSujznMj/z9S/P/z/3LmX////5b//JkWqxxoRRaLrubJCHAdzYcWODdv+mtvZ/+MYxPMOC2odoAiNotVJZ0Vt2VqSD52bqzoQUdUKy2er0mroz2ImX/ffZq7X1k3INcezhRmERUQFFMAKMfV+gmPaVJ1igl2k/+MYxPUQ+2oMAACNFHP/9xk/D8srrZ8vzu/6//+Rn/z/z+zneV/+v/4uZ9f//r///7ra1i0znd0Ugk4dN6Y7gvKgUdX79xks/+MYxOwM804mSAhG3/KCtd87mQv5c/5Zf/7Ev/78+WauWX//kpIjI5uRowybyixL5XX///9ljMuUzMQqXJK/tDgIgrL/559G/+MYxPMPO14hoAhGv/mf5ZzlJLOy2QkeTfcjvUyVy//8/f2FeWu88vZVPrqa9ZRm4QQNIl+ZXNGC6/SXL88C+nHJ/7+SvMhI/+MYxPEQQ2YMAAFTFIs2gqVC7+4N/uX//f8vxH/58uUymv/9y3n5b6p/////23ZHynRxARCkKUwRQQKsdFCUNswfdmL1lgtv/+MYxOsNU1YhoAiHo6Sv3/l/Xzl3+2v//z//39/Rn/Bzz50R8pf+u1l1////p1TRqIXaXd0lDIY1USShoAoxCxaAAqa79xkE/+MYxPAOq2YlqAhG3i/PH3PO5xkW66X2h6/88sP8+U/+uX5lkd1Wyys9az/smhajlmX//5cUNkTjmAKPJoxzJyrMUopoJBRq/+MYxPAOQ2YQAABTEP73EgSF593QPX7+U3v8///5P/5f/1//8WfL5/1/wwp+mQv5f/LOigzvMjoczjItyM9EgLnY/+XqeeNw/+MYxPIPW1odgAiNh1SJsuiWWbOXoFVzs2a4NzlzXZn5//7X3dqO9L75RtzsmeQIKivkbIknm6xULDDSF5G5edXuv9C5lKVa/+MYxO8Og2IeQAiHhU3LrlyX7QBy//nfQ//Ky//ly7J58a7KBc0ayl7+6f2b///zX2K6SHIepGMDBElCtphtGsZv0xJEKiQ//+MYxPAPq1odqAhG3wDT/nXn7///////L//e/cyXZbb6AMy12NvdI9zIy89yP////v7TUeUIqnHCCasDDMKcm5u123L8cVu3/+MYxOwNQ1YhqAhG3zUVguuHqHy/6l2v3wV/qv//1/y/6/L//4es9nUvyz39T////ZutU9IzMWbQyKjY5epCS1vy5xHlVZJJ/+MYxPIOS2YQAABTEANCv/fIss+X6P////8v+Z//7/LI8NLlZNFck/z+/Xv////0K/83Yuomhozh1pUW7Qga+6t4NNE0ONyy/+MYxPMQQ14ZgAiNo8toABfy/svsz/rLv/17a0avX2vbuuzH00V0+XbV20T///3+ljpQxDFMyOMU1BpkIo8YcHKrCcyiKKre/+MYxO0PY2YVgAiToO2vyGX6nq+ZGb/rXl1//z//5b//lP8uf//EXKv+v0/////XvQqTHqxWoRRgrhmDQQThlQOyKj8/0/Nr/+MYxOoNk14eQAiNob7U7/4/la2f//OxCL/n//f/3l2Y15p5/upz2pf9f//vb6fPQrUQuQWcUc+KjmrmzmEozKAfEE2ozP6//+MYxO4PA2oaIAjNoPr/Nfaw///33+X9X/eZ+fn1/WsjbNckfer3+X////IfPyFgNsUSt77vc4pDvI10yuq3EgRQpc7tf8uf/+MYxO0Oq2IeQAgKyYp9+ff/8t/VKaoXy//G//Mlg/vqertShLzX3z/v1/1usqWRrBmSOCTfz+xy0sx9H63VEYg/r1//y/f9/+MYxO0Nk1YiQAiHhPRtNNHzUTq6q62f1XTbORdOq//X+ifdGOWrVHT2OY9hoLyZQ1I1OkSI4NyocRYoUKCKLRLH0W23JYjT/+MYxPEOe14dgAiNo19+/Ln9Uglsp4+ZoF/0oiS+//+6/Ky99yje////qTa8////5/i+DFN2QNkCg0QUzocL/8z+9XOZ54F5/+MYxPINW2IeQAhM3ceYqGZJzgEAMZmZnZwkIrdFDDe/+6/bO+zrRU5sYqdzx7dIYqqOyjECzyIUAwNkCJGxav/3/cvwCyzh/+MYxPcPC14dqAiNow2kh3GeZQmSGeKjgYTMzZ7l58z/3//633UfmVt4ncevdKqvispjUlOkhOkTwuwsXQoxMruyQWgISfyX/+MYxPUPs2oV4AgOkPLK//PPzf////5n/+/8NeDSNlRbu9FKjI8Zn/O89Z/+f/L6fL6ObO7wiuTKLQRjt4JUkfCiZZFYEpXT/+MYxPENwzYqSAhG3zlwiHl+Vln8utc8+X///36///L9Tv5LMl1ftaeZd/zl//////nLfhZytqwKmCjMFcMIwQcAMZ2oQGKn/+MYxPUO214QAABNEf1y0qzKPqaNn3AEjuGta0EsZF8j/+X/+avnuL5WLWOhrPCGdKIznKWIbhBiOUIrq4eiMNb++RofJUR//+MYxPQO+2oQAABTECDLKpKyp7AFEE8jv/+Sl/f/y/f/l5fP4fymp//l////19DUomQyM0m1ZpEZBzxYoAZF/76MqX0Xlyuc/+MYxPMQE2YaQAjNoOhkaR051mjiXVyEahjrxZUVKOOczO6VzO22dvX/72/XSfKGp6jj1xthiMTqqkaMDONH8CrEtDC58Rlm/+MYxO0PA2IeQAhGvRcLtzbVM/gZH6X/lrIqeVGpIri//vyEv/zP/5f5/9b/8Pz/X6/////b9NHfUzFhEoxzO4G0JqZksJg5/+MYxOwNA2oUAABRLKr/0/12Xg3ZXsiKqursXOls6MpKE2znexzO55WW+peuvZ/7auaSuIHKhjghBhAV3CmBClmIxpPSkSy7/+MYxPMOIz4hoAhG3yfJyIVqohcXWCjI/8vP9+1/7//X/3/6f61/+v7/t77f6/2/////+26mQzIyjqylhTO4eKGRQxhbNDiJ/+MYxPUSE2oIAACTEFX/++n7JrSx2WYNMZFc7AlUirWqGBPCXOpzmRTPQjIe9czff/5/PfLPJX3KO6w22kttoaJ9pNWZDjFM/+MYxOcNi2YhoAiHhqk05mxEuYDmFRBBIGDT7+IflmVMb/0Wf/0/QLkHf1/2m6v6fpoY+1+sAhoMlxoGOFQ+jbbcZJGljIXK/+MYxOsQO2IMAACTFb+lv4fH/GVV//r//efnoslIj/r9fxbPO8vHItLDn/P//ZdO6lS9VdVByqsIqUNAYfBAhpCxuXVke+X2/+MYxOUNE2IiQAgEwV5f0jVYbP3//7v/L//l5f5ss4GVEaGbmesRh9K0ju6///837UmOjpIwssokUcxQt+gNYplsHLYhB5eJ/+MYxOsQk1YMAACTEY3JJQ1wxZtG/tak6KISwy/uZ/j6nkHvZei9RjajSy8n3x/u3///stJyKaAKCFJMKC4b/r/WvwKplRP5/+MYxOMKOAYuSABEAnq+WEvP//5I//v/QMz8//X758VpvOnnOVPn/f//uX2+f7nDYvkGpozxt8Xn2tRGoPBM1PX/6/+YdDJZ/+MYxPUPQ1YiSAiHo8IiMFFDMfiOduTSMAxPIM7R9Lkv8t/3993+be079FC2LRc8jYlp5R6KheqB2l0kwFwoFSmWOyCsZ8v+/+MYxPMQg2IaQAlNoFP7Ly7/X//+W+gepL/1mP1mfb8ccMf6rJy7AZA9f8//z/1MupC79GSiKa17cElnuR7pw5MG48AV+ucZ/+MYxOwMgAYuSAhEAhglKMW9+py5S+PP+Rf/6MP/fXz/vlOfvzMv/LWRcWGz16///9fZMlpasVhhHOGxIRbHk8nkkYP+EQKl/+MYxPUPG2IdgAjNozJQByAMF/6//le/y////8/rVl/v5/d/5U98kU2tzl5SITKXk///7Pt5VWhZSMOQqIHZwB0LymkzFFnA/+MYxPMOw2oQAABNEL0pKo025GgSbCS9H7lzLlV58mRTv//3+W8WT//f/7zz5//l/9ki/6////WXFkRjlygC4US7JYQwCIg1/+MYxPMPk1YaQAjNof+3GgQj8XKu+pz/PNeX2//81+BMxLX//nz8/5vXovznf9GZ8kZy//J/t1dPqqsZWQIqK2lF4LBUIAJn/+MYxO8Pq2YdoAlNopA5QImv5P/i4cqmi/y///9DP/mplLdWL/8rZS/qX////m+pfVpWM5jBgJysYxQpTGMYUcygIwYU6qqq/+MYxOsPE14aQAiNoYAwNmLCuoX4szULsxZmoXZiwr/FhX//gIWFSJmtiVCwr3f7P/ioqLCwsLC4qK1MQU1FMy45OS4zVVVV/+MYxOkN614mSAhE31VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV/+MYxOwOwz4hqAiHo1VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV/+MYxOwOG1oOIAgEqFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV/+MYxO4L6AVtkAhEAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV",J="Read this book aloud",$=n(9860),ee=n(3609),te=n(3609);function ne(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var n=null==e?null:"undefined"!=typeof Symbol&&e[Symbol.iterator]||e["@@iterator"];if(null!=n){var o,i,a=[],r=!0,s=!1;try{for(n=n.call(e);!(r=(o=n.next()).done)&&(a.push(o.value),!t||a.length!==t);r=!0);}catch(e){s=!0,i=e}finally{try{r||null==n.return||n.return()}finally{if(s)throw i}}return a}}(e,t)||function(e,t){if(e){if("string"==typeof e)return oe(e,t);var n=Object.prototype.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(e):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?oe(e,t):void 0}}(e,t)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function oe(e,t){(null==t||t>e.length)&&(t=e.length);for(var n=0,o=new Array(t);n<t;n++)o[n]=e[n];return o}function ie(e,t,n,o,i,a,r){try{var s=e[a](r),u=s.value}catch(e){return void n(e)}s.done?t(u):Promise.resolve(u).then(o,i)}ee.extend(BookReader.defaultOptions,{server:"ia600609.us.archive.org",bookPath:"",enableTtsPlugin:!0}),BookReader.prototype.setup=(Z=BookReader.prototype.setup,function(e){if(Z.call(this,e),this.options.enableTtsPlugin){this._ttsBoxesByIndex={};var t=W.isSupported()?W:R.isSupported()?R:null;if(/_forceTTSEngine=(festival|web)/.test(location.toString())){var n=location.toString().match(/_forceTTSEngine=(festival|web)/)[1];t={festival:R,web:W}[n]}t&&(this.ttsEngine=new t({server:e.server,bookPath:e.bookPath,bookLanguage:(o=e.bookLanguage,o?_(o=o.toLowerCase(),["ISO 639-1"])||_(o,["ISO 639-2/B"])||_(o,["ISO 639-2/T","Endonym","Name"]):null),onLoadingStart:this.showProgressPopup.bind(this,"Loading audio..."),onLoadingComplete:this.removeProgressPopup.bind(this),onDone:this.ttsStop.bind(this),beforeChunkPlay:this.ttsBeforeChunkPlay.bind(this),afterChunkPlay:this.ttsSendChunkFinishedAnalyticsEvent.bind(this)}))}var o}),BookReader.prototype.init=function(e){return function(){var t=this;this.options.enableTtsPlugin&&this.bind(BookReader.eventNames.PostInit,(function(){t.$(".BRicon.read").click((function(){return t.ttsToggle(),!1})),t.ttsEngine&&(t.ttsEngine.init(),/[?&]_autoReadAloud=show/.test(location.toString())&&t.ttsStart(!1))})),e.call(this)}}(BookReader.prototype.init),BookReader.prototype._createPageContainer=function(e){return function(t){var n=e.call(this,t);if(this.options.enableTtsPlugin&&n.page&&t in this._ttsBoxesByIndex){var o=n.page.index;(0,$.Tm)("ttsHiliteLayer",this._ttsBoxesByIndex[o],n.page,n.$container[0])}return n}}(BookReader.prototype._createPageContainer),BookReader.prototype.buildMobileDrawerElement=function(e){return function(){var t=e.call(this);return this.options.enableTtsPlugin&&this.ttsEngine&&t.find(".BRmobileMenu__moreInfoRow").after(te('\n        <li>\n            <span>\n                <span class="DrawerIconWrapper"><img class="DrawerIcon" src="'.concat(this.imagesBaseURL,'icon_speaker_open.svg" alt="info-speaker"/></span>\n                Read Aloud\n            </span>\n            <div>\n                <span class="larger">Press to toggle read aloud</span>\n                <br/>\n                <button class="BRicon read"></button>\n            </div>\n        </li>'))),t}}(BookReader.prototype.buildMobileDrawerElement),BookReader.prototype.initNavbar=function(e){return function(){var t=this,n=e.call(this);if(this.options.enableTtsPlugin&&this.ttsEngine){this.refs.$BRReadAloudToolbar=te('\n        <ul class="read-aloud">\n          <li>\n            <select class="playback-speed" name="playback-speed" title="'.concat("Playback speed",'">\n              <option value="0.25">0.25x</option>\n              <option value="0.5">0.5x</option>\n              <option value="0.75">0.75x</option>\n              <option value="1.0" selected>1.0x</option>\n              <option value="1.25">1.25x</option>\n              <option value="1.5">1.5x</option>\n              <option value="1.75">1.75x</option>\n              <option value="2">2x</option>\n            </select>\n          </li>\n          <li>\n            <button type="button" name="review" title="').concat("Review 10 seconds",'">\n              <div class="icon icon-review"></div>\n            </button>\n          </li>\n          <li>\n            <button type="button" name="play" title="').concat("Play",'">\n              <div class="icon icon-play"></div>\n              <div class="icon icon-pause"></div>\n            </button>\n          </li>\n          <li>\n            <button type="button" name="advance" title="').concat("Advance 10 seconds",'">\n              <div class="icon icon-advance"></div>\n            </button>\n          </li>\n          <li>\n            <select class="playback-voices" name="playback-voice" style="display: none" title="Change read aloud voices">\n            </select>\n          </li>\n        </ul>\n      ')),n.find(".BRcontrols").prepend(this.refs.$BRReadAloudToolbar);var o=function(e){e.empty(),t.ttsEngine.getVoices().length>1?(e.append(t.ttsEngine.getVoices().map((function(e){return te('<option value="'.concat(e.voiceURI,'">').concat(e.lang," - ").concat(e.name,"</option>"))}))),e.val(t.ttsEngine.voice.voiceURI),e.show()):e.hide()},i=this.refs.$BRReadAloudToolbar.find("[name=playback-voice]");o(i),i.on("change",(function(e){return t.ttsEngine.setVoice(i.val())})),this.ttsEngine.events.on("pause resume start",(function(){return t.ttsUpdateState()})),this.ttsEngine.events.on("voiceschanged",(function(){return o(i)})),this.refs.$BRReadAloudToolbar.find("[name=play]").on("click",this.ttsPlayPause.bind(this)),this.refs.$BRReadAloudToolbar.find("[name=advance]").on("click",this.ttsJumpForward.bind(this)),this.refs.$BRReadAloudToolbar.find("[name=review]").on("click",this.ttsJumpBackward.bind(this));var a=this.refs.$BRReadAloudToolbar.find('select[name="playback-speed"]');a.on("change",(function(e){return t.ttsEngine.setPlaybackRate(parseFloat(a.val()))})),te('<li>\n          <button class="BRicon read js-tooltip" title="'.concat(J,'">\n            <div class="icon icon-read-aloud"></div>\n            <span class="tooltip">').concat(J,"</span>\n          </button>\n        </li>")).insertBefore(n.find(".BRcontrols .BRicon.zoom_out").closest("li"))}return n}}(BookReader.prototype.initNavbar),BookReader.prototype.ttsToggle=function(){this.autoStop&&this.autoStop(),this.ttsEngine.playing?this.ttsStop():this.ttsStart()},BookReader.prototype.ttsStart=function(){var e=!(arguments.length>0&&void 0!==arguments[0])||arguments[0];this.constModeThumb==this.mode&&this.switchMode(this.constMode1up),this.refs.$BRReadAloudToolbar.addClass("visible"),this.$(".BRicon.read").addClass("unread active"),this.ttsSendAnalyticsEvent("Start"),e&&this.ttsEngine.start(this.currentIndex(),this.getNumLeafs())},BookReader.prototype.ttsJumpForward=function(){this.ttsEngine.paused&&this.ttsEngine.resume(),this.ttsEngine.jumpForward()},BookReader.prototype.ttsJumpBackward=function(){this.ttsEngine.paused&&this.ttsEngine.resume(),this.ttsEngine.jumpBackward()},BookReader.prototype.ttsUpdateState=function(){var e=!(this.ttsEngine.paused||!this.ttsEngine.playing);this.$(".read-aloud [name=play]").toggleClass("playing",e)},BookReader.prototype.ttsPlayPause=function(){this.ttsEngine.playing?(this.ttsEngine.togglePlayPause(),this.ttsUpdateState(this.ttsEngine.paused)):this.ttsToggle()},BookReader.prototype.ttsStop=function(){this.refs.$BRReadAloudToolbar.removeClass("visible"),this.$(".BRicon.read").removeClass("unread active"),this.ttsSendAnalyticsEvent("Stop"),this.ttsEngine.stop(),this.ttsRemoveHilites(),this.removeProgressPopup()},BookReader.prototype.ttsBeforeChunkPlay=function(){var e,t=(e=regeneratorRuntime.mark((function e(t){return regeneratorRuntime.wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,this.ttsMaybeFlipToIndex(t.leafIndex);case 2:this.ttsHighlightChunk(t),this.ttsScrollToChunk(t);case 4:case"end":return e.stop()}}),e,this)})),function(){var t=this,n=arguments;return new Promise((function(o,i){var a=e.apply(t,n);function r(e){ie(a,o,i,r,s,"next",e)}function s(e){ie(a,o,i,r,s,"throw",e)}r(void 0)}))});return function(e){return t.apply(this,arguments)}}(),BookReader.prototype.ttsSendChunkFinishedAnalyticsEvent=function(e){var t;this.ttsSendAnalyticsEvent("ChunkFinished-Words",(t=e.text.match(/\S+/g))?t.length:0)},BookReader.prototype.ttsMaybeFlipToIndex=function(e){var t=this.constMode2up==this.mode,n=null,o=new Promise((function(e){return n=e}));return t?e==this.twoPage.currentIndexR||e==this.twoPage.currentIndexL?n():(this.animationFinishedCallback=n,this.jumpToIndex(e)):(this.jumpToIndex(e),n()),o},BookReader.prototype.ttsHighlightChunk=function(e){var t,n,o,i=this,a=e.leafIndex;this.ttsRemoveHilites(),this._ttsBoxesByIndex=(t={},n=a,o=e.lineRects.map((function(e){var t=ne(e,4),n=t[0],o=t[1];return{l:n,r:t[2],b:o,t:t[3]}})),n in t?Object.defineProperty(t,n,{value:o,enumerable:!0,configurable:!0,writable:!0}):t[n]=o,t);for(var r=function(){var e=ne(u[s],2),t=e[0],n=e[1],o=parseFloat(t),a=i._models.book.getPage(o);i.getActivePageContainerElementsForIndex(o).forEach((function(e){return(0,$.Tm)("ttsHiliteLayer",n,a,e)}))},s=0,u=Object.entries(this._ttsBoxesByIndex);s<u.length;s++)r()},BookReader.prototype.ttsScrollToChunk=function(e){var t,n;this.constModeThumb!=this.mode&&(null===(t=te(".pagediv".concat(e.leafIndex," .ttsHiliteLayer rect")).last())||void 0===t||null===(n=t[0])||void 0===n||n.scrollIntoView({block:this.constMode1up==this.mode||this.isFullscreenActive?"center":"nearest",inline:"center",behavior:"smooth"}))},BookReader.prototype.ttsRemoveHilites=function(){te(this.getActivePageContainerElements()).find(".ttsHiliteLayer").remove(),this._ttsBoxesByIndex={}},BookReader.prototype.ttsSendAnalyticsEvent=function(e,t){if(this.archiveAnalyticsSendEvent){var n={},o=this.ttsEngine.opts.bookLanguage;o&&(n.mediaLanguage=o),this.archiveAnalyticsSendEvent("BRReadAloud",e,t,n)}}},7775:function(e,t,n){"use strict";function o(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:navigator.userAgent,t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:navigator.vendor;return/chrome/i.test(e)&&/google inc/i.test(t)}function i(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:navigator.userAgent;return/firefox/i.test(e)}function a(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:navigator.userAgent;return/safari/i.test(e)&&!/chrome|chromium/i.test(e)}n.d(t,{i7:function(){return o},vU:function(){return i},G6:function(){return a}})},9720:function(e,t,n){var o=n(2109),i=n(4699).entries;o({target:"Object",stat:!0},{entries:function(e){return i(e)}})},4723:function(e,t,n){"use strict";var o=n(7007),i=n(9670),a=n(7466),r=n(1340),s=n(4488),u=n(1530),l=n(7651);o("match",(function(e,t,n){return[function(t){var n=s(this),o=null==t?void 0:t[e];return void 0!==o?o.call(t,n):new RegExp(t)[e](r(n))},function(e){var o=i(this),s=r(e),c=n(t,o,s);if(c.done)return c.value;if(!o.global)return l(o,s);var d=o.unicode;o.lastIndex=0;for(var h,f=[],p=0;null!==(h=l(o,s));){var A=r(h[0]);f[p]=A,""===A&&(o.lastIndex=u(s,a(o.lastIndex),d)),p++}return 0===p?null:f}]}))},6755:function(e,t,n){"use strict";var o,i=n(2109),a=n(1236).f,r=n(7466),s=n(1340),u=n(3929),l=n(4488),c=n(4964),d=n(1913),h="".startsWith,f=Math.min,p=c("startsWith");i({target:"String",proto:!0,forced:!(!d&&!p&&(o=a(String.prototype,"startsWith"),o&&!o.writable)||p)},{startsWith:function(e){var t=s(l(this));u(e);var n=r(f(arguments.length>1?arguments[1]:void 0,t.length)),o=s(e);return h?h.call(t,o,n):t.slice(n,n+o.length)===o}})},1030:function(e,t){"use strict";t.Z=void 0,t.Z=[["Serbian","српски језик","sr","srp","srp"],["Romanian, Moldavian, Moldovan","Română","ro","ron","rum"],["Sichuan Yi, Nuosu","ꆈꌠ꒿ Nuosuhxop","ii","iii","iii"],["Tahitian","Reo Tahiti","ty","tah","tah"],["Tagalog","Wikang Tagalog","tl","tgl","tgl"],["Yiddish","ייִדיש","yi","yid","yid"],["Akan","Akan","ak","aka","aka"],["Malay","Bahasa Melayu, بهاس ملايو‎","ms","msa","may"],["Arabic","العربية","ar","ara","ara"],["Norwegian","Norsk","no","nor","nor"],["Ojibwa","ᐊᓂᔑᓈᐯᒧᐎᓐ","oj","oji","oji"],["Fulah","Fulfulde, Pulaar, Pular","ff","ful","ful"],["Persian","فارسی","fa","fas","per"],["Albanian","Shqip","sq","sqi","alb"],["Aymara","aymar aru","ay","aym","aym"],["Azerbaijani","azərbaycan dili","az","aze","aze"],["Chinese","中文 (Zhōngwén), 汉语, 漢語","zh","zho","chi"],["Cree","ᓀᐦᐃᔭᐍᐏᐣ","cr","cre","cre"],["Estonian","eesti, eesti keel","et","est","est"],["Guaraní","Avañe'ẽ","gn","grn","grn"],["Inupiaq","Iñupiaq, Iñupiatun","ik","ipk","ipk"],["Inuktitut","ᐃᓄᒃᑎᑐᑦ","iu","iku","iku"],["Kanuri","Kanuri","kr","kau","kau"],["Komi","коми кыв","kv","kom","kom"],["Kongo","Kikongo","kg","kon","kon"],["Kurdish","Kurdî, کوردی‎","ku","kur","kur"],["Latvian","latviešu valoda","lv","lav","lav"],["Malagasy","fiteny malagasy","mg","mlg","mlg"],["Mongolian","Монгол хэл","mn","mon","mon"],["Oromo","Afaan Oromoo","om","orm","orm"],["Pashto, Pushto","پښتو","ps","pus","pus"],["Quechua","Runa Simi, Kichwa","qu","que","que"],["Sardinian","sardu","sc","srd","srd"],["Swahili","Kiswahili","sw","swa","swa"],["Uzbek","Oʻzbek, Ўзбек, أۇزبېك‎","uz","uzb","uzb"],["Zhuang, Chuang","Saɯ cueŋƅ, Saw cuengh","za","zha","zha"],["Bislama","Bislama","bi","bis","bis"],["Norwegian Bokmål","Norsk Bokmål","nb","nob","nob"],["Norwegian Nynorsk","Norsk Nynorsk","nn","nno","nno"],["Indonesian","Bahasa Indonesia","id","ind","ind"],["Twi","Twi","tw","twi","twi"],["Esperanto","Esperanto","eo","epo","epo"],["Interlingua","Interlingua","ia","ina","ina"],["Interlingue","Originally called Occidental; then Interlingue after WWII","ie","ile","ile"],["Ido","Ido","io","ido","ido"],["Volapük","Volapük","vo","vol","vol"],["Bihari languages","भोजपुरी","bh","bih","bih"],["Hebrew (modern)","עברית","he","heb","heb"],["Sanskrit","संस्कृतम्","sa","san","san"],["Church Slavic, Church Slavonic, Old Church Slavonic, Old Slavonic, Old Bulgarian","ѩзыкъ словѣньскъ","cu","chu","chu"],["Pali","पाऴि","pi","pli","pli"],["Avestan","avesta","ae","ave","ave"],["Latin","latine, lingua latina","la","lat","lat"],["Armenian","Հայերեն","hy","hye","arm"],["Swati","SiSwati","ss","ssw","ssw"],["Tibetan","བོད་ཡིག","bo","bod","tib"],["South Ndebele","isiNdebele","nr","nbl","nbl"],["Slovene","Slovenski Jezik, Slovenščina","sl","slv","slv"],["Oriya","ଓଡ଼ିଆ","or","ori","ori"],["North Ndebele","isiNdebele","nd","nde","nde"],["Nauru","Dorerin Naoero","na","nau","nau"],["Maori","te reo Māori","mi","mri","mao"],["Marathi","मराठी","mr","mar","mar"],["Luba-Katanga","Kiluba","lu","lub","lub"],["Rundi","Ikirundi","rn","run","run"],["Central Khmer","ខ្មែរ, ខេមរភាសា, ភាសាខ្មែរ","km","khm","khm"],["Western Frisian","Frysk","fy","fry","fry"],["Bengali","বাংলা","bn","ben","ben"],["Avaric","авар мацӀ, магӀарул мацӀ","av","ava","ava"],["Abkhazian","аҧсуа бызшәа, аҧсшәа","ab","abk","abk"],["Afar","Afaraf","aa","aar","aar"],["Afrikaans","Afrikaans","af","afr","afr"],["Amharic","አማርኛ","am","amh","amh"],["Aragonese","aragonés","an","arg","arg"],["Assamese","অসমীয়া","as","asm","asm"],["Bambara","bamanankan","bm","bam","bam"],["Bashkir","башҡорт теле","ba","bak","bak"],["Basque","euskara, euskera","eu","eus","baq"],["Belarusian","беларуская мова","be","bel","bel"],["Bosnian","bosanski jezik","bs","bos","bos"],["Breton","brezhoneg","br","bre","bre"],["Bulgarian","български език","bg","bul","bul"],["Burmese","ဗမာစာ","my","mya","bur"],["Catalan, Valencian","català, valencià","ca","cat","cat"],["Chamorro","Chamoru","ch","cha","cha"],["Chechen","нохчийн мотт","ce","che","che"],["Chichewa, Chewa, Nyanja","chiCheŵa, chinyanja","ny","nya","nya"],["Chuvash","чӑваш чӗлхи","cv","chv","chv"],["Cornish","Kernewek","kw","cor","cor"],["Corsican","corsu, lingua corsa","co","cos","cos"],["Croatian","hrvatski jezik","hr","hrv","hrv"],["Czech","čeština, český jazyk","cs","ces","cze"],["Danish","dansk","da","dan","dan"],["Divehi, Dhivehi, Maldivian","ދިވެހި","dv","div","div"],["Dutch, Flemish","Nederlands, Vlaams","nl","nld","dut"],["Dzongkha","རྫོང་ཁ","dz","dzo","dzo"],["English","English","en","eng","eng"],["Ewe","Eʋegbe","ee","ewe","ewe"],["Faroese","føroyskt","fo","fao","fao"],["Fijian","vosa Vakaviti","fj","fij","fij"],["Finnish","suomi, suomen kieli","fi","fin","fin"],["French","français, langue française","fr","fra","fre"],["Galician","Galego","gl","glg","glg"],["Georgian","ქართული","ka","kat","geo"],["German","Deutsch","de","deu","ger"],["Greek (modern)","ελληνικά","el","ell","gre"],["Gujarati","ગુજરાતી","gu","guj","guj"],["Haitian, Haitian Creole","Kreyòl ayisyen","ht","hat","hat"],["Hausa","(Hausa) هَوُسَ","ha","hau","hau"],["Herero","Otjiherero","hz","her","her"],["Hindi","हिन्दी, हिंदी","hi","hin","hin"],["Hiri Motu","Hiri Motu","ho","hmo","hmo"],["Hungarian","magyar","hu","hun","hun"],["Irish","Gaeilge","ga","gle","gle"],["Igbo","Asụsụ Igbo","ig","ibo","ibo"],["Icelandic","Íslenska","is","isl","ice"],["Italian","Italiano","it","ita","ita"],["Japanese","日本語 (にほんご)","ja","jpn","jpn"],["Javanese","ꦧꦱꦗꦮ, Basa Jawa","jv","jav","jav"],["Kalaallisut, Greenlandic","kalaallisut, kalaallit oqaasii","kl","kal","kal"],["Kannada","ಕನ್ನಡ","kn","kan","kan"],["Kashmiri","कश्मीरी, كشميري‎","ks","kas","kas"],["Kazakh","қазақ тілі","kk","kaz","kaz"],["Kikuyu, Gikuyu","Gĩkũyũ","ki","kik","kik"],["Kinyarwanda","Ikinyarwanda","rw","kin","kin"],["Kirghiz, Kyrgyz","Кыргызча, Кыргыз тили","ky","kir","kir"],["Korean","한국어","ko","kor","kor"],["Kuanyama, Kwanyama","Kuanyama","kj","kua","kua"],["Luxembourgish, Letzeburgesch","Lëtzebuergesch","lb","ltz","ltz"],["Ganda","Luganda","lg","lug","lug"],["Limburgan, Limburger, Limburgish","Limburgs","li","lim","lim"],["Lingala","Lingála","ln","lin","lin"],["Lao","ພາສາລາວ","lo","lao","lao"],["Lithuanian","lietuvių kalba","lt","lit","lit"],["Manx","Gaelg, Gailck","gv","glv","glv"],["Macedonian","македонски јазик","mk","mkd","mac"],["Malayalam","മലയാളം","ml","mal","mal"],["Maltese","Malti","mt","mlt","mlt"],["Marshallese","Kajin M̧ajeļ","mh","mah","mah"],["Navajo, Navaho","Diné bizaad","nv","nav","nav"],["Nepali","नेपाली","ne","nep","nep"],["Ndonga","Owambo","ng","ndo","ndo"],["Occitan","occitan, lenga d'òc","oc","oci","oci"],["Ossetian, Ossetic","ирон æвзаг","os","oss","oss"],["Panjabi, Punjabi","ਪੰਜਾਬੀ","pa","pan","pan"],["Polish","język polski, polszczyzna","pl","pol","pol"],["Portuguese","Português","pt","por","por"],["Romansh","Rumantsch Grischun","rm","roh","roh"],["Russian","русский","ru","rus","rus"],["Sindhi","सिन्धी, سنڌي، سندھی‎","sd","snd","snd"],["Northern Sami","Davvisámegiella","se","sme","sme"],["Samoan","gagana fa'a Samoa","sm","smo","smo"],["Sango","yângâ tî sängö","sg","sag","sag"],["Gaelic, Scottish Gaelic","Gàidhlig","gd","gla","gla"],["Shona","chiShona","sn","sna","sna"],["Sinhala, Sinhalese","සිංහල","si","sin","sin"],["Slovak","Slovenčina, Slovenský Jazyk","sk","slk","slo"],["Somali","Soomaaliga, af Soomaali","so","som","som"],["Southern Sotho","Sesotho","st","sot","sot"],["Spanish, Castilian","Español","es","spa","spa"],["Sundanese","Basa Sunda","su","sun","sun"],["Swedish","Svenska","sv","swe","swe"],["Tamil","தமிழ்","ta","tam","tam"],["Telugu","తెలుగు","te","tel","tel"],["Tajik","тоҷикӣ, toçikī, تاجیکی‎","tg","tgk","tgk"],["Thai","ไทย","th","tha","tha"],["Tigrinya","ትግርኛ","ti","tir","tir"],["Turkmen","Türkmen, Түркмен","tk","tuk","tuk"],["Tswana","Setswana","tn","tsn","tsn"],["Tongan (Tonga Islands)","Faka Tonga","to","ton","ton"],["Turkish","Türkçe","tr","tur","tur"],["Tsonga","Xitsonga","ts","tso","tso"],["Tatar","татар теле, tatar tele","tt","tat","tat"],["Uighur, Uyghur","ئۇيغۇرچە‎, Uyghurche","ug","uig","uig"],["Ukrainian","Українська","uk","ukr","ukr"],["Urdu","اردو","ur","urd","urd"],["Venda","Tshivenḓa","ve","ven","ven"],["Vietnamese","Tiếng Việt","vi","vie","vie"],["Walloon","Walon","wa","wln","wln"],["Welsh","Cymraeg","cy","cym","wel"],["Wolof","Wollof","wo","wol","wol"],["Xhosa","isiXhosa","xh","xho","xho"],["Yoruba","Yorùbá","yo","yor","yor"],["Zulu","isiZulu","zu","zul","zul"]]},4371:function(e,t,n){var o,i;o=[n(3609)],void 0===(i=function(e){return function(e){"use strict";function t(e){void 0===e&&(e=window.navigator.userAgent),e=e.toLowerCase();var t=/(edge)\/([\w.]+)/.exec(e)||/(opr)[\/]([\w.]+)/.exec(e)||/(chrome)[ \/]([\w.]+)/.exec(e)||/(iemobile)[\/]([\w.]+)/.exec(e)||/(version)(applewebkit)[ \/]([\w.]+).*(safari)[ \/]([\w.]+)/.exec(e)||/(webkit)[ \/]([\w.]+).*(version)[ \/]([\w.]+).*(safari)[ \/]([\w.]+)/.exec(e)||/(webkit)[ \/]([\w.]+)/.exec(e)||/(opera)(?:.*version|)[ \/]([\w.]+)/.exec(e)||/(msie) ([\w.]+)/.exec(e)||e.indexOf("trident")>=0&&/(rv)(?::| )([\w.]+)/.exec(e)||e.indexOf("compatible")<0&&/(mozilla)(?:.*? rv:([\w.]+)|)/.exec(e)||[],n=/(ipad)/.exec(e)||/(ipod)/.exec(e)||/(windows phone)/.exec(e)||/(iphone)/.exec(e)||/(kindle)/.exec(e)||/(silk)/.exec(e)||/(android)/.exec(e)||/(win)/.exec(e)||/(mac)/.exec(e)||/(linux)/.exec(e)||/(cros)/.exec(e)||/(playbook)/.exec(e)||/(bb)/.exec(e)||/(blackberry)/.exec(e)||[],o={},i={browser:t[5]||t[3]||t[1]||"",version:t[2]||t[4]||"0",versionNumber:t[4]||t[2]||"0",platform:n[0]||""};if(i.browser&&(o[i.browser]=!0,o.version=i.version,o.versionNumber=parseInt(i.versionNumber,10)),i.platform&&(o[i.platform]=!0),(o.android||o.bb||o.blackberry||o.ipad||o.iphone||o.ipod||o.kindle||o.playbook||o.silk||o["windows phone"])&&(o.mobile=!0),(o.cros||o.mac||o.linux||o.win)&&(o.desktop=!0),(o.chrome||o.opr||o.safari)&&(o.webkit=!0),o.rv||o.iemobile){var a="msie";i.browser=a,o[a]=!0}if(o.edge){delete o.edge;var r="msedge";i.browser=r,o.msedge=!0}if(o.safari&&o.blackberry){var s="blackberry";i.browser=s,o.blackberry=!0}if(o.safari&&o.playbook){var u="playbook";i.browser=u,o.playbook=!0}if(o.bb){var l="blackberry";i.browser=l,o[l]=!0}if(o.opr){var c="opera";i.browser=c,o.opera=!0}if(o.safari&&o.android){var d="android";i.browser=d,o.android=!0}if(o.safari&&o.kindle){var h="kindle";i.browser=h,o.kindle=!0}if(o.safari&&o.silk){var f="silk";i.browser=f,o.silk=!0}return o.name=i.browser,o.platform=i.platform,o}return window.jQBrowser=t(window.navigator.userAgent),window.jQBrowser.uaMatch=t,e&&(e.browser=window.jQBrowser),window.jQBrowser}(e)}.apply(t,o))||(e.exports=i)},5529:function(e,t,n){var o;e=n.nmd(e),function(i,a){"use strict";if(!i||!i.document)throw new Error("SoundManager requires a browser with window and document objects.");var r=null;function s(e,t){this.setupOptions={url:e||null,flashVersion:8,debugMode:!0,debugFlash:!1,useConsole:!0,consoleOnly:!0,waitForWindowLoad:!1,bgColor:"#ffffff",useHighPerformance:!1,flashPollingInterval:null,html5PollingInterval:null,flashLoadTimeout:1e3,wmode:null,allowScriptAccess:"always",useFlashBlock:!1,useHTML5Audio:!0,forceUseGlobalHTML5Audio:!1,ignoreMobileRestrictions:!1,html5Test:/^(probably|maybe)$/i,preferFlash:!1,noSWFCache:!1,idPrefix:"sound"},this.defaultOptions={autoLoad:!1,autoPlay:!1,from:null,loops:1,onid3:null,onerror:null,onload:null,whileloading:null,onplay:null,onpause:null,onresume:null,whileplaying:null,onposition:null,onstop:null,onfinish:null,multiShot:!0,multiShotEvents:!1,position:null,pan:0,playbackRate:1,stream:!0,to:null,type:null,usePolicyFile:!1,volume:100},this.flash9Options={onfailure:null,isMovieStar:null,usePeakData:!1,useWaveformData:!1,useEQData:!1,onbufferchange:null,ondataerror:null},this.movieStarOptions={bufferTime:3,serverURL:null,onconnect:null,duration:null},this.audioFormats={mp3:{type:['audio/mpeg; codecs="mp3"',"audio/mpeg","audio/mp3","audio/MPA","audio/mpa-robust"],required:!0},mp4:{related:["aac","m4a","m4b"],type:['audio/mp4; codecs="mp4a.40.2"',"audio/aac","audio/x-m4a","audio/MP4A-LATM","audio/mpeg4-generic"],required:!1},ogg:{type:["audio/ogg; codecs=vorbis"],required:!1},opus:{type:["audio/ogg; codecs=opus","audio/opus"],required:!1},wav:{type:['audio/wav; codecs="1"',"audio/wav","audio/wave","audio/x-wav"],required:!1},flac:{type:["audio/flac"],required:!1}},this.movieID="sm2-container",this.id=t||"sm2movie",this.debugID="soundmanager-debug",this.debugURLParam=/([#?&])debug=1/i,this.versionNumber="V2.97a.20170601",this.version=null,this.movieURL=null,this.altURL=null,this.swfLoaded=!1,this.enabled=!1,this.oMC=null,this.sounds={},this.soundIDs=[],this.muted=!1,this.didFlashBlock=!1,this.filePattern=null,this.filePatterns={flash8:/\.mp3(\?.*)?$/i,flash9:/\.mp3(\?.*)?$/i},this.features={buffering:!1,peakData:!1,waveformData:!1,eqData:!1,movieStar:!1},this.sandbox={type:null,types:{remote:"remote (domain-based) rules",localWithFile:"local with file access (no internet access)",localWithNetwork:"local with network (internet access only, no local access)",localTrusted:"local, trusted (local+internet access)"},description:null,noRemote:null,noLocal:null},this.html5={usingFlash:null},this.flash={},this.html5Only=!1,this.ignoreFlash=!1;var n,o,r,s,u,l,c,d,h,f,p,A,m,g,y,v,b,w,V,k,_,M,S,O,P,I,x,E,L,q,R,T,C,D,F,B,U,H,j,Q,N,Y,z,K,Z,W,G,X,J,$,ee,te,ne,oe,ie,ae,re,se,ue,le,ce,de,he,fe,pe,Ae=this,me=null,ge=null,ye="soundManager",ve=ye+": ",be=navigator.userAgent,we=i.location.href.toString(),Ve=document,ke=[],_e=!0,Me=!1,Se=!1,Oe=!1,Pe=!1,Ie=!1,xe=0,Ee=["log","info","warn","error"],Le=null,qe=null,Re=!1,Te=!1,Ce=0,De=null,Fe=[],Be=null,Ue=Array.prototype.slice,He=!1,je=0,Qe=1e3,Ne=be.match(/(ipad|iphone|ipod)/i),Ye=be.match(/android/i),ze=be.match(/msie|trident/i),Ke=be.match(/webkit/i),Ze=be.match(/safari/i)&&!be.match(/chrome/i),We=be.match(/opera/i),Ge=be.match(/(mobile|pre\/|xoom)/i)||Ne||Ye,Xe=!we.match(/usehtml5audio/i)&&!we.match(/sm2-ignorebadua/i)&&Ze&&!be.match(/silk/i)&&be.match(/OS\sX\s10_6_([3-7])/i),Je=i.console!==a&&console.log!==a,$e=Ve.hasFocus!==a?Ve.hasFocus():null,et=Ze&&(Ve.hasFocus===a||!Ve.hasFocus()),tt=!et,nt=/(mp3|mp4|mpa|m4a|m4b)/i,ot="about:blank",it=Ve.location?Ve.location.protocol.match(/http/i):null,at=it?"":"//",rt=/^\s*audio\/(?:x-)?(?:mpeg4|aac|flv|mov|mp4|m4v|m4a|m4b|mp4v|3gp|3g2)\s*(?:$|;)/i,st=["mpeg4","aac","flv","mov","mp4","m4v","f4v","m4a","m4b","mp4v","3gp","3g2"],ut=new RegExp("\\.("+st.join("|")+")(\\?.*)?$","i");function lt(e){return Ae.preferFlash&&se&&!Ae.ignoreFlash&&Ae.flash[e]!==a&&Ae.flash[e]}function ct(e){return function(t){var n,o=this._s;return o&&o._a?n=e.call(this,t):(o&&o.id?Ae._wD(o.id+": Ignoring "+t.type):Ae._wD("HTML5::Ignoring "+t.type),n=null),n}}this.mimePattern=/^\s*audio\/(?:x-)?(?:mp(?:eg|3))\s*(?:$|;)/i,this.useAltURL=!it,U={swfBox:"sm2-object-box",swfDefault:"movieContainer",swfError:"swf_error",swfTimedout:"swf_timedout",swfLoaded:"swf_loaded",swfUnblocked:"swf_unblocked",sm2Debug:"sm2_debug",highPerf:"high_performance",flashDebug:"flash_debug"},ee=[null,"MEDIA_ERR_ABORTED","MEDIA_ERR_NETWORK","MEDIA_ERR_DECODE","MEDIA_ERR_SRC_NOT_SUPPORTED"],this.hasHTML5=function(){try{return Audio!==a&&(We&&opera!==a&&opera.version()<10?new Audio(null):new Audio).canPlayType!==a}catch(e){return!1}}(),this.setup=function(e){var t=!Ae.url;return e!==a&&Oe&&Be&&Ae.ok()&&(e.flashVersion!==a||e.url!==a||e.html5Test!==a)&&N(D("setupLate")),p(e),He||(Ge?Ae.setupOptions.ignoreMobileRestrictions&&!Ae.setupOptions.forceUseGlobalHTML5Audio||(Fe.push(_.globalHTML5),He=!0):Ae.setupOptions.forceUseGlobalHTML5Audio&&(Fe.push(_.globalHTML5),He=!0)),!pe&&Ge&&(Ae.setupOptions.ignoreMobileRestrictions?Fe.push(_.ignoreMobile):(Ae.setupOptions.useHTML5Audio&&!Ae.setupOptions.preferFlash||Ae._wD(_.mobileUA),Ae.setupOptions.useHTML5Audio=!0,Ae.setupOptions.preferFlash=!1,Ne?Ae.ignoreFlash=!0:(Ye&&!be.match(/android\s2\.3/i)||!Ye)&&(Ae._wD(_.globalHTML5),He=!0))),e&&(t&&P&&e.url!==a&&Ae.beginDelayedInit(),P||e.url===a||"complete"!==Ve.readyState||setTimeout(S,1)),pe=!0,Ae},this.ok=function(){return Be?Oe&&!Pe:Ae.useHTML5Audio&&Ae.hasHTML5},this.supported=this.ok,this.getMovie=function(e){return o(e)||Ve[e]||i[e]},this.createSound=function(e,t){var o,i,r,s=null;if(i=(o=ye+".createSound(): ")+D(Oe?"notOK":"notReady"),!Oe||!Ae.ok())return N(i),!1;if(t!==a&&(e={id:e,url:t}),(r=f(e)).url=W(r.url),r.id===a&&(r.id=Ae.setupOptions.idPrefix+je++),r.id.toString().charAt(0).match(/^[0-9]$/)&&Ae._wD(o+D("badID",r.id),2),Ae._wD(o+r.id+(r.url?" ("+r.url+")":""),1),Y(r.id,!0))return Ae._wD(o+r.id+" exists",1),Ae.sounds[r.id];function u(){return r=j(r),Ae.sounds[r.id]=new n(r),Ae.soundIDs.push(r.id),Ae.sounds[r.id]}if(J(r))s=u(),Ae.html5Only||Ae._wD(r.id+": Using HTML5"),s._setup_html5(r);else{if(Ae.html5Only)return Ae._wD(r.id+": No HTML5 support for this sound, and no Flash. Exiting."),u();if(Ae.html5.usingFlash&&r.url&&r.url.match(/data:/i))return Ae._wD(r.id+": data: URIs not supported via Flash. Exiting."),u();l>8&&(null===r.isMovieStar&&(r.isMovieStar=!!(r.serverURL||r.type&&r.type.match(rt)||r.url&&r.url.match(ut))),r.isMovieStar&&(Ae._wD(o+"using MovieStar handling"),r.loops>1&&d("noNSLoop"))),r=Q(r,o),s=u(),8===l?ge._createSound(r.id,r.loops||1,r.usePolicyFile):(ge._createSound(r.id,r.url,r.usePeakData,r.useWaveformData,r.useEQData,r.isMovieStar,!!r.isMovieStar&&r.bufferTime,r.loops||1,r.serverURL,r.duration||null,r.autoPlay,!0,r.autoLoad,r.usePolicyFile),r.serverURL||(s.connected=!0,r.onconnect&&r.onconnect.apply(s))),r.serverURL||!r.autoLoad&&!r.autoPlay||s.load(r)}return!r.serverURL&&r.autoPlay&&s.play(),s},this.destroySound=function(e,t){if(!Y(e))return!1;var n,o=Ae.sounds[e];for(o.stop(),o._iO={},o.unload(),n=0;n<Ae.soundIDs.length;n++)if(Ae.soundIDs[n]===e){Ae.soundIDs.splice(n,1);break}return t||o.destruct(!0),o=null,delete Ae.sounds[e],!0},this.load=function(e,t){return!!Y(e)&&Ae.sounds[e].load(t)},this.unload=function(e){return!!Y(e)&&Ae.sounds[e].unload()},this.onPosition=function(e,t,n,o){return!!Y(e)&&Ae.sounds[e].onposition(t,n,o)},this.onposition=this.onPosition,this.clearOnPosition=function(e,t,n){return!!Y(e)&&Ae.sounds[e].clearOnPosition(t,n)},this.play=function(e,t){var n=null,o=t&&!(t instanceof Object);if(!Oe||!Ae.ok())return N(ye+".play(): "+D(Oe?"notOK":"notReady")),!1;if(Y(e,o))o&&(t={url:t});else{if(!o)return!1;o&&(t={url:t}),t&&t.url&&(Ae._wD(ye+'.play(): Attempting to create "'+e+'"',1),t.id=e,n=Ae.createSound(t).play())}return null===n&&(n=Ae.sounds[e].play(t)),n},this.start=this.play,this.setPlaybackRate=function(e,t,n){return!!Y(e)&&Ae.sounds[e].setPlaybackRate(t,n)},this.setPosition=function(e,t){return!!Y(e)&&Ae.sounds[e].setPosition(t)},this.stop=function(e){return!!Y(e)&&(Ae._wD(ye+".stop("+e+")",1),Ae.sounds[e].stop())},this.stopAll=function(){var e;for(e in Ae._wD(ye+".stopAll()",1),Ae.sounds)Ae.sounds.hasOwnProperty(e)&&Ae.sounds[e].stop()},this.pause=function(e){return!!Y(e)&&Ae.sounds[e].pause()},this.pauseAll=function(){var e;for(e=Ae.soundIDs.length-1;e>=0;e--)Ae.sounds[Ae.soundIDs[e]].pause()},this.resume=function(e){return!!Y(e)&&Ae.sounds[e].resume()},this.resumeAll=function(){var e;for(e=Ae.soundIDs.length-1;e>=0;e--)Ae.sounds[Ae.soundIDs[e]].resume()},this.togglePause=function(e){return!!Y(e)&&Ae.sounds[e].togglePause()},this.setPan=function(e,t){return!!Y(e)&&Ae.sounds[e].setPan(t)},this.setVolume=function(e,t){var n,o;if(e!==a&&!isNaN(e)&&t===a){for(n=0,o=Ae.soundIDs.length;n<o;n++)Ae.sounds[Ae.soundIDs[n]].setVolume(e);return!1}return!!Y(e)&&Ae.sounds[e].setVolume(t)},this.mute=function(e){var t=0;if(e instanceof String&&(e=null),e)return!!Y(e)&&(Ae._wD(ye+'.mute(): Muting "'+e+'"'),Ae.sounds[e].mute());for(Ae._wD(ye+".mute(): Muting all sounds"),t=Ae.soundIDs.length-1;t>=0;t--)Ae.sounds[Ae.soundIDs[t]].mute();return Ae.muted=!0,!0},this.muteAll=function(){Ae.mute()},this.unmute=function(e){var t;if(e instanceof String&&(e=null),e)return!!Y(e)&&(Ae._wD(ye+'.unmute(): Unmuting "'+e+'"'),Ae.sounds[e].unmute());for(Ae._wD(ye+".unmute(): Unmuting all sounds"),t=Ae.soundIDs.length-1;t>=0;t--)Ae.sounds[Ae.soundIDs[t]].unmute();return Ae.muted=!1,!0},this.unmuteAll=function(){Ae.unmute()},this.toggleMute=function(e){return!!Y(e)&&Ae.sounds[e].toggleMute()},this.getMemoryUse=function(){var e=0;return ge&&8!==l&&(e=parseInt(ge._getMemoryUse(),10)),e},this.disable=function(e){var t;if(e===a&&(e=!1),Pe)return!1;for(Pe=!0,d("shutdown",1),t=Ae.soundIDs.length-1;t>=0;t--)R(Ae.sounds[Ae.soundIDs[t]]);return R(Ae),h(e),ae.remove(i,"load",y),!0},this.canPlayMIME=function(e){var t;return Ae.hasHTML5&&(t=$({type:e})),!t&&Be&&(t=e&&Ae.ok()?!!(l>8&&e.match(rt)||e.match(Ae.mimePattern)):null),t},this.canPlayURL=function(e){var t;return Ae.hasHTML5&&(t=$({url:e})),!t&&Be&&(t=e&&Ae.ok()?!!e.match(Ae.filePattern):null),t},this.canPlayLink=function(e){return!(e.type===a||!e.type||!Ae.canPlayMIME(e.type))||Ae.canPlayURL(e.href)},this.getSoundById=function(e,t){if(!e)return null;var n=Ae.sounds[e];return n||t||Ae._wD(ye+'.getSoundById(): Sound "'+e+'" not found.',2),n},this.onready=function(e,t){var n="onready";if("function"!=typeof e)throw D("needFunction",n);return Oe&&Ae._wD(D("queue",n)),t||(t=i),m(n,e,t),g(),!0},this.ontimeout=function(e,t){var n="ontimeout";if("function"!=typeof e)throw D("needFunction",n);return Oe&&Ae._wD(D("queue",n)),t||(t=i),m(n,e,t),g({type:n}),!0},this._writeDebug=function(e,t){var n,i;return!(!Ae.setupOptions.debugMode||!(Je&&Ae.useConsole&&(t&&"object"==typeof t?console.log(e,t):Ee[t]!==a?console[Ee[t]](e):console.log(e),Ae.consoleOnly))&&(!(n=o("soundmanager-debug"))||(i=Ve.createElement("div"),++xe%2==0&&(i.className="sm2-alt"),t=t===a?0:parseInt(t,10),i.appendChild(Ve.createTextNode(e)),t&&(t>=2&&(i.style.fontWeight="bold"),3===t&&(i.style.color="#ff3333")),n.insertBefore(i,n.firstChild),n=null,0)))},-1!==we.indexOf("sm2-debug=alert")&&(this._writeDebug=function(e){i.alert(e)}),this._wD=this._writeDebug,this._debug=function(){var e,t;for(d("currentObj",1),e=0,t=Ae.soundIDs.length;e<t;e++)Ae.sounds[Ae.soundIDs[e]]._debug()},this.reboot=function(e,t){var n,o,a;for(Ae.soundIDs.length&&Ae._wD("Destroying "+Ae.soundIDs.length+" SMSound object"+(1!==Ae.soundIDs.length?"s":"")+"..."),n=Ae.soundIDs.length-1;n>=0;n--)Ae.sounds[Ae.soundIDs[n]].destruct();if(ge)try{ze&&(qe=ge.innerHTML),Le=ge.parentNode.removeChild(ge)}catch(e){d("badRemove",2)}if(qe=Le=Be=ge=null,Ae.enabled=P=Oe=Re=Te=Me=Se=Pe=He=Ae.swfLoaded=!1,Ae.soundIDs=[],Ae.sounds={},je=0,pe=!1,e)ke=[];else for(n in ke)if(ke.hasOwnProperty(n))for(o=0,a=ke[n].length;o<a;o++)ke[n][o].fired=!1;return t||Ae._wD(ye+": Rebooting..."),Ae.html5={usingFlash:null},Ae.flash={},Ae.html5Only=!1,Ae.ignoreFlash=!1,i.setTimeout((function(){t||Ae.beginDelayedInit()}),20),Ae},this.reset=function(){return d("reset"),Ae.reboot(!0,!0)},this.getMoviePercent=function(){return ge&&"PercentLoaded"in ge?ge.PercentLoaded():null},this.beginDelayedInit=function(){Ie=!0,S(),setTimeout((function(){return!Te&&(x(),M(),Te=!0,!0)}),20),v()},this.destruct=function(){Ae._wD(ye+".destruct()"),Ae.disable(!0)},n=function(e){var t,n,o,i,r,s,u,h,p,A,m=this,g=!1,y=[],v=0,b=null;p={duration:null,time:null},this.id=e.id,this.sID=this.id,this.url=e.url,this.options=f(e),this.instanceOptions=this.options,this._iO=this.instanceOptions,this.pan=this.options.pan,this.volume=this.options.volume,this.isHTML5=!1,this._a=null,A=!this.url,this.id3={},this._debug=function(){Ae._wD(m.id+": Merged options:",m.options)},this.load=function(e){var t;if(e!==a?m._iO=f(e,m.options):(e=m.options,m._iO=e,b&&b!==m.url&&(d("manURL"),m._iO.url=m.url,m.url=null)),m._iO.url||(m._iO.url=m.url),m._iO.url=W(m._iO.url),m.instanceOptions=m._iO,t=m._iO,Ae._wD(m.id+": load ("+t.url+")"),!t.url&&!m.url)return Ae._wD(m.id+": load(): url is unassigned. Exiting.",2),m;if(m.isHTML5||8!==l||m.url||t.autoPlay||Ae._wD(m.id+": Flash 8 load() limitation: Wait for onload() before calling play().",1),t.url===m.url&&0!==m.readyState&&2!==m.readyState)return d("onURL",1),3===m.readyState&&t.onload&&fe(m,(function(){t.onload.apply(m,[!!m.duration])})),m;if(m.loaded=!1,m.readyState=1,m.playState=0,m.id3={},J(t))m._setup_html5(t)._called_load?Ae._wD(m.id+": Ignoring request to load again"):(m._html5_canplay=!1,m.url!==t.url&&(Ae._wD(d("manURL")+": "+t.url),m._a.src=t.url,m.setPosition(0)),m._a.autobuffer="auto",m._a.preload="auto",m._a._called_load=!0);else{if(Ae.html5Only)return Ae._wD(m.id+": No flash support. Exiting."),m;if(m._iO.url&&m._iO.url.match(/data:/i))return Ae._wD(m.id+": data: URIs not supported via Flash. Exiting."),m;try{m.isHTML5=!1,m._iO=Q(j(t)),m._iO.autoPlay&&(m._iO.position||m._iO.from)&&(Ae._wD(m.id+": Disabling autoPlay because of non-zero offset case"),m._iO.autoPlay=!1),t=m._iO,8===l?ge._load(m.id,t.url,t.stream,t.autoPlay,t.usePolicyFile):ge._load(m.id,t.url,!!t.stream,!!t.autoPlay,t.loops||1,!!t.autoLoad,t.usePolicyFile)}catch(e){d("smError",2),c("onload",!1),E({type:"SMSOUND_LOAD_JS_EXCEPTION",fatal:!0})}}return m.url=t.url,m},this.unload=function(){return 0!==m.readyState&&(Ae._wD(m.id+": unload()"),m.isHTML5?(i(),m._a&&(m._a.pause(),b=ne(m._a))):8===l?ge._unload(m.id,ot):ge._unload(m.id),t()),m},this.destruct=function(e){Ae._wD(m.id+": Destruct"),m.isHTML5?(i(),m._a&&(m._a.pause(),ne(m._a),He||o(),m._a._s=null,m._a=null)):(m._iO.onfailure=null,ge._destroySound(m.id)),e||Ae.destroySound(m.id,!0)},this.play=function(e,t){var n,o,i,u,c,d,p=!0;if(n=m.id+": play(): ",t=t===a||t,e||(e={}),m.url&&(m._iO.url=m.url),m._iO=f(m._iO,m.options),m._iO=f(e,m._iO),m._iO.url=W(m._iO.url),m.instanceOptions=m._iO,!m.isHTML5&&m._iO.serverURL&&!m.connected)return m.getAutoPlay()||(Ae._wD(n+" Netstream not connected yet - setting autoPlay"),m.setAutoPlay(!0)),m;if(J(m._iO)&&(m._setup_html5(m._iO),r()),1===m.playState&&!m.paused){if(!m._iO.multiShot)return Ae._wD(n+"Already playing (one-shot)",1),m.isHTML5&&m.setPosition(m._iO.position),m;Ae._wD(n+"Already playing (multi-shot)",1)}if(e.url&&e.url!==m.url&&(m.readyState||m.isHTML5||8!==l||!A?m.load(m._iO):A=!1),m.loaded)Ae._wD(n.substr(0,n.lastIndexOf(":")));else if(0===m.readyState){if(Ae._wD(n+"Attempting to load"),m.isHTML5||Ae.html5Only){if(!m.isHTML5)return Ae._wD(n+"Unsupported type. Exiting."),m;m.load(m._iO)}else m._iO.autoPlay=!0,m.load(m._iO);m.instanceOptions=m._iO}else{if(2===m.readyState)return Ae._wD(n+"Could not load - exiting",2),m;Ae._wD(n+"Loading - attempting to play...")}return!m.isHTML5&&9===l&&m.position>0&&m.position===m.duration&&(Ae._wD(n+"Sound at end, resetting to position: 0"),e.position=0),m.paused&&m.position>=0&&(!m._iO.serverURL||m.position>0)?(Ae._wD(n+"Resuming from paused state",1),m.resume()):(m._iO=f(e,m._iO),(!m.isHTML5&&null!==m._iO.position&&m._iO.position>0||null!==m._iO.from&&m._iO.from>0||null!==m._iO.to)&&0===m.instanceCount&&0===m.playState&&!m._iO.serverURL&&(i=function(){m._iO=f(e,m._iO),m.play(m._iO)},m.isHTML5&&!m._html5_canplay?(Ae._wD(n+"Beginning load for non-zero offset case"),m.load({_oncanplay:i})):m.isHTML5||m.loaded||m.readyState&&2===m.readyState||(Ae._wD(n+"Preloading for non-zero offset case"),m.load({onload:i})),m._iO=h()),(!m.instanceCount||m._iO.multiShotEvents||m.isHTML5&&m._iO.multiShot&&!He||!m.isHTML5&&l>8&&!m.getAutoPlay())&&m.instanceCount++,m._iO.onposition&&0===m.playState&&s(m),m.playState=1,m.paused=!1,m.position=m._iO.position===a||isNaN(m._iO.position)?0:m._iO.position,m.isHTML5||(m._iO=Q(j(m._iO))),m._iO.onplay&&t&&(m._iO.onplay.apply(m),g=!0),m.setVolume(m._iO.volume,!0),m.setPan(m._iO.pan,!0),1!==m._iO.playbackRate&&m.setPlaybackRate(m._iO.playbackRate),m.isHTML5?m.instanceCount<2?(r(),o=m._setup_html5(),m.setPosition(m._iO.position),o.play()):(Ae._wD(m.id+": Cloning Audio() for instance #"+m.instanceCount+"..."),u=new Audio(m._iO.url),c=function(){ae.remove(u,"ended",c),m._onfinish(m),ne(u),u=null},d=function(){ae.remove(u,"canplay",d);try{u.currentTime=m._iO.position/Qe}catch(e){N(m.id+": multiShot play() failed to apply position of "+m._iO.position/Qe)}u.play()},ae.add(u,"ended",c),m._iO.volume!==a&&(u.volume=Math.max(0,Math.min(1,m._iO.volume/100))),m.muted&&(u.muted=!0),m._iO.position?ae.add(u,"canplay",d):u.play()):(p=ge._start(m.id,m._iO.loops||1,9===l?m.position:m.position/Qe,m._iO.multiShot||!1),9!==l||p||(Ae._wD(n+"No sound hardware, or 32-sound ceiling hit",2),m._iO.onplayerror&&m._iO.onplayerror.apply(m)))),m},this.start=this.play,this.stop=function(e){var t,n=m._iO;return 1===m.playState&&(Ae._wD(m.id+": stop()"),m._onbufferchange(0),m._resetOnPosition(0),m.paused=!1,m.isHTML5||(m.playState=0),u(),n.to&&m.clearOnPosition(n.to),m.isHTML5?m._a&&(t=m.position,m.setPosition(0),m.position=t,m._a.pause(),m.playState=0,m._onTimer(),i()):(ge._stop(m.id,e),n.serverURL&&m.unload()),m.instanceCount=0,m._iO={},n.onstop&&n.onstop.apply(m)),m},this.setAutoPlay=function(e){Ae._wD(m.id+": Autoplay turned "+(e?"on":"off")),m._iO.autoPlay=e,m.isHTML5||(ge._setAutoPlay(m.id,e),e&&(m.instanceCount||1!==m.readyState||(m.instanceCount++,Ae._wD(m.id+": Incremented instance count to "+m.instanceCount))))},this.getAutoPlay=function(){return m._iO.autoPlay},this.setPlaybackRate=function(e){var t=Math.max(.5,Math.min(4,e));if(t!==e&&Ae._wD(m.id+": setPlaybackRate("+e+"): limiting rate to "+t,2),m.isHTML5)try{m._iO.playbackRate=t,m._a.playbackRate=t}catch(e){Ae._wD(m.id+": setPlaybackRate("+t+") failed: "+e.message,2)}return m},this.setPosition=function(e){e===a&&(e=0);var t,n,o=m.isHTML5?Math.max(e,0):Math.min(m.duration||m._iO.duration,Math.max(e,0));if(m.position=o,n=m.position/Qe,m._resetOnPosition(m.position),m._iO.position=o,m.isHTML5){if(m._a){if(m._html5_canplay){if(m._a.currentTime.toFixed(3)!==n.toFixed(3)){Ae._wD(m.id+": setPosition("+n+")");try{m._a.currentTime=n,(0===m.playState||m.paused)&&m._a.pause()}catch(e){Ae._wD(m.id+": setPosition("+n+") failed: "+e.message,2)}}}else if(n)return Ae._wD(m.id+": setPosition("+n+"): Cannot seek yet, sound not ready",2),m;m.paused&&m._onTimer(!0)}}else t=9===l?m.position:n,m.readyState&&2!==m.readyState&&ge._setPosition(m.id,t,m.paused||!m.playState,m._iO.multiShot);return m},this.pause=function(e){return m.paused||0===m.playState&&1!==m.readyState||(Ae._wD(m.id+": pause()"),m.paused=!0,m.isHTML5?(m._setup_html5().pause(),i()):(e||e===a)&&ge._pause(m.id,m._iO.multiShot),m._iO.onpause&&m._iO.onpause.apply(m)),m},this.resume=function(){var e=m._iO;return m.paused?(Ae._wD(m.id+": resume()"),m.paused=!1,m.playState=1,m.isHTML5?(m._setup_html5().play(),r()):(e.isMovieStar&&!e.serverURL&&m.setPosition(m.position),ge._pause(m.id,e.multiShot)),!g&&e.onplay?(e.onplay.apply(m),g=!0):e.onresume&&e.onresume.apply(m),m):m},this.togglePause=function(){return Ae._wD(m.id+": togglePause()"),0===m.playState?(m.play({position:9!==l||m.isHTML5?m.position/Qe:m.position}),m):(m.paused?m.resume():m.pause(),m)},this.setPan=function(e,t){return e===a&&(e=0),t===a&&(t=!1),m.isHTML5||ge._setPan(m.id,e),m._iO.pan=e,t||(m.pan=e,m.options.pan=e),m},this.setVolume=function(e,t){return e===a&&(e=100),t===a&&(t=!1),m.isHTML5?m._a&&(Ae.muted&&!m.muted&&(m.muted=!0,m._a.muted=!0),m._a.volume=Math.max(0,Math.min(1,e/100))):ge._setVolume(m.id,Ae.muted&&!m.muted||m.muted?0:e),m._iO.volume=e,t||(m.volume=e,m.options.volume=e),m},this.mute=function(){return m.muted=!0,m.isHTML5?m._a&&(m._a.muted=!0):ge._setVolume(m.id,0),m},this.unmute=function(){m.muted=!1;var e=m._iO.volume!==a;return m.isHTML5?m._a&&(m._a.muted=!1):ge._setVolume(m.id,e?m._iO.volume:m.options.volume),m},this.toggleMute=function(){return m.muted?m.unmute():m.mute()},this.onPosition=function(e,t,n){return y.push({position:parseInt(e,10),method:t,scope:n!==a?n:m,fired:!1}),m},this.onposition=this.onPosition,this.clearOnPosition=function(e,t){var n;if(e=parseInt(e,10),!isNaN(e))for(n=0;n<y.length;n++)e===y[n].position&&(t&&t!==y[n].method||(y[n].fired&&v--,y.splice(n,1)))},this._processOnPosition=function(){var e,t,n=y.length;if(!n||!m.playState||v>=n)return!1;for(e=n-1;e>=0;e--)!(t=y[e]).fired&&m.position>=t.position&&(t.fired=!0,v++,t.method.apply(t.scope,[t.position]),n=y.length);return!0},this._resetOnPosition=function(e){var t,n,o=y.length;if(!o)return!1;for(t=o-1;t>=0;t--)(n=y[t]).fired&&e<=n.position&&(n.fired=!1,v--);return!0},h=function(){var e,t,n=m._iO,o=n.from,i=n.to;return t=function(){Ae._wD(m.id+': "To" time of '+i+" reached."),m.clearOnPosition(i,t),m.stop()},e=function(){Ae._wD(m.id+': Playing "from" '+o),null===i||isNaN(i)||m.onPosition(i,t)},null===o||isNaN(o)||(n.position=o,n.multiShot=!1,e()),n},s=function(){var e,t=m._iO.onposition;if(t)for(e in t)t.hasOwnProperty(e)&&m.onPosition(parseInt(e,10),t[e])},u=function(){var e,t=m._iO.onposition;if(t)for(e in t)t.hasOwnProperty(e)&&m.clearOnPosition(parseInt(e,10))},r=function(){m.isHTML5&&z(m)},i=function(){m.isHTML5&&K(m)},(t=function(e){e||(y=[],v=0),g=!1,m._hasTimer=null,m._a=null,m._html5_canplay=!1,m.bytesLoaded=null,m.bytesTotal=null,m.duration=m._iO&&m._iO.duration?m._iO.duration:null,m.durationEstimate=null,m.buffered=[],m.eqData=[],m.eqData.left=[],m.eqData.right=[],m.failures=0,m.isBuffering=!1,m.instanceOptions={},m.instanceCount=0,m.loaded=!1,m.metadata={},m.readyState=0,m.muted=!1,m.paused=!1,m.peakData={left:0,right:0},m.waveformData={left:[],right:[]},m.playState=0,m.position=null,m.id3={}})(),this._onTimer=function(e){var t,n,o=!1,i={};return(m._hasTimer||e)&&m._a&&(e||(m.playState>0||1===m.readyState)&&!m.paused)&&((t=m._get_html5_duration())!==p.duration&&(p.duration=t,m.duration=t,o=!0),m.durationEstimate=m.duration,(n=m._a.currentTime*Qe||0)!==p.time&&(p.time=n,o=!0),(o||e)&&m._whileplaying(n,i,i,i,i)),o},this._get_html5_duration=function(){var e=m._iO,t=m._a&&m._a.duration?m._a.duration*Qe:e&&e.duration?e.duration:null;return t&&!isNaN(t)&&t!==1/0?t:null},this._apply_loop=function(e,t){!e.loop&&t>1&&Ae._wD("Note: Native HTML5 looping is infinite.",1),e.loop=t>1?"loop":""},this._setup_html5=function(e){var o,i=f(m._iO,e),a=He?me:m._a,r=decodeURI(i.url);if(He?r===decodeURI(re)&&(o=!0):r===decodeURI(b)&&(o=!0),a){if(a._s)if(He)a._s&&a._s.playState&&!o&&a._s.stop();else if(!He&&r===decodeURI(b))return m._apply_loop(a,i.loops),a;o||(b&&t(!1),a.src=i.url,m.url=i.url,b=i.url,re=i.url,a._called_load=!1)}else i.autoLoad||i.autoPlay?(m._a=new Audio(i.url),m._a.load()):m._a=We&&opera.version()<10?new Audio(null):new Audio,(a=m._a)._called_load=!1,He&&(me=a);return m.isHTML5=!0,m._a=a,a._s=m,n(),m._apply_loop(a,i.loops),i.autoLoad||i.autoPlay?m.load():(a.autobuffer=!1,a.preload="auto"),a},n=function(){if(m._a._added_events)return!1;var e,t,n;for(e in m._a._added_events=!0,ce)ce.hasOwnProperty(e)&&(t=e,n=ce[e],void 0,m._a&&m._a.addEventListener(t,n,!1));return!0},o=function(){var e,t,n;for(e in Ae._wD(m.id+": Removing event listeners"),m._a._added_events=!1,ce)ce.hasOwnProperty(e)&&(t=e,n=ce[e],void 0,m._a&&m._a.removeEventListener(t,n,!1))},this._onload=function(e){var t,n=!!e||!m.isHTML5&&8===l&&m.duration;return t=m.id+": ",Ae._wD(t+(n?"onload()":"Failed to load / invalid sound?"+(m.duration?" -":" Zero-length duration reported.")+" ("+m.url+")"),n?1:2),n||m.isHTML5||(!0===Ae.sandbox.noRemote&&Ae._wD(t+D("noNet"),1),!0===Ae.sandbox.noLocal&&Ae._wD(t+D("noLocal"),1)),m.loaded=n,m.readyState=n?3:2,m._onbufferchange(0),n||m.isHTML5||m._onerror(),m._iO.onload&&fe(m,(function(){m._iO.onload.apply(m,[n])})),!0},this._onerror=function(e,t){m._iO.onerror&&fe(m,(function(){m._iO.onerror.apply(m,[e,t])}))},this._onbufferchange=function(e){return!(0===m.playState||e&&m.isBuffering||!e&&!m.isBuffering||(m.isBuffering=1===e,m._iO.onbufferchange&&(Ae._wD(m.id+": Buffer state change: "+e),m._iO.onbufferchange.apply(m,[e])),0))},this._onsuspend=function(){return m._iO.onsuspend&&(Ae._wD(m.id+": Playback suspended"),m._iO.onsuspend.apply(m)),!0},this._onfailure=function(e,t,n){m.failures++,Ae._wD(m.id+": Failure ("+m.failures+"): "+e),m._iO.onfailure&&1===m.failures?m._iO.onfailure(e,t,n):Ae._wD(m.id+": Ignoring failure")},this._onwarning=function(e,t,n){m._iO.onwarning&&m._iO.onwarning(e,t,n)},this._onfinish=function(){var e=m._iO.onfinish;m._onbufferchange(0),m._resetOnPosition(0),m.instanceCount&&(m.instanceCount--,m.instanceCount||(u(),m.playState=0,m.paused=!1,m.instanceCount=0,m.instanceOptions={},m._iO={},i(),m.isHTML5&&(m.position=0)),m.instanceCount&&!m._iO.multiShotEvents||e&&(Ae._wD(m.id+": onfinish()"),fe(m,(function(){e.apply(m)}))))},this._whileloading=function(e,t,n,o){var i=m._iO;m.bytesLoaded=e,m.bytesTotal=t,m.duration=Math.floor(n),m.bufferLength=o,m.isHTML5||i.isMovieStar?m.durationEstimate=m.duration:i.duration?m.durationEstimate=m.duration>i.duration?m.duration:i.duration:m.durationEstimate=parseInt(m.bytesTotal/m.bytesLoaded*m.duration,10),m.isHTML5||(m.buffered=[{start:0,end:m.duration}]),(3!==m.readyState||m.isHTML5)&&i.whileloading&&i.whileloading.apply(m)},this._whileplaying=function(e,t,n,o,i){var r,s=m._iO;return!isNaN(e)&&null!==e&&(m.position=Math.max(0,e),m._processOnPosition(),!m.isHTML5&&l>8&&(s.usePeakData&&t!==a&&t&&(m.peakData={left:t.leftPeak,right:t.rightPeak}),s.useWaveformData&&n!==a&&n&&(m.waveformData={left:n.split(","),right:o.split(",")}),s.useEQData&&i!==a&&i&&i.leftEQ&&(r=i.leftEQ.split(","),m.eqData=r,m.eqData.left=r,i.rightEQ!==a&&i.rightEQ&&(m.eqData.right=i.rightEQ.split(",")))),1===m.playState&&(m.isHTML5||8!==l||m.position||!m.isBuffering||m._onbufferchange(0),s.whileplaying&&s.whileplaying.apply(m)),!0)},this._oncaptiondata=function(e){Ae._wD(m.id+": Caption data received."),m.captiondata=e,m._iO.oncaptiondata&&m._iO.oncaptiondata.apply(m,[e])},this._onmetadata=function(e,t){Ae._wD(m.id+": Metadata received.");var n,o,i={};for(n=0,o=e.length;n<o;n++)i[e[n]]=t[n];m.metadata=i,m._iO.onmetadata&&m._iO.onmetadata.call(m,m.metadata)},this._onid3=function(e,t){Ae._wD(m.id+": ID3 data received.");var n,o,i=[];for(n=0,o=e.length;n<o;n++)i[e[n]]=t[n];m.id3=f(m.id3,i),m._iO.onid3&&m._iO.onid3.apply(m)},this._onconnect=function(e){e=1===e,Ae._wD(m.id+": "+(e?"Connected.":"Failed to connect? - "+m.url),e?1:2),m.connected=e,e&&(m.failures=0,Y(m.id)&&(m.getAutoPlay()?m.play(a,m.getAutoPlay()):m._iO.autoLoad&&m.load()),m._iO.onconnect&&m._iO.onconnect.apply(m,[e]))},this._ondataerror=function(e){m.playState>0&&(Ae._wD(m.id+": Data error: "+e),m._iO.ondataerror&&m._iO.ondataerror.apply(m))},this._debug()},I=function(){return Ve.body||Ve.getElementsByTagName("div")[0]},o=function(e){return Ve.getElementById(e)},f=function(e,t){var n,o,i=e||{};for(o in n=t===a?Ae.defaultOptions:t)n.hasOwnProperty(o)&&i[o]===a&&("object"!=typeof n[o]||null===n[o]?i[o]=n[o]:i[o]=f(i[o],n[o]));return i},fe=function(e,t){e.isHTML5||8!==l?t():i.setTimeout(t,0)},A={onready:1,ontimeout:1,defaultOptions:1,flash9Options:1,movieStarOptions:1},p=function(e,t){var n,o=!0,i=t!==a,r=Ae.setupOptions,s=A;if(e===a){for(n in o=[],r)r.hasOwnProperty(n)&&o.push(n);for(n in s)s.hasOwnProperty(n)&&("object"==typeof Ae[n]?o.push(n+": {...}"):Ae[n]instanceof Function?o.push(n+": function() {...}"):o.push(n));return Ae._wD(D("setup",o.join(", "))),!1}for(n in e)if(e.hasOwnProperty(n))if("object"!=typeof e[n]||null===e[n]||e[n]instanceof Array||e[n]instanceof RegExp)i&&s[t]!==a?Ae[t][n]=e[n]:r[n]!==a?(Ae.setupOptions[n]=e[n],Ae[n]=e[n]):s[n]===a?(N(D(Ae[n]===a?"setupUndef":"setupError",n),2),o=!1):Ae[n]instanceof Function?Ae[n].apply(Ae,e[n]instanceof Array?e[n]:[e[n]]):Ae[n]=e[n];else{if(s[n]!==a)return p(e[n],n);N(D(Ae[n]===a?"setupUndef":"setupError",n),2),o=!1}return o},ae=function(){var e=i.attachEvent,t={add:e?"attachEvent":"addEventListener",remove:e?"detachEvent":"removeEventListener"};function n(t){var n=Ue.call(t),o=n.length;return e?(n[1]="on"+n[1],o>3&&n.pop()):3===o&&n.push(!1),n}function o(n,o){var i=n.shift(),a=[t[o]];e?i[a](n[0],n[1]):i[a].apply(i,n)}return{add:function(){o(n(arguments),"add")},remove:function(){o(n(arguments),"remove")}}}(),ce={abort:ct((function(){Ae._wD(this._s.id+": abort")})),canplay:ct((function(){var e,t=this._s;if(!t._html5_canplay){if(t._html5_canplay=!0,Ae._wD(t.id+": canplay"),t._onbufferchange(0),e=t._iO.position===a||isNaN(t._iO.position)?null:t._iO.position/Qe,this.currentTime!==e){Ae._wD(t.id+": canplay: Setting position to "+e);try{this.currentTime=e}catch(n){Ae._wD(t.id+": canplay: Setting position of "+e+" failed: "+n.message,2)}}t._iO._oncanplay&&t._iO._oncanplay()}})),canplaythrough:ct((function(){var e=this._s;e.loaded||(e._onbufferchange(0),e._whileloading(e.bytesLoaded,e.bytesTotal,e._get_html5_duration()),e._onload(!0))})),durationchange:ct((function(){var e,t=this._s;e=t._get_html5_duration(),isNaN(e)||e===t.duration||(Ae._wD(this._s.id+": durationchange ("+e+")"+(t.duration?", previously "+t.duration:"")),t.durationEstimate=t.duration=e)})),ended:ct((function(){var e=this._s;Ae._wD(e.id+": ended"),e._onfinish()})),error:ct((function(){var e=ee[this.error.code]||null;Ae._wD(this._s.id+": HTML5 error, code "+this.error.code+(e?" ("+e+")":"")),this._s._onload(!1),this._s._onerror(this.error.code,e)})),loadeddata:ct((function(){var e=this._s;Ae._wD(e.id+": loadeddata"),e._loaded||Ze||(e.duration=e._get_html5_duration())})),loadedmetadata:ct((function(){Ae._wD(this._s.id+": loadedmetadata")})),loadstart:ct((function(){Ae._wD(this._s.id+": loadstart"),this._s._onbufferchange(1)})),play:ct((function(){this._s._onbufferchange(0)})),playing:ct((function(){Ae._wD(this._s.id+": playing "+String.fromCharCode(9835)),this._s._onbufferchange(0)})),progress:ct((function(e){var t,n,o,i=this._s,a=0,r="progress"===e.type,s=e.target.buffered,u=e.loaded||0,l=e.total||1;if(i.buffered=[],s&&s.length){for(t=0,n=s.length;t<n;t++)i.buffered.push({start:s.start(t)*Qe,end:s.end(t)*Qe});if(a=(s.end(0)-s.start(0))*Qe,u=Math.min(1,a/(e.target.duration*Qe)),r&&s.length>1){for(o=[],n=s.length,t=0;t<n;t++)o.push(e.target.buffered.start(t)*Qe+"-"+e.target.buffered.end(t)*Qe);Ae._wD(this._s.id+": progress, timeRanges: "+o.join(", "))}r&&!isNaN(u)&&Ae._wD(this._s.id+": progress, "+Math.floor(100*u)+"% loaded")}isNaN(u)||(i._whileloading(u,l,i._get_html5_duration()),u&&l&&u===l&&ce.canplaythrough.call(this,e))})),ratechange:ct((function(){Ae._wD(this._s.id+": ratechange")})),suspend:ct((function(e){var t=this._s;Ae._wD(this._s.id+": suspend"),ce.progress.call(this,e),t._onsuspend()})),stalled:ct((function(){Ae._wD(this._s.id+": stalled")})),timeupdate:ct((function(){this._s._onTimer()})),waiting:ct((function(){var e=this._s;Ae._wD(this._s.id+": waiting"),e._onbufferchange(1)}))},J=function(e){return!(!e||!(e.type||e.url||e.serverURL))&&!(e.serverURL||e.type&&lt(e.type))&&(e.type?$({type:e.type}):$({url:e.url})||Ae.html5Only||e.url.match(/data:/i))},ne=function(e){var t;return e&&(t=Ze?ot:Ae.html5.canPlayType("audio/wav")?"data:audio/wave;base64,/UklGRiYAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQIAAAD//w==":ot,e.src=t,e._called_unload!==a&&(e._called_load=!1)),He&&(re=null),t},$=function(e){if(!Ae.useHTML5Audio||!Ae.hasHTML5)return!1;var t,n,o,i,r=e.url||null,s=e.type||null,u=Ae.audioFormats;if(s&&Ae.html5[s]!==a)return Ae.html5[s]&&!lt(s);if(!te){for(i in te=[],u)u.hasOwnProperty(i)&&(te.push(i),u[i].related&&(te=te.concat(u[i].related)));te=new RegExp("\\.("+te.join("|")+")(\\?.*)?$","i")}return(o=r?r.toLowerCase().match(te):null)&&o.length?o=o[1]:s?o=(-1!==(n=s.indexOf(";"))?s.substr(0,n):s).substr(6):t=!1,o&&Ae.html5[o]!==a?t=Ae.html5[o]&&!lt(o):(s="audio/"+o,t=Ae.html5.canPlayType({type:s}),Ae.html5[o]=t,t=t&&Ae.html5[s]&&!lt(s)),t},ie=function(){if(!Ae.useHTML5Audio||!Ae.hasHTML5)return Ae.html5.usingFlash=!0,Be=!0,!1;var e,t,n,o,i=Audio!==a?We&&opera.version()<10?new Audio(null):new Audio:null,r={};function s(e){var t,n,a=!1,r=!1;if(!i||"function"!=typeof i.canPlayType)return a;if(e instanceof Array){for(o=0,n=e.length;o<n;o++)(Ae.html5[e[o]]||i.canPlayType(e[o]).match(Ae.html5Test))&&(r=!0,Ae.html5[e[o]]=!0,Ae.flash[e[o]]=!!e[o].match(nt));a=r}else a=!(!(t=!(!i||"function"!=typeof i.canPlayType)&&i.canPlayType(e))||!t.match(Ae.html5Test));return a}for(e in n=Ae.audioFormats)if(n.hasOwnProperty(e)&&(t="audio/"+e,r[e]=s(n[e].type),r[t]=r[e],e.match(nt)?(Ae.flash[e]=!0,Ae.flash[t]=!0):(Ae.flash[e]=!1,Ae.flash[t]=!1),n[e]&&n[e].related))for(o=n[e].related.length-1;o>=0;o--)r["audio/"+n[e].related[o]]=r[e],Ae.html5[n[e].related[o]]=r[e],Ae.flash[n[e].related[o]]=r[e];return r.canPlayType=i?s:null,Ae.html5=f(Ae.html5,r),Ae.html5.usingFlash=X(),Be=Ae.html5.usingFlash,!0},_={notReady:"Unavailable - wait until onready() has fired.",notOK:"Audio support is not available.",domError:ye+"exception caught while appending SWF to DOM.",spcWmode:"Removing wmode, preventing known SWF loading issue(s)",swf404:ve+"Verify that %s is a valid path.",tryDebug:"Try "+ye+".debugFlash = true for more security details (output goes to SWF.)",checkSWF:"See SWF output for more debug info.",localFail:ve+"Non-HTTP page ("+Ve.location.protocol+" URL?) Review Flash player security settings for this special case:\nhttp://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html\nMay need to add/allow path, eg. c:/sm2/ or /users/me/sm2/",waitFocus:ve+"Special case: Waiting for SWF to load with window focus...",waitForever:ve+"Waiting indefinitely for Flash (will recover if unblocked)...",waitSWF:ve+"Waiting for 100% SWF load...",needFunction:ve+"Function object expected for %s",badID:'Sound ID "%s" should be a string, starting with a non-numeric character',currentObj:ve+"_debug(): Current sound objects",waitOnload:ve+"Waiting for window.onload()",docLoaded:ve+"Document already loaded",onload:ve+"initComplete(): calling soundManager.onload()",onloadOK:ye+".onload() complete",didInit:ve+"init(): Already called?",secNote:"Flash security note: Network/internet URLs will not load due to security restrictions. Access can be configured via Flash Player Global Security Settings Page: http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html",badRemove:ve+"Failed to remove Flash node.",shutdown:ye+".disable(): Shutting down",queue:ve+"Queueing %s handler",smError:"SMSound.load(): Exception: JS-Flash communication failed, or JS error.",fbTimeout:"No flash response, applying ."+U.swfTimedout+" CSS...",fbLoaded:"Flash loaded",fbHandler:ve+"flashBlockHandler()",manURL:"SMSound.load(): Using manually-assigned URL",onURL:ye+".load(): current URL already assigned.",badFV:ye+'.flashVersion must be 8 or 9. "%s" is invalid. Reverting to %s.',as2loop:"Note: Setting stream:false so looping can work (flash 8 limitation)",noNSLoop:"Note: Looping not implemented for MovieStar formats",needfl9:"Note: Switching to flash 9, required for MP4 formats.",mfTimeout:"Setting flashLoadTimeout = 0 (infinite) for off-screen, mobile flash case",needFlash:ve+"Fatal error: Flash is needed to play some required formats, but is not available.",gotFocus:ve+"Got window focus.",policy:"Enabling usePolicyFile for data access",setup:ye+".setup(): allowed parameters: %s",setupError:ye+'.setup(): "%s" cannot be assigned with this method.',setupUndef:ye+'.setup(): Could not find option "%s"',setupLate:ye+".setup(): url, flashVersion and html5Test property changes will not take effect until reboot().",noURL:ve+"Flash URL required. Call soundManager.setup({url:...}) to get started.",sm2Loaded:"SoundManager 2: Ready. "+String.fromCharCode(10003),reset:ye+".reset(): Removing event callbacks",mobileUA:"Mobile UA detected, preferring HTML5 by default.",globalHTML5:"Using singleton HTML5 Audio() pattern for this device.",ignoreMobile:"Ignoring mobile restrictions for this device."},D=function(){var e,t,n,o,i;if(o=(e=Ue.call(arguments)).shift(),(i=_&&_[o]?_[o]:"")&&e&&e.length)for(t=0,n=e.length;t<n;t++)i=i.replace("%s",e[t]);return i},j=function(e){return 8===l&&e.loops>1&&e.stream&&(d("as2loop"),e.stream=!1),e},Q=function(e,t){return e&&!e.usePolicyFile&&(e.onid3||e.usePeakData||e.useWaveformData||e.useEQData)&&(Ae._wD((t||"")+D("policy")),e.usePolicyFile=!0),e},N=function(e){Je&&console.warn!==a?console.warn(e):Ae._wD(e)},r=function(){return!1},R=function(e){var t;for(t in e)e.hasOwnProperty(t)&&"function"==typeof e[t]&&(e[t]=r);t=null},T=function(e){e===a&&(e=!1),(Pe||e)&&Ae.disable(e)},C=function(e){var t;if(e)if(e.match(/\.swf(\?.*)?$/i)){if(e.substr(e.toLowerCase().lastIndexOf(".swf?")+4))return e}else e.lastIndexOf("/")!==e.length-1&&(e+="/");return t=(e&&-1!==e.lastIndexOf("/")?e.substr(0,e.lastIndexOf("/")+1):"./")+Ae.movieURL,Ae.noSWFCache&&(t+="?ts="+(new Date).getTime()),t},V=function(){8!==(l=parseInt(Ae.flashVersion,10))&&9!==l&&(Ae._wD(D("badFV",l,8)),Ae.flashVersion=l=8);var e=Ae.debugMode||Ae.debugFlash?"_debug.swf":".swf";Ae.useHTML5Audio&&!Ae.html5Only&&Ae.audioFormats.mp4.required&&l<9&&(Ae._wD(D("needfl9")),Ae.flashVersion=l=9),Ae.version=Ae.versionNumber+(Ae.html5Only?" (HTML5-only mode)":9===l?" (AS3/Flash 9)":" (AS2/Flash 8)"),l>8?(Ae.defaultOptions=f(Ae.defaultOptions,Ae.flash9Options),Ae.features.buffering=!0,Ae.defaultOptions=f(Ae.defaultOptions,Ae.movieStarOptions),Ae.filePatterns.flash9=new RegExp("\\.(mp3|"+st.join("|")+")(\\?.*)?$","i"),Ae.features.movieStar=!0):Ae.features.movieStar=!1,Ae.filePattern=Ae.filePatterns[8!==l?"flash9":"flash8"],Ae.movieURL=(8===l?"soundmanager2.swf":"soundmanager2_flash9.swf").replace(".swf",e),Ae.features.peakData=Ae.features.waveformData=Ae.features.eqData=l>8},L=function(e,t){ge&&ge._setPolling(e,t)},q=function(){if(Ae.debugURLParam.test(we)&&(Ae.setupOptions.debugMode=Ae.debugMode=!0),!o(Ae.debugID)){var e,t,n,i,a;if(Ae.debugMode&&!o(Ae.debugID)&&(!Je||!Ae.useConsole||!Ae.consoleOnly)){for(a in(e=Ve.createElement("div")).id=Ae.debugID+"-toggle",i={position:"fixed",bottom:"0px",right:"0px",width:"1.2em",height:"1.2em",lineHeight:"1.2em",margin:"2px",textAlign:"center",border:"1px solid #999",cursor:"pointer",background:"#fff",color:"#333",zIndex:10001},e.appendChild(Ve.createTextNode("-")),e.onclick=H,e.title="Toggle SM2 debug console",be.match(/msie 6/i)&&(e.style.position="absolute",e.style.cursor="hand"),i)i.hasOwnProperty(a)&&(e.style[a]=i[a]);if((t=Ve.createElement("div")).id=Ae.debugID,t.style.display=Ae.debugMode?"block":"none",Ae.debugMode&&!o(e.id)){try{(n=I()).appendChild(e)}catch(e){throw new Error(D("domError")+" \n"+e.toString())}n.appendChild(t)}}n=null}},Y=this.getSoundById,d=function(e,t){return e?Ae._wD(D(e),t):""},H=function(){var e=o(Ae.debugID),t=o(Ae.debugID+"-toggle");e&&(_e?(t.innerHTML="+",e.style.display="none"):(t.innerHTML="-",e.style.display="block"),_e=!_e)},c=function(e,t,n){if(i.sm2Debugger!==a)try{sm2Debugger.handleEvent(e,t,n)}catch(e){return!1}return!0},B=function(){var e=[];return Ae.debugMode&&e.push(U.sm2Debug),Ae.debugFlash&&e.push(U.flashDebug),Ae.useHighPerformance&&e.push(U.highPerf),e.join(" ")},F=function(){var e=D("fbHandler"),t=Ae.getMoviePercent(),n=U,o={type:"FLASHBLOCK"};Ae.html5Only||(Ae.ok()?(Ae.didFlashBlock&&Ae._wD(e+": Unblocked"),Ae.oMC&&(Ae.oMC.className=[B(),n.swfDefault,n.swfLoaded+(Ae.didFlashBlock?" "+n.swfUnblocked:"")].join(" "))):(Be&&(Ae.oMC.className=B()+" "+n.swfDefault+" "+(null===t?n.swfTimedout:n.swfError),Ae._wD(e+": "+D("fbTimeout")+(t?" ("+D("fbLoaded")+")":""))),Ae.didFlashBlock=!0,g({type:"ontimeout",ignoreInit:!0,error:o}),E(o)))},m=function(e,t,n){ke[e]===a&&(ke[e]=[]),ke[e].push({method:t,scope:n||null,fired:!1})},g=function(e){if(e||(e={type:Ae.ok()?"onready":"ontimeout"}),!Oe&&e&&!e.ignoreInit)return!1;if("ontimeout"===e.type&&(Ae.ok()||Pe&&!e.ignoreInit))return!1;var t,n,o={success:e&&e.ignoreInit?Ae.ok():!Pe},i=e&&e.type&&ke[e.type]||[],a=[],r=[o],s=Be&&!Ae.ok();for(e.error&&(r[0].error=e.error),t=0,n=i.length;t<n;t++)!0!==i[t].fired&&a.push(i[t]);if(a.length)for(t=0,n=a.length;t<n;t++)a[t].scope?a[t].method.apply(a[t].scope,r):a[t].method.apply(this,r),s||(a[t].fired=!0);return!0},y=function(){i.setTimeout((function(){Ae.useFlashBlock&&F(),g(),"function"==typeof Ae.onload&&(d("onload",1),Ae.onload.apply(i),d("onloadOK",1)),Ae.waitForWindowLoad&&ae.add(i,"load",y)}),1)},ue=function(){if(se!==a)return se;var e,t,n,o,r=!1,s=navigator,u=i.ActiveXObject;try{o=s.plugins}catch(e){o=void 0}if(o&&o.length)t="application/x-shockwave-flash",(n=s.mimeTypes)&&n[t]&&n[t].enabledPlugin&&n[t].enabledPlugin.description&&(r=!0);else if(u!==a&&!be.match(/MSAppHost/i)){try{e=new u("ShockwaveFlash.ShockwaveFlash")}catch(t){e=null}r=!!e,e=null}return se=r,r},X=function(){var e,t,n=Ae.audioFormats;if(Ne&&be.match(/os (1|2|3_0|3_1)\s/i)?(Ae.hasHTML5=!1,Ae.html5Only=!0,Ae.oMC&&(Ae.oMC.style.display="none")):Ae.useHTML5Audio&&(Ae.html5&&Ae.html5.canPlayType||(Ae._wD("SoundManager: No HTML5 Audio() support detected."),Ae.hasHTML5=!1),Xe&&Ae._wD(ve+"Note: Buggy HTML5 Audio in Safari on this OS X release, see https://bugs.webkit.org/show_bug.cgi?id=32159 - "+(se?"will use flash fallback for MP3/MP4, if available":" would use flash fallback for MP3/MP4, but none detected."),1)),Ae.useHTML5Audio&&Ae.hasHTML5)for(t in G=!0,n)n.hasOwnProperty(t)&&n[t].required&&(Ae.html5.canPlayType(n[t].type)?Ae.preferFlash&&(Ae.flash[t]||Ae.flash[n[t].type])&&(e=!0):(G=!1,e=!0));return Ae.ignoreFlash&&(e=!1,G=!0),Ae.html5Only=Ae.hasHTML5&&Ae.useHTML5Audio&&!e,!Ae.html5Only},W=function(e){var t,n,o,i=0;if(e instanceof Array){for(t=0,n=e.length;t<n;t++)if(e[t]instanceof Object){if(Ae.canPlayMIME(e[t].type)){i=t;break}}else if(Ae.canPlayURL(e[t])){i=t;break}e[i].url&&(e[i]=e[i].url),o=e[i]}else o=e;return o},z=function(e){e._hasTimer||(e._hasTimer=!0,!Ge&&Ae.html5PollingInterval&&(null===De&&0===Ce&&(De=setInterval(Z,Ae.html5PollingInterval)),Ce++))},K=function(e){e._hasTimer&&(e._hasTimer=!1,!Ge&&Ae.html5PollingInterval&&Ce--)},Z=function(){var e;if(null!==De&&!Ce)return clearInterval(De),void(De=null);for(e=Ae.soundIDs.length-1;e>=0;e--)Ae.sounds[Ae.soundIDs[e]].isHTML5&&Ae.sounds[Ae.soundIDs[e]]._hasTimer&&Ae.sounds[Ae.soundIDs[e]]._onTimer()},E=function(e){e=e!==a?e:{},"function"==typeof Ae.onerror&&Ae.onerror.apply(i,[{type:e.type!==a?e.type:null}]),e.fatal!==a&&e.fatal&&Ae.disable()},le=function(){if(Xe&&ue()){var e,t,n=Ae.audioFormats;for(t in n)if(n.hasOwnProperty(t)&&("mp3"===t||"mp4"===t)&&(Ae._wD(ye+": Using flash fallback for "+t+" format"),Ae.html5[t]=!1,n[t]&&n[t].related))for(e=n[t].related.length-1;e>=0;e--)Ae.html5[n[t].related[e]]=!1}},this._setSandboxType=function(e){var t=Ae.sandbox;t.type=e,t.description=t.types[t.types[e]!==a?e:"unknown"],"localWithFile"===t.type?(t.noRemote=!0,t.noLocal=!1,d("secNote",2)):"localWithNetwork"===t.type?(t.noRemote=!1,t.noLocal=!0):"localTrusted"===t.type&&(t.noRemote=!1,t.noLocal=!1)},this._externalInterfaceOK=function(e){if(!Ae.swfLoaded){var t;if(c("swf",!0),c("flashtojs",!0),Ae.swfLoaded=!0,et=!1,Xe&&le(),!e||e.replace(/\+dev/i,"")!==Ae.versionNumber.replace(/\+dev/i,""))return t=ye+': Fatal: JavaScript file build "'+Ae.versionNumber+'" does not match Flash SWF build "'+e+'" at '+Ae.url+". Ensure both are up-to-date.",void setTimeout((function(){throw new Error(t)}),0);setTimeout(u,ze?100:1)}},x=function(e,t){if(Me&&Se)return!1;function n(){var e,t=[],n=[];e="SoundManager "+Ae.version+(!Ae.html5Only&&Ae.useHTML5Audio?Ae.hasHTML5?" + HTML5 audio":", no HTML5 audio support":""),Ae.html5Only?Ae.html5PollingInterval&&t.push("html5PollingInterval ("+Ae.html5PollingInterval+"ms)"):(Ae.preferFlash&&t.push("preferFlash"),Ae.useHighPerformance&&t.push("useHighPerformance"),Ae.flashPollingInterval&&t.push("flashPollingInterval ("+Ae.flashPollingInterval+"ms)"),Ae.html5PollingInterval&&t.push("html5PollingInterval ("+Ae.html5PollingInterval+"ms)"),Ae.wmode&&t.push("wmode ("+Ae.wmode+")"),Ae.debugFlash&&t.push("debugFlash"),Ae.useFlashBlock&&t.push("flashBlock")),t.length&&(n=n.concat([t.join(" + ")])),Ae._wD(e+(n.length?" + "+n.join(", "):""),1),de()}if(Ae.html5Only)return V(),n(),Ae.oMC=o(Ae.movieID),u(),Me=!0,Se=!0,!1;var i,r,s,l,c,d,h,f,p,A=t||Ae.url,m=Ae.altURL||A,g=I(),y=B(),v=Ve.getElementsByTagName("html")[0];function b(e,t){return'<param name="'+e+'" value="'+t+'" />'}if(i=v&&v.dir&&v.dir.match(/rtl/i),e=e===a?Ae.id:e,V(),Ae.url=C(it?A:m),t=Ae.url,Ae.wmode=!Ae.wmode&&Ae.useHighPerformance?"transparent":Ae.wmode,null!==Ae.wmode&&(be.match(/msie 8/i)||!ze&&!Ae.useHighPerformance)&&navigator.platform.match(/win32|win64/i)&&(Fe.push(_.spcWmode),Ae.wmode=null),r={name:e,id:e,src:t,quality:"high",allowScriptAccess:Ae.allowScriptAccess,bgcolor:Ae.bgColor,pluginspage:at+"www.macromedia.com/go/getflashplayer",title:"JS/Flash audio component (SoundManager 2)",type:"application/x-shockwave-flash",wmode:Ae.wmode,hasPriority:"true"},Ae.debugFlash&&(r.FlashVars="debug=1"),Ae.wmode||delete r.wmode,ze)s=Ve.createElement("div"),c=['<object id="'+e+'" data="'+t+'" type="'+r.type+'" title="'+r.title+'" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0">',b("movie",t),b("AllowScriptAccess",Ae.allowScriptAccess),b("quality",r.quality),Ae.wmode?b("wmode",Ae.wmode):"",b("bgcolor",Ae.bgColor),b("hasPriority","true"),Ae.debugFlash?b("FlashVars",r.FlashVars):"","</object>"].join("");else for(l in s=Ve.createElement("embed"),r)r.hasOwnProperty(l)&&s.setAttribute(l,r[l]);if(q(),y=B(),g=I())if(Ae.oMC=o(Ae.movieID)||Ve.createElement("div"),Ae.oMC.id)p=Ae.oMC.className,Ae.oMC.className=(p?p+" ":U.swfDefault)+(y?" "+y:""),Ae.oMC.appendChild(s),ze&&((d=Ae.oMC.appendChild(Ve.createElement("div"))).className=U.swfBox,d.innerHTML=c),Se=!0;else{if(Ae.oMC.id=Ae.movieID,Ae.oMC.className=U.swfDefault+" "+y,h=null,d=null,Ae.useFlashBlock||(Ae.useHighPerformance?h={position:"fixed",width:"8px",height:"8px",bottom:"0px",left:"0px",overflow:"hidden"}:(h={position:"absolute",width:"6px",height:"6px",top:"-9999px",left:"-9999px"},i&&(h.left=Math.abs(parseInt(h.left,10))+"px"))),Ke&&(Ae.oMC.style.zIndex=1e4),!Ae.debugFlash)for(f in h)h.hasOwnProperty(f)&&(Ae.oMC.style[f]=h[f]);try{ze||Ae.oMC.appendChild(s),g.appendChild(Ae.oMC),ze&&((d=Ae.oMC.appendChild(Ve.createElement("div"))).className=U.swfBox,d.innerHTML=c),Se=!0}catch(e){throw new Error(D("domError")+" \n"+e.toString())}}return Me=!0,n(),!0},M=function(){return Ae.html5Only?(x(),!1):!ge&&(Ae.url?((ge=Ae.getMovie(Ae.id))||(Le?(ze?Ae.oMC.innerHTML=qe:Ae.oMC.appendChild(Le),Le=null,Me=!0):x(Ae.id,Ae.url),ge=Ae.getMovie(Ae.id)),"function"==typeof Ae.oninitmovie&&setTimeout(Ae.oninitmovie,1),he(),!0):(d("noURL"),!1))},v=function(){setTimeout(b,1e3)},w=function(){i.setTimeout((function(){N(ve+"useFlashBlock is false, 100% HTML5 mode is possible. Rebooting with preferFlash: false..."),Ae.setup({preferFlash:!1}).reboot(),Ae.didFlashBlock=!0,Ae.beginDelayedInit()}),1)},b=function(){var e,t=!1;Ae.url&&(Re||(Re=!0,ae.remove(i,"load",v),se&&et&&!$e?d("waitFocus"):(Oe||(e=Ae.getMoviePercent())>0&&e<100&&(t=!0),setTimeout((function(){if(e=Ae.getMoviePercent(),t)return Re=!1,Ae._wD(D("waitSWF")),void i.setTimeout(v,1);Oe||(Ae._wD(ye+": No Flash response within expected time. Likely causes: "+(0===e?"SWF load failed, ":"")+"Flash blocked or JS-Flash security error."+(Ae.debugFlash?" "+D("checkSWF"):""),2),!it&&e&&(d("localFail",2),Ae.debugFlash||d("tryDebug",2)),0===e&&Ae._wD(D("swf404",Ae.url),1),c("flashtojs",!1,": Timed out"+(it?" (Check flash security or flash blockers)":" (No plugin/missing SWF?)"))),!Oe&&tt&&(null===e?Ae.useFlashBlock||0===Ae.flashLoadTimeout?(Ae.useFlashBlock&&F(),d("waitForever")):!Ae.useFlashBlock&&G?w():(d("waitForever"),g({type:"ontimeout",ignoreInit:!0,error:{type:"INIT_FLASHBLOCK"}})):0===Ae.flashLoadTimeout?d("waitForever"):!Ae.useFlashBlock&&G?w():T(!0))}),Ae.flashLoadTimeout))))},k=function(){function e(){ae.remove(i,"focus",k)}return $e||!et?(e(),!0):(tt=!0,$e=!0,d("gotFocus"),Re=!1,v(),e(),!0)},he=function(){Fe.length&&(Ae._wD("SoundManager 2: "+Fe.join(" "),1),Fe=[])},de=function(){he();var e,t=[];if(Ae.useHTML5Audio&&Ae.hasHTML5){for(e in Ae.audioFormats)Ae.audioFormats.hasOwnProperty(e)&&t.push(e+" = "+Ae.html5[e]+(!Ae.html5[e]&&Be&&Ae.flash[e]?" (using flash)":Ae.preferFlash&&Ae.flash[e]&&Be?" (preferring flash)":Ae.html5[e]?"":" ("+(Ae.audioFormats[e].required?"required, ":"")+"and no flash support)"));Ae._wD("SoundManager 2 HTML5 support: "+t.join(", "),1)}},h=function(e){if(Oe)return!1;if(Ae.html5Only)return d("sm2Loaded",1),Oe=!0,y(),c("onload",!0),!0;var t,n=!0;return Ae.useFlashBlock&&Ae.flashLoadTimeout&&!Ae.getMoviePercent()||(Oe=!0),t={type:!se&&Be?"NO_FLASH":"INIT_TIMEOUT"},Ae._wD("SoundManager 2 "+(Pe?"failed to load":"loaded")+" ("+(Pe?"Flash security/load error":"OK")+") "+String.fromCharCode(Pe?10006:10003),Pe?2:1),Pe||e?(Ae.useFlashBlock&&Ae.oMC&&(Ae.oMC.className=B()+" "+(null===Ae.getMoviePercent()?U.swfTimedout:U.swfError)),g({type:"ontimeout",error:t,ignoreInit:!0}),c("onload",!1),E(t),n=!1):c("onload",!0),Pe||(Ae.waitForWindowLoad&&!Ie?(d("waitOnload"),ae.add(i,"load",y)):(Ae.waitForWindowLoad&&Ie&&d("docLoaded"),y())),n},s=function(){var e,t=Ae.setupOptions;for(e in t)t.hasOwnProperty(e)&&(Ae[e]===a?Ae[e]=t[e]:Ae[e]!==t[e]&&(Ae.setupOptions[e]=Ae[e]))},u=function(){if(Oe)return d("didInit"),!1;function e(){ae.remove(i,"load",Ae.beginDelayedInit)}if(Ae.html5Only)return Oe||(e(),Ae.enabled=!0,h()),!0;M();try{ge._externalInterfaceTest(!1),L(!0,Ae.flashPollingInterval||(Ae.useHighPerformance?10:50)),Ae.debugMode||ge._disableDebug(),Ae.enabled=!0,c("jstoflash",!0),Ae.html5Only||ae.add(i,"unload",r)}catch(e){return Ae._wD("js/flash exception: "+e.toString()),c("jstoflash",!1),E({type:"JS_TO_FLASH_EXCEPTION",fatal:!0}),T(!0),h(),!1}return h(),e(),!0},S=function(){return!P&&(P=!0,s(),q(),!se&&Ae.hasHTML5&&(Ae._wD("SoundManager 2: No Flash detected"+(Ae.useHTML5Audio?". Trying HTML5-only mode.":", enabling HTML5."),1),Ae.setup({useHTML5Audio:!0,preferFlash:!1})),ie(),!se&&Be&&(Fe.push(_.needFlash),Ae.setup({flashLoadTimeout:1})),Ve.removeEventListener&&Ve.removeEventListener("DOMContentLoaded",S,!1),M(),!0)},oe=function(){return"complete"===Ve.readyState&&(S(),Ve.detachEvent("onreadystatechange",oe)),!0},O=function(){Ie=!0,S(),ae.remove(i,"load",O)},ue(),ae.add(i,"focus",k),ae.add(i,"load",v),ae.add(i,"load",O),Ve.addEventListener?Ve.addEventListener("DOMContentLoaded",S,!1):Ve.attachEvent?Ve.attachEvent("onreadystatechange",oe):(c("onload",!1),E({type:"NO_DOM2_EVENTS",fatal:!0}))}i.SM2_DEFER!==a&&SM2_DEFER||(r=new s),e&&"object"==typeof e.exports?(e.exports.SoundManager=s,e.exports.soundManager=r):void 0===(o=function(){return{constructor:s,getInstance:function(e){if(!i.soundManager&&e instanceof Function){var t=e(s);t instanceof s&&(i.soundManager=t)}return i.soundManager}}}.call(t,n,t,e))||(e.exports=o),i.SoundManager=s,i.soundManager=r}(window)}},function(e){e(e.s=2862)}]);
+(self["webpackChunk_internetarchive_bookreader"] = self["webpackChunk_internetarchive_bookreader"] || []).push([["plugins/plugin.tts.js"],{
+
+/***/ "./src/plugins/tts/AbstractTTSEngine.js":
+/*!**********************************************!*\
+  !*** ./src/plugins/tts/AbstractTTSEngine.js ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ AbstractTTSEngine; }
+/* harmony export */ });
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.iterator.js */ "./node_modules/core-js/modules/es.array.iterator.js");
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.string.iterator.js */ "./node_modules/core-js/modules/es.string.iterator.js");
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator.js */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/es.array.find.js */ "./node_modules/core-js/modules/es.array.find.js");
+/* harmony import */ var core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_es_array_filter_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.array.filter.js */ "./node_modules/core-js/modules/es.array.filter.js");
+/* harmony import */ var core_js_modules_es_array_filter_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_filter_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_es_string_starts_with_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.string.starts-with.js */ "./node_modules/core-js/modules/es.string.starts-with.js");
+/* harmony import */ var core_js_modules_es_string_starts_with_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_starts_with_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "./node_modules/core-js/modules/es.regexp.exec.js");
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! core-js/modules/es.string.replace.js */ "./node_modules/core-js/modules/es.string.replace.js");
+/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var core_js_modules_es_array_slice_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! core-js/modules/es.array.slice.js */ "./node_modules/core-js/modules/es.array.slice.js");
+/* harmony import */ var core_js_modules_es_array_slice_js__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_slice_js__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! core-js/modules/es.function.name.js */ "./node_modules/core-js/modules/es.function.name.js");
+/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! core-js/modules/es.array.from.js */ "./node_modules/core-js/modules/es.array.from.js");
+/* harmony import */ var core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! core-js/modules/es.symbol.js */ "./node_modules/core-js/modules/es.symbol.js");
+/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! core-js/modules/es.symbol.description.js */ "./node_modules/core-js/modules/es.symbol.description.js");
+/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! core-js/modules/es.symbol.iterator.js */ "./node_modules/core-js/modules/es.symbol.iterator.js");
+/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _PageChunkIterator_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./PageChunkIterator.js */ "./src/plugins/tts/PageChunkIterator.js");
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "jquery");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+/** @typedef {import('./utils.js').ISO6391} ISO6391 */
+
+/** @typedef {import('./PageChunk.js')} PageChunk */
+
+/**
+ * @export
+ * @typedef {Object} TTSEngineOptions
+ * @property {String} server
+ * @property {String} bookPath
+ * @property {ISO6391} bookLanguage
+ * @property {Function} onLoadingStart
+ * @property {Function} onLoadingComplete
+ * @property {Function} onDone called when the entire book is done
+ * @property {function(PageChunk): PromiseLike} beforeChunkPlay will delay the playing of the chunk
+ * @property {function(PageChunk): void} afterChunkPlay fires once a chunk has fully finished
+ */
+
+/**
+ * @typedef {Object} AbstractTTSSound
+ * @property {PageChunk} chunk
+ * @property {boolean} loaded
+ * @property {number} rate
+ * @property {SpeechSynthesisVoice} voice
+ * @property {(callback: Function) => void} load
+ * @property {() => PromiseLike} play
+ * @property {() => Promise} stop
+ * @property {() => void} pause
+ * @property {() => void} resume
+ * @property {() => void} finish force the sound to 'finish'
+ * @property {number => void} setPlaybackRate
+ * @property {SpeechSynthesisVoice => void} setVoice
+ **/
+
+/** Handling bookreader's text-to-speech */
+
+var AbstractTTSEngine = /*#__PURE__*/function () {
+  /**
+   * @protected
+   * @param {TTSEngineOptions} options
+   */
+  function AbstractTTSEngine(options) {
+    var _this = this;
+
+    _classCallCheck(this, AbstractTTSEngine);
+
+    this.playing = false;
+    this.paused = false;
+    this.opts = options;
+    /** @type {PageChunkIterator} */
+
+    this._chunkIterator = null;
+    /** @type {AbstractTTSSound} */
+
+    this.activeSound = null;
+    this.playbackRate = 1;
+    /** Events we can bind to */
+
+    this.events = $({});
+    /** @type {SpeechSynthesisVoice} */
+
+    this.voice = null; // Listen for voice changes (fired by subclasses)
+
+    this.events.on('voiceschanged', function () {
+      _this.voice = AbstractTTSEngine.getBestBookVoice(_this.getVoices(), _this.opts.bookLanguage);
+    });
+    this.events.trigger('voiceschanged');
+  }
+  /**
+   * @abstract
+   * @return {boolean}
+   */
+
+
+  _createClass(AbstractTTSEngine, [{
+    key: "getVoices",
+    value:
+    /**
+     * @abstract
+     * @return {SpeechSynthesisVoice[]}
+     */
+    function getVoices() {
+      throw new Error("Unimplemented abstract class");
+    }
+    /** @abstract */
+
+  }, {
+    key: "init",
+    value: function init() {
+      return null;
+    }
+    /**
+     * @param {number} leafIndex
+     * @param {number} numLeafs total number of leafs in the current book
+     */
+
+  }, {
+    key: "start",
+    value: function start(leafIndex, numLeafs) {
+      this.playing = true;
+      this.opts.onLoadingStart();
+      this._chunkIterator = new _PageChunkIterator_js__WEBPACK_IMPORTED_MODULE_17__.default(numLeafs, leafIndex, {
+        server: this.opts.server,
+        bookPath: this.opts.bookPath,
+        pageBufferSize: 5
+      });
+      this.step();
+      this.events.trigger('start');
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      if (this.activeSound) this.activeSound.stop();
+      this.playing = false;
+      this._chunkIterator = null;
+      this.activeSound = null;
+      this.events.trigger('stop');
+    }
+    /** @public */
+
+  }, {
+    key: "pause",
+    value: function pause() {
+      var fireEvent = !this.paused && this.activeSound;
+      this.paused = true;
+      if (this.activeSound) this.activeSound.pause();
+      if (fireEvent) this.events.trigger('pause');
+    }
+    /** @public */
+
+  }, {
+    key: "resume",
+    value: function resume() {
+      var fireEvent = this.paused && this.activeSound;
+      this.paused = false;
+      if (this.activeSound) this.activeSound.resume();
+      if (fireEvent) this.events.trigger('resume');
+    }
+  }, {
+    key: "togglePlayPause",
+    value: function togglePlayPause() {
+      if (this.paused) this.resume();else this.pause();
+    }
+    /** @public */
+
+  }, {
+    key: "jumpForward",
+    value: function jumpForward() {
+      if (this.activeSound) this.activeSound.finish();
+    }
+    /** @public */
+
+  }, {
+    key: "jumpBackward",
+    value: function () {
+      var _jumpBackward = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _this2 = this;
+
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return Promise.all([this.activeSound.stop(), this._chunkIterator.decrement().then(function () {
+                  return _this2._chunkIterator.decrement();
+                })]);
+
+              case 2:
+                this.step();
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function jumpBackward() {
+        return _jumpBackward.apply(this, arguments);
+      }
+
+      return jumpBackward;
+    }()
+    /** @param {number} newRate */
+
+  }, {
+    key: "setVoice",
+    value: function setVoice(voiceURI) {
+      this.voice = this.getVoices().find(function (voice) {
+        return voice.voiceURI === voiceURI;
+      });
+      if (this.activeSound) this.activeSound.setVoice(this.voice);
+    }
+    /** @param {number} newRate */
+
+  }, {
+    key: "setPlaybackRate",
+    value: function setPlaybackRate(newRate) {
+      this.playbackRate = newRate;
+      if (this.activeSound) this.activeSound.setPlaybackRate(newRate);
+    }
+    /** @private */
+
+  }, {
+    key: "step",
+    value: function () {
+      var _step = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var _this3 = this;
+
+        var chunk, sound, playPromise;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this._chunkIterator.next();
+
+              case 2:
+                chunk = _context2.sent;
+
+                if (!(chunk == _PageChunkIterator_js__WEBPACK_IMPORTED_MODULE_17__.default.AT_END)) {
+                  _context2.next = 7;
+                  break;
+                }
+
+                this.stop();
+                this.opts.onDone();
+                return _context2.abrupt("return");
+
+              case 7:
+                this.opts.onLoadingStart();
+                sound = this.createSound(chunk);
+                sound.chunk = chunk;
+                sound.rate = this.playbackRate;
+                sound.voice = this.voice;
+                sound.load(function () {
+                  return _this3.opts.onLoadingComplete();
+                });
+                this.opts.onLoadingComplete();
+                _context2.next = 16;
+                return this.opts.beforeChunkPlay(chunk);
+
+              case 16:
+                if (this.playing) {
+                  _context2.next = 18;
+                  break;
+                }
+
+                return _context2.abrupt("return");
+
+              case 18:
+                _context2.next = 20;
+                return this.playSound(sound).then(function () {
+                  return _this3.opts.afterChunkPlay(sound.chunk);
+                });
+
+              case 20:
+                playPromise = _context2.sent;
+                if (this.paused) this.pause();
+                _context2.next = 24;
+                return playPromise;
+
+              case 24:
+                if (!this.playing) {
+                  _context2.next = 26;
+                  break;
+                }
+
+                return _context2.abrupt("return", this.step());
+
+              case 26:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function step() {
+        return _step.apply(this, arguments);
+      }
+
+      return step;
+    }()
+    /**
+     * @abstract
+     * @param {PageChunk} chunk
+     * @return {AbstractTTSSound}
+     */
+
+  }, {
+    key: "createSound",
+    value: function createSound(chunk) {
+      throw new Error("Unimplemented abstract class");
+    }
+    /**
+     * @param {AbstractTTSSound} sound
+     * @return {PromiseLike} promise called once playing finished
+     */
+
+  }, {
+    key: "playSound",
+    value: function playSound(sound) {
+      this.activeSound = sound;
+      if (!this.activeSound.loaded) this.opts.onLoadingStart();
+      return this.activeSound.play();
+    }
+    /** Convenience wrapper for {@see AbstractTTSEngine.getBestVoice} */
+
+  }, {
+    key: "getBestVoice",
+    value: function getBestVoice() {
+      return AbstractTTSEngine.getBestBookVoice(this.getVoices(), this.opts.bookLanguage);
+    }
+    /**
+     * @private
+     * Find the best voice to use given the available voices, the book language, and the user's
+     * languages.
+     * @param {SpeechSynthesisVoice[]} voices
+     * @param {ISO6391} bookLanguage
+     * @param {string[]} userLanguages languages in BCP47 format (e.g. en-US). Ordered by preference.
+     * @return {SpeechSynthesisVoice | undefined}
+     */
+
+  }], [{
+    key: "isSupported",
+    value: function isSupported() {
+      throw new Error("Unimplemented abstract class");
+    }
+  }, {
+    key: "getBestBookVoice",
+    value: function getBestBookVoice(voices, bookLanguage) {
+      var userLanguages = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : navigator.languages;
+      var bookLangVoices = voices.filter(function (v) {
+        return v.lang.startsWith(bookLanguage);
+      }); // navigator.languages browser support isn't great yet, so get just 1 language otherwise
+      // Sample navigator.languages: ["en-CA", "fr-CA", "fr", "en-US", "en", "de-DE", "de"]
+
+      userLanguages = userLanguages || (navigator.language ? [navigator.language] : []); // user languages that match the book language
+
+      var matchingUserLangs = userLanguages.filter(function (lang) {
+        return lang.startsWith(bookLanguage);
+      }); // Try to find voices that intersect these two sets
+
+      return AbstractTTSEngine.getMatchingVoice(matchingUserLangs, bookLangVoices) || bookLangVoices.find(function (v) {
+        return v.default;
+      }) || bookLangVoices[0] // No voices match the book language? let's find a voice in the user's language
+      // and ignore book lang
+      || AbstractTTSEngine.getMatchingVoice(userLanguages, voices) // C'mon! Ok, just read with whatever we got!
+      || voices.find(function (v) {
+        return v.default;
+      }) || voices[0];
+    }
+    /**
+       * @private
+       * Get the best voice that matches one of the BCP47 languages (order by preference)
+       * @param {string[]} languages in BCP 47 format (e.g. 'en-US', or 'en'); ordered by preference
+       * @param {SpeechSynthesisVoice[]} voices voices to choose from
+       * @return {SpeechSynthesisVoice | undefined}
+       */
+
+  }, {
+    key: "getMatchingVoice",
+    value: function getMatchingVoice(languages, voices) {
+      var _iterator = _createForOfIteratorHelper(languages),
+          _step2;
+
+      try {
+        var _loop = function _loop() {
+          var lang = _step2.value;
+          // Chrome Android was returning voice languages like `en_US` instead of `en-US`
+          var matchingVoices = voices.filter(function (v) {
+            return v.lang.replace('_', '-').startsWith(lang);
+          });
+
+          if (matchingVoices.length) {
+            return {
+              v: matchingVoices.find(function (v) {
+                return v.default;
+              }) || matchingVoices[0]
+            };
+          }
+        };
+
+        for (_iterator.s(); !(_step2 = _iterator.n()).done;) {
+          var _ret = _loop();
+
+          if (_typeof(_ret) === "object") return _ret.v;
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    }
+  }]);
+
+  return AbstractTTSEngine;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/plugins/tts/FestivalTTSEngine.js":
+/*!**********************************************!*\
+  !*** ./src/plugins/tts/FestivalTTSEngine.js ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ FestivalTTSEngine; }
+/* harmony export */ });
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "./node_modules/core-js/modules/es.regexp.exec.js");
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_string_match_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.string.match.js */ "./node_modules/core-js/modules/es.string.match.js");
+/* harmony import */ var core_js_modules_es_string_match_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_match_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_object_get_prototype_of_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.object.get-prototype-of.js */ "./node_modules/core-js/modules/es.object.get-prototype-of.js");
+/* harmony import */ var core_js_modules_es_object_get_prototype_of_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_get_prototype_of_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_reflect_construct_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.reflect.construct.js */ "./node_modules/core-js/modules/es.reflect.construct.js");
+/* harmony import */ var core_js_modules_es_reflect_construct_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_reflect_construct_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_reflect_get_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/es.reflect.get.js */ "./node_modules/core-js/modules/es.reflect.get.js");
+/* harmony import */ var core_js_modules_es_reflect_get_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_reflect_get_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_es_object_get_own_property_descriptor_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.object.get-own-property-descriptor.js */ "./node_modules/core-js/modules/es.object.get-own-property-descriptor.js");
+/* harmony import */ var core_js_modules_es_object_get_own_property_descriptor_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_get_own_property_descriptor_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.symbol.js */ "./node_modules/core-js/modules/es.symbol.js");
+/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! core-js/modules/es.symbol.description.js */ "./node_modules/core-js/modules/es.symbol.description.js");
+/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! core-js/modules/es.symbol.iterator.js */ "./node_modules/core-js/modules/es.symbol.iterator.js");
+/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! core-js/modules/es.array.iterator.js */ "./node_modules/core-js/modules/es.array.iterator.js");
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! core-js/modules/es.string.iterator.js */ "./node_modules/core-js/modules/es.string.iterator.js");
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator.js */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _AbstractTTSEngine_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./AbstractTTSEngine.js */ "./src/plugins/tts/AbstractTTSEngine.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./utils.js */ "./src/plugins/tts/utils.js");
+/* harmony import */ var soundmanager2__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! soundmanager2 */ "./node_modules/soundmanager2/script/soundmanager2.js");
+/* harmony import */ var soundmanager2__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(soundmanager2__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var jquery_browser__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! jquery.browser */ "./node_modules/jquery.browser/dist/jquery.browser.js");
+/* harmony import */ var jquery_browser__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(jquery_browser__WEBPACK_IMPORTED_MODULE_17__);
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "jquery");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+/* global soundManager */
+
+
+
+/** @typedef {import("./AbstractTTSEngine.js").TTSEngineOptions} TTSEngineOptions */
+
+/** @typedef {import("./AbstractTTSEngine.js").AbstractTTSSound} AbstractTTSSound */
+
+/**
+ * @extends AbstractTTSEngine
+ * TTS using Festival endpoint
+ **/
+
+var FestivalTTSEngine = /*#__PURE__*/function (_AbstractTTSEngine) {
+  _inherits(FestivalTTSEngine, _AbstractTTSEngine);
+
+  var _super = _createSuper(FestivalTTSEngine);
+
+  /** @param {TTSEngineOptions} options */
+  function FestivalTTSEngine(options) {
+    var _$$browser;
+
+    var _this;
+
+    _classCallCheck(this, FestivalTTSEngine);
+
+    _this = _super.call(this, options); // $.browsers is sometimes undefined on some Android browsers :/
+    // Likely related to when $.browser was moved to npm
+
+    /** @type {'mp3' | 'ogg'} format of audio to get */
+
+    _this.audioFormat = (_$$browser = $.browser) !== null && _$$browser !== void 0 && _$$browser.mozilla ? 'ogg' : 'mp3'; //eslint-disable-line no-jquery/no-browser
+
+    return _this;
+  }
+  /** @override */
+
+
+  _createClass(FestivalTTSEngine, [{
+    key: "getVoices",
+    value: function getVoices() {
+      return [{
+        default: true,
+        lang: "en-US",
+        localService: false,
+        name: "Festival - English (US)",
+        voiceURI: null
+      }];
+    }
+    /** @override */
+
+  }, {
+    key: "init",
+    value: function init() {
+      // setup sound manager
+      soundManager.setup({
+        debugMode: false,
+        // Note, there's a bug in Chrome regarding range requests.
+        // Flash is used as a workaround.
+        // See https://bugs.chromium.org/p/chromium/issues/detail?id=505707
+        preferFlash: true,
+        url: '/bookreader/BookReader/soundmanager/swf',
+        useHTML5Audio: true,
+        //flash 8 version of swf is buggy when calling play() on a sound that is still loading
+        flashVersion: 9
+      });
+    }
+    /**
+     * @override
+     * @param {number} leafIndex
+     * @param {number} numLeafs total number of leafs in the current book
+     */
+
+  }, {
+    key: "start",
+    value: function start(leafIndex, numLeafs) {
+      var _this2 = this;
+
+      var promise = null; // Hack for iOS
+
+      if (navigator.userAgent.match(/mobile/i)) {
+        promise = this.iOSCaptureUserIntentHack();
+      }
+
+      promise = promise || Promise.resolve();
+      promise.then(function () {
+        return _get(_getPrototypeOf(FestivalTTSEngine.prototype), "start", _this2).call(_this2, leafIndex, numLeafs);
+      });
+    }
+    /** @override */
+
+  }, {
+    key: "createSound",
+    value: function createSound(chunk) {
+      return new FestivalTTSSound(this.getSoundUrl(chunk.text));
+    }
+    /**
+     * @private
+     * Get URL for audio that says this text
+     * @param {String} dataString the thing to say
+     * @return {String} url
+     */
+
+  }, {
+    key: "getSoundUrl",
+    value: function getSoundUrl(dataString) {
+      return 'https://' + this.opts.server + '/BookReader/BookReaderGetTTS.php?string=' + encodeURIComponent(dataString) + '&format=.' + this.audioFormat;
+    }
+    /**
+     * @private
+     * Security restrictions require playback to be triggered
+     * by a user click/touch. This intention gets lost in the async calls
+     * on iOS, but, for some reason, if we start the audio here, it works.
+     * See https://stackoverflow.com/questions/12206631/html5-audio-cant-play-through-javascript-unless-triggered-manually-once
+     * @return {PromiseLike}
+     */
+
+  }, {
+    key: "iOSCaptureUserIntentHack",
+    value: function iOSCaptureUserIntentHack() {
+      var sound = soundManager.createSound({
+        url: SILENCE_1MS[this.audioFormat]
+      });
+      return new Promise(function (res) {
+        return sound.play({
+          onfinish: res
+        });
+      }).then(function () {
+        return sound.destruct();
+      });
+    }
+  }], [{
+    key: "isSupported",
+    value:
+    /** @override */
+    function isSupported() {
+      return typeof soundManager !== 'undefined' && soundManager.supported();
+    }
+  }]);
+
+  return FestivalTTSEngine;
+}(_AbstractTTSEngine_js__WEBPACK_IMPORTED_MODULE_14__.default);
+/** @extends AbstractTTSSound */
+
+
+
+
+var FestivalTTSSound = /*#__PURE__*/function () {
+  /** @param {string} soundUrl **/
+  function FestivalTTSSound(soundUrl) {
+    _classCallCheck(this, FestivalTTSSound);
+
+    this.soundUrl = soundUrl;
+    /** @type {SMSound} */
+
+    this.sound = null;
+    this.rate = 1;
+    /** @type {function} calling this resolves the "play" promise */
+
+    this._finishResolver = null;
+  }
+
+  _createClass(FestivalTTSSound, [{
+    key: "loaded",
+    get: function get() {
+      return this.sound && this.sound.loaded;
+    }
+  }, {
+    key: "load",
+    value: function load(_onload) {
+      var _this3 = this;
+
+      this.sound = soundManager.createSound({
+        url: this.soundUrl,
+        // API recommended, but only fires once play started on safari
+        onload: function onload() {
+          if (_this3.rate != 1) _this3.sound.setPlaybackRate(_this3.rate);
+
+          _onload();
+        },
+        onresume: function onresume() {
+          (0,_utils_js__WEBPACK_IMPORTED_MODULE_15__.sleep)(25).then(function () {
+            if (_this3.rate != 1) _this3.sound.setPlaybackRate(_this3.rate);
+          });
+        }
+      });
+      return this.sound.load();
+    }
+  }, {
+    key: "play",
+    value: function play() {
+      var _this4 = this;
+
+      return new Promise(function (res) {
+        _this4._finishResolver = res;
+
+        _this4.sound.play({
+          onfinish: res
+        });
+      }).then(function () {
+        return _this4.sound.destruct();
+      });
+    }
+    /** @override */
+
+  }, {
+    key: "stop",
+    value: function stop() {
+      this.sound.stop();
+      return Promise.resolve();
+    }
+    /** @override */
+
+  }, {
+    key: "pause",
+    value: function pause() {
+      this.sound.pause();
+    }
+    /** @override */
+
+  }, {
+    key: "resume",
+    value: function resume() {
+      this.sound.resume();
+    }
+    /** @override */
+
+  }, {
+    key: "setPlaybackRate",
+    value: function setPlaybackRate(rate) {
+      this.rate = rate;
+      this.sound.setPlaybackRate(rate);
+    }
+    /** @override */
+
+  }, {
+    key: "finish",
+    value: function finish() {
+      this.sound.stop();
+
+      this._finishResolver();
+    }
+  }]);
+
+  return FestivalTTSSound;
+}();
+/** Needed to capture the audio context for iOS hack. Generated using Audacity. */
+
+
+var SILENCE_1MS = {
+  mp3: 'data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA//////////////////////////////////////////////////////////////////8AAAAeTEFNRTMuOTlyBJwAAAAAAAAAADUgJAaUQQABrgAAAnHIf8sZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//sQxAADwlwBKGAAACAAAD/AAAAEAAAAH///////////////+UBAMExBTUUzLjk5LjOqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqr/+xDEIAPAAAGkAAAAIAAANIAAAASqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqg==',
+  ogg: 'data:audio/ogg;base64,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'
+};
+
+/***/ }),
+
+/***/ "./src/plugins/tts/PageChunk.js":
+/*!**************************************!*\
+  !*** ./src/plugins/tts/PageChunk.js ***!
+  \**************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ PageChunk; }
+/* harmony export */ });
+/* harmony import */ var core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.map.js */ "./node_modules/core-js/modules/es.array.map.js");
+/* harmony import */ var core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_slice_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.slice.js */ "./node_modules/core-js/modules/es.array.slice.js");
+/* harmony import */ var core_js_modules_es_array_slice_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_slice_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "./node_modules/core-js/modules/es.regexp.exec.js");
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.string.replace.js */ "./node_modules/core-js/modules/es.string.replace.js");
+/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/es.symbol.js */ "./node_modules/core-js/modules/es.symbol.js");
+/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.symbol.description.js */ "./node_modules/core-js/modules/es.symbol.description.js");
+/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.symbol.iterator.js */ "./node_modules/core-js/modules/es.symbol.iterator.js");
+/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! core-js/modules/es.array.iterator.js */ "./node_modules/core-js/modules/es.array.iterator.js");
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! core-js/modules/es.string.iterator.js */ "./node_modules/core-js/modules/es.string.iterator.js");
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator.js */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! core-js/modules/es.function.name.js */ "./node_modules/core-js/modules/es.function.name.js");
+/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! core-js/modules/es.array.from.js */ "./node_modules/core-js/modules/es.array.from.js");
+/* harmony import */ var core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_14__);
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "jquery");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/**
+ * Class to manage a 'chunk' (approximately a paragraph) of text on a page.
+ */
+var PageChunk = /*#__PURE__*/function () {
+  /**
+   * @param {number} leafIndex
+   * @param {number} chunkIndex
+   * @param {string} text
+   * @param {DJVURect[]} lineRects
+   */
+  function PageChunk(leafIndex, chunkIndex, text, lineRects) {
+    _classCallCheck(this, PageChunk);
+
+    this.leafIndex = leafIndex;
+    this.chunkIndex = chunkIndex;
+    this.text = text;
+    this.lineRects = lineRects;
+  }
+  /**
+   * @param {string} server
+   * @param {string} bookPath
+   * @param {number} leafIndex
+   * @return {Promise<PageChunk[]>}
+   */
+
+
+  _createClass(PageChunk, null, [{
+    key: "fetch",
+    value: function () {
+      var _fetch = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(server, bookPath, leafIndex) {
+        var chunks;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return $.ajax({
+                  type: 'GET',
+                  url: "https://".concat(server, "/BookReader/BookReaderGetTextWrapper.php"),
+                  dataType: 'jsonp',
+                  cache: true,
+                  data: {
+                    path: "".concat(bookPath, "_djvu.xml"),
+                    page: leafIndex
+                  }
+                });
+
+              case 2:
+                chunks = _context.sent;
+                return _context.abrupt("return", PageChunk._fromTextWrapperResponse(leafIndex, chunks));
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function fetch(_x, _x2, _x3) {
+        return _fetch.apply(this, arguments);
+      }
+
+      return fetch;
+    }()
+    /**
+     * Convert the response from BookReaderGetTextWrapper.php into a {@link PageChunk} instance
+     * @param {number} leafIndex
+     * @param {Array<[String, ...DJVURect[]]>} chunksResponse
+     * @return {PageChunk[]}
+     */
+
+  }, {
+    key: "_fromTextWrapperResponse",
+    value: function _fromTextWrapperResponse(leafIndex, chunksResponse) {
+      return chunksResponse.map(function (c, i) {
+        var correctedLineRects = PageChunk._fixChunkRects(c.slice(1));
+
+        var correctedText = PageChunk._removeDanglingHyphens(c[0]);
+
+        return new PageChunk(leafIndex, i, correctedText, correctedLineRects);
+      });
+    }
+    /**
+     * @private
+     * Sometimes the first rectangle will be ridiculously wide/tall. Find those and fix them
+     * *NOTE*: Modifies the original array and returns it.
+     * *NOTE*: This should probably be fixed on the petabox side, and then removed here
+     * Has 2 problems:
+     *  - If the rect is the last rect on the page (and hence the only rect in the array),
+     *    the rect's size isn't fixed
+     * - Because this relies on the second rect, there's a chance it won't be the right
+     *   width
+     * @param {DJVURect[]} rects
+     * @return {DJVURect[]}
+     */
+
+  }, {
+    key: "_fixChunkRects",
+    value: function _fixChunkRects(rects) {
+      if (rects.length < 2) return rects;
+
+      var _rects = _slicedToArray(rects, 2),
+          firstRect = _rects[0],
+          secondRect = _rects[1];
+
+      var _firstRect = _slicedToArray(firstRect, 3),
+          left = _firstRect[0],
+          bottom = _firstRect[1],
+          right = _firstRect[2];
+
+      var width = right - left;
+      var secondHeight = secondRect[1] - secondRect[3];
+      var secondWidth = secondRect[2] - secondRect[0];
+      var secondRight = secondRect[2];
+
+      if (width > secondWidth * 30) {
+        // Set the end to be the same
+        firstRect[2] = secondRight; // And the top to be the same height
+
+        firstRect[3] = bottom - secondHeight;
+      }
+
+      return rects;
+    }
+    /**
+     * Remove "dangling" hyphens from read aloud text to avoid TTS stuttering
+     * @param {string} text
+     * @return {string}
+     */
+
+  }, {
+    key: "_removeDanglingHyphens",
+    value: function _removeDanglingHyphens(text) {
+      // Some books mis-OCR a dangling hyphen as a ¬ (mathematical not sign) . Since in math
+      // the not sign should not appear followed by a space, we think we can safely assume
+      // this should be replaced.
+      return text.replace(/[-¬]\s+/g, '');
+    }
+  }]);
+
+  return PageChunk;
+}();
+/**
+ * @typedef {[number, number, number, number]} DJVURect
+ * coords are in l,b,r,t order
+ */
+
+
+
+
+/***/ }),
+
+/***/ "./src/plugins/tts/PageChunkIterator.js":
+/*!**********************************************!*\
+  !*** ./src/plugins/tts/PageChunkIterator.js ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ PageChunkIterator; }
+/* harmony export */ });
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_object_assign_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.object.assign.js */ "./node_modules/core-js/modules/es.object.assign.js");
+/* harmony import */ var core_js_modules_es_object_assign_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_assign_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _PageChunk_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PageChunk.js */ "./src/plugins/tts/PageChunk.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+/**
+ * Class that iterates over the page chunks of a book; caching/buffering
+ * as much as possible to try to ensure a smooth experience.
+ */
+
+var PageChunkIterator = /*#__PURE__*/function () {
+  /**
+   * @param {number} pageCount total number of pages
+   * @param {number} start page to start on
+   * @param {PageChunkIteratorOptions} opts
+   */
+  function PageChunkIterator(pageCount, start, opts) {
+    _classCallCheck(this, PageChunkIterator);
+
+    this.pageCount = pageCount;
+    this.opts = Object.assign({}, DEFAULT_OPTS, opts);
+    /** Position in the chunk sequence */
+
+    this._cursor = {
+      page: start,
+      chunk: 0
+    };
+    /** @type {Object<number, PageChunk[]>} leaf index -> chunks*/
+
+    this._bufferedPages = {};
+    /** @type {Object<number, PromiseLike<PageChunk[]>} leaf index -> chunks*/
+
+    this._bufferingPages = {};
+    /**
+     * @type {Promise} promise that manages cursor modifications so that they
+     * happen in order triggered as opposed to order the server responds
+     **/
+
+    this._cursorLock = Promise.resolve();
+  }
+  /**
+   * Get the next chunk
+   * @return {PromiseLike<"__PageChunkIterator.AT_END__" | PageChunk>}
+   */
+
+
+  _createClass(PageChunkIterator, [{
+    key: "next",
+    value: function next() {
+      var _this = this;
+
+      return this._cursorLock = this._cursorLock.then(function () {
+        return _this._nextUncontrolled();
+      });
+    }
+    /**
+     * Sends the cursor back 1
+     * @return {Promise}
+     **/
+
+  }, {
+    key: "decrement",
+    value: function decrement() {
+      var _this2 = this;
+
+      return this._cursorLock = this._cursorLock.then(function () {
+        return _this2._decrementUncontrolled();
+      });
+    }
+    /**
+     * Gets without ensuring synchronization. Since this iterator has a lot of async
+     * code, calling e.g. "next" twice (before the first call to next has finished)
+     * would cause the system to be in a weird state. To avoid that, we make sure calls
+     * to next and decrement (functions that modify the cursor) are synchronized,
+     * so that regardless how long it takes for one to respond, they'll always be executed
+     * in the correct order.
+     * @return {PromiseLike<"__PageChunkIterator.AT_END__" | PageChunk>}
+     */
+
+  }, {
+    key: "_nextUncontrolled",
+    value: function () {
+      var _nextUncontrolled2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var chunks;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(this._cursor.page == this.pageCount)) {
+                  _context.next = 2;
+                  break;
+                }
+
+                return _context.abrupt("return", Promise.resolve(PageChunkIterator.AT_END));
+
+              case 2:
+                this._recenterBuffer(this._cursor.page);
+
+                _context.next = 5;
+                return this._fetchPageChunks(this._cursor.page);
+
+              case 5:
+                chunks = _context.sent;
+
+                if (!(this._cursor.chunk == chunks.length)) {
+                  _context.next = 10;
+                  break;
+                }
+
+                this._cursor.page++;
+                this._cursor.chunk = 0;
+                return _context.abrupt("return", this._nextUncontrolled());
+
+              case 10:
+                return _context.abrupt("return", chunks[this._cursor.chunk++]);
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function _nextUncontrolled() {
+        return _nextUncontrolled2.apply(this, arguments);
+      }
+
+      return _nextUncontrolled;
+    }()
+    /**
+     * Decrements without ensuring synchronization. (See {@link PageChunkIterator._nextUncontrolled});
+     * @return {Promise}
+     */
+
+  }, {
+    key: "_decrementUncontrolled",
+    value: function _decrementUncontrolled() {
+      var _this3 = this;
+
+      var cursorChangePromise = Promise.resolve();
+
+      if (this._cursor.chunk > 0) {
+        this._cursor.chunk--;
+      } else if (this._cursor.page > 0) {
+        this._cursor.page--; // Go back possibly multiple pages, because pages can be blank
+
+        cursorChangePromise = this._fetchPageChunks(this._cursor.page).then(function (prevPageChunks) {
+          if (prevPageChunks.length == 0) return _this3._decrementUncontrolled();else _this3._cursor.chunk = prevPageChunks.length - 1;
+        });
+      }
+
+      return cursorChangePromise.then(function () {
+        return _this3._fetchPageChunks(_this3._cursor.page);
+      });
+    }
+    /**
+     * Recenter the buffer around the provided page index
+     * @param {number} index
+     */
+
+  }, {
+    key: "_recenterBuffer",
+    value: function _recenterBuffer(index) {
+      var start = Math.max(0, index - this.opts.pageBufferSize);
+      var end = Math.min(this.pageCount, index + this.opts.pageBufferSize + 1);
+
+      for (var i = start; i < end; i++) {
+        this._fetchPageChunks(i);
+      }
+
+      this._removePageFromBuffer(start - 1);
+
+      this._removePageFromBuffer(end + 1);
+    }
+    /**
+     * @param {number} index
+     */
+
+  }, {
+    key: "_removePageFromBuffer",
+    value: function _removePageFromBuffer(index) {
+      delete this._bufferingPages[index];
+      delete this._bufferedPages[index];
+    }
+    /**
+     * Fetches the chunks on a page; checks the buffer, so it won't make unnecessary
+     * requests if it's called multiple times for the same index.
+     * @param {number} index
+     * @return {Promise<PageChunk[]>}
+     */
+
+  }, {
+    key: "_fetchPageChunks",
+    value: function _fetchPageChunks(index) {
+      var _this4 = this;
+
+      if (index in this._bufferingPages) return this._bufferingPages[index];
+      if (index in this._bufferedPages) return Promise.resolve(this._bufferedPages[index]);
+      this._bufferingPages[index] = this._fetchPageChunksDirect(index).then(function (chunks) {
+        delete _this4._bufferingPages[index];
+        _this4._bufferedPages[index] = chunks;
+        return chunks;
+      });
+      return this._bufferingPages[index];
+    }
+    /**
+     * Fetches a page without checking buffer
+     * @param {number} index
+     */
+
+  }, {
+    key: "_fetchPageChunksDirect",
+    value: function _fetchPageChunksDirect(index) {
+      return _PageChunk_js__WEBPACK_IMPORTED_MODULE_4__.default.fetch(this.opts.server, this.opts.bookPath, index);
+    }
+  }]);
+
+  return PageChunkIterator;
+}();
+
+
+PageChunkIterator.AT_END = "__PageChunkIterator.AT_END__";
+/** @type {PageChunkIteratorOptions} */
+
+var DEFAULT_OPTS = {
+  server: null,
+  bookPath: null,
+  pageBufferSize: 2
+};
+/**
+ * @typedef {Object} PageChunkIteratorOptions
+ * @property {string} server
+ * @property {string} bookPath
+ * @property {number} [pageBufferSize] number of pages to buffer before/after the current page
+ */
+
+/***/ }),
+
+/***/ "./src/plugins/tts/WebTTSEngine.js":
+/*!*****************************************!*\
+  !*** ./src/plugins/tts/WebTTSEngine.js ***!
+  \*****************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ WebTTSEngine; },
+/* harmony export */   "WebTTSSound": function() { return /* binding */ WebTTSSound; }
+/* harmony export */ });
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.map.js */ "./node_modules/core-js/modules/es.array.map.js");
+/* harmony import */ var core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_array_filter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.array.filter.js */ "./node_modules/core-js/modules/es.array.filter.js");
+/* harmony import */ var core_js_modules_es_array_filter_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_filter_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_object_get_prototype_of_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.object.get-prototype-of.js */ "./node_modules/core-js/modules/es.object.get-prototype-of.js");
+/* harmony import */ var core_js_modules_es_object_get_prototype_of_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_get_prototype_of_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_array_slice_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.array.slice.js */ "./node_modules/core-js/modules/es.array.slice.js");
+/* harmony import */ var core_js_modules_es_array_slice_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_slice_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/es.regexp.to-string.js */ "./node_modules/core-js/modules/es.regexp.to-string.js");
+/* harmony import */ var core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.array.iterator.js */ "./node_modules/core-js/modules/es.array.iterator.js");
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! core-js/modules/es.string.iterator.js */ "./node_modules/core-js/modules/es.string.iterator.js");
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator.js */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var core_js_modules_es_reflect_construct_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! core-js/modules/es.reflect.construct.js */ "./node_modules/core-js/modules/es.reflect.construct.js");
+/* harmony import */ var core_js_modules_es_reflect_construct_js__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_reflect_construct_js__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var core_js_modules_es_reflect_get_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! core-js/modules/es.reflect.get.js */ "./node_modules/core-js/modules/es.reflect.get.js");
+/* harmony import */ var core_js_modules_es_reflect_get_js__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_reflect_get_js__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var core_js_modules_es_object_get_own_property_descriptor_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! core-js/modules/es.object.get-own-property-descriptor.js */ "./node_modules/core-js/modules/es.object.get-own-property-descriptor.js");
+/* harmony import */ var core_js_modules_es_object_get_own_property_descriptor_js__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_get_own_property_descriptor_js__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! core-js/modules/es.symbol.js */ "./node_modules/core-js/modules/es.symbol.js");
+/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! core-js/modules/es.symbol.description.js */ "./node_modules/core-js/modules/es.symbol.description.js");
+/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! core-js/modules/es.symbol.iterator.js */ "./node_modules/core-js/modules/es.symbol.iterator.js");
+/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _util_browserSniffing_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../util/browserSniffing.js */ "./src/util/browserSniffing.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./utils.js */ "./src/plugins/tts/utils.js");
+/* harmony import */ var _AbstractTTSEngine_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./AbstractTTSEngine.js */ "./src/plugins/tts/AbstractTTSEngine.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+/* global br */
+
+
+
+/** @typedef {import("./AbstractTTSEngine.js").PageChunk} PageChunk */
+
+/** @typedef {import("./AbstractTTSEngine.js").AbstractTTSSound} AbstractTTSSound */
+
+/** @typedef {import("./AbstractTTSEngine.js").TTSEngineOptions} TTSEngineOptions */
+
+/**
+ * @extends AbstractTTSEngine
+ * TTS using Web Speech APIs
+ **/
+
+var WebTTSEngine = /*#__PURE__*/function (_AbstractTTSEngine) {
+  _inherits(WebTTSEngine, _AbstractTTSEngine);
+
+  var _super = _createSuper(WebTTSEngine);
+
+  /** @param {TTSEngineOptions} options */
+  function WebTTSEngine(options) {
+    var _this;
+
+    _classCallCheck(this, WebTTSEngine);
+
+    _this = _super.call(this, options); // SAFARI doesn't have addEventListener on speechSynthesis
+
+    if (speechSynthesis.addEventListener) {
+      speechSynthesis.addEventListener('voiceschanged', function () {
+        return _this.events.trigger('voiceschanged');
+      });
+    }
+
+    return _this;
+  }
+  /** @override */
+
+
+  _createClass(WebTTSEngine, [{
+    key: "start",
+    value: function start(leafIndex, numLeafs) {
+      var _this2 = this;
+
+      // Need to run in this function to capture user intent to start playing audio
+      if ('mediaSession' in navigator) {
+        var audio = new Audio(SILENCE_6S_MP3);
+        audio.loop = true;
+        this.events.on('pause', function () {
+          return audio.pause();
+        });
+        this.events.on('resume', function () {
+          return audio.play();
+        }); // apparently this is what you need to do to make the media session notification go away
+        // See https://developers.google.com/web/updates/2017/02/media-session#implementation_notes
+
+        this.events.on('stop', function () {
+          return audio.src = '';
+        });
+        audio.play().then(function () {
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: br.bookTitle,
+            artist: br.options.metadata.filter(function (m) {
+              return m.label == 'Author';
+            }).map(function (m) {
+              return m.value;
+            })[0],
+            // album: 'The Ultimate Collection (Remastered)',
+            artwork: [{
+              src: br.options.thumbnail,
+              type: 'image/jpg'
+            }]
+          });
+          navigator.mediaSession.setActionHandler('play', function () {
+            audio.play();
+
+            _this2.resume();
+          });
+          navigator.mediaSession.setActionHandler('pause', function () {
+            audio.pause();
+
+            _this2.pause();
+          }); // navigator.mediaSession.setActionHandler('seekbackward', () => this.jumpBackward());
+          // navigator.mediaSession.setActionHandler('seekforward', () => this.jumpForward());
+          // Some devices only support the previoustrack/nexttrack (e.g. Win10), so show those.
+          // Android devices do support the seek actions, but we don't want to show both buttons
+          // and have them do the same thing.
+
+          navigator.mediaSession.setActionHandler('previoustrack', function () {
+            return _this2.jumpBackward();
+          });
+          navigator.mediaSession.setActionHandler('nexttrack', function () {
+            return _this2.jumpForward();
+          });
+        });
+      }
+
+      return _get(_getPrototypeOf(WebTTSEngine.prototype), "start", this).call(this, leafIndex, numLeafs);
+    }
+    /** @override */
+
+  }, {
+    key: "getVoices",
+    value: function getVoices() {
+      return speechSynthesis.getVoices();
+    }
+    /** @override */
+
+  }, {
+    key: "createSound",
+    value: function createSound(chunk) {
+      return new WebTTSSound(chunk.text);
+    }
+  }], [{
+    key: "isSupported",
+    value: function isSupported() {
+      return typeof window.speechSynthesis !== 'undefined' && !/samsungbrowser/i.test(navigator.userAgent);
+    }
+  }]);
+
+  return WebTTSEngine;
+}(_AbstractTTSEngine_js__WEBPACK_IMPORTED_MODULE_19__.default);
+/** @extends AbstractTTSSound */
+
+
+
+var WebTTSSound = /*#__PURE__*/function () {
+  /** @param {string} text **/
+  function WebTTSSound(text) {
+    _classCallCheck(this, WebTTSSound);
+
+    this.text = text;
+    this.loaded = false;
+    this.paused = false;
+    this.started = false;
+    /** Whether the audio was stopped with a .stop() call */
+
+    this.stopped = false;
+    this.rate = 1;
+    /** @type {SpeechSynthesisUtterance} */
+
+    this.utterance = null;
+    /** @type {SpeechSynthesisVoice} */
+
+    this.voice = null;
+    this._lastEvents = {
+      /** @type {SpeechSynthesisEvent} */
+      pause: null,
+
+      /** @type {SpeechSynthesisEvent} */
+      boundary: null,
+
+      /** @type {SpeechSynthesisEvent} */
+      start: null
+    };
+    /** Store where we are in the text. Only works on some browsers. */
+
+    this._charIndex = 0;
+    /** @type {Function} resolve function called when playback finished */
+
+    this._finishResolver = null;
+    /** @type {Promise} promise resolved by _finishResolver */
+
+    this._finishPromise = null;
+  }
+  /** @override **/
+
+
+  _createClass(WebTTSSound, [{
+    key: "load",
+    value: function load(onload) {
+      var _this3 = this;
+
+      this.loaded = false;
+      this.started = false;
+      this.utterance = new SpeechSynthesisUtterance(this.text.slice(this._charIndex));
+      this.utterance.voice = this.voice; // Need to also set lang (for some reason); won't set voice on Chrome@Android otherwise
+
+      if (this.voice) this.utterance.lang = this.voice.lang;
+      this.utterance.rate = this.rate; // Useful for debugging things
+
+      if (location.toString().indexOf('_debugReadAloud=true') != -1) {
+        this.utterance.addEventListener('pause', function () {
+          return console.log('pause');
+        });
+        this.utterance.addEventListener('resume', function () {
+          return console.log('resume');
+        });
+        this.utterance.addEventListener('start', function () {
+          return console.log('start');
+        });
+        this.utterance.addEventListener('end', function () {
+          return console.log('end');
+        });
+        this.utterance.addEventListener('error', function () {
+          return console.log('error');
+        });
+        this.utterance.addEventListener('boundary', function () {
+          return console.log('boundary');
+        });
+        this.utterance.addEventListener('mark', function () {
+          return console.log('mark');
+        });
+        this.utterance.addEventListener('finish', function () {
+          return console.log('finish');
+        });
+      } // Keep track of the speech synthesis events that come in; they have useful info
+      // about progress (like charIndex)
+
+
+      this.utterance.addEventListener('start', function (ev) {
+        return _this3._lastEvents.start = ev;
+      });
+      this.utterance.addEventListener('boundary', function (ev) {
+        return _this3._lastEvents.boundary = ev;
+      });
+      this.utterance.addEventListener('pause', function (ev) {
+        return _this3._lastEvents.pause = ev;
+      }); // Update our state
+
+      this.utterance.addEventListener('start', function () {
+        _this3.started = true;
+        _this3.stopped = false;
+        _this3.paused = false;
+      });
+      this.utterance.addEventListener('pause', function () {
+        return _this3.paused = true;
+      });
+      this.utterance.addEventListener('resume', function () {
+        return _this3.paused = false;
+      });
+      this.utterance.addEventListener('end', function (ev) {
+        if (!_this3.paused && !_this3.stopped) {
+          // Trigger a new event, finish, which only fires when audio fully completed
+          _this3.utterance.dispatchEvent(new CustomEvent('finish', ev));
+        }
+      });
+      this.loaded = true;
+      onload && onload();
+    }
+    /**
+     * Run whenever properties have changed. Tries to restart in the same spot it
+     * left off.
+     * @return {Promise<void>}
+     */
+
+  }, {
+    key: "reload",
+    value: function reload() {
+      var _this4 = this;
+
+      // We'll restore the pause state, so copy it here
+      var wasPaused = this.paused; // Use recent event to determine where we'll restart from
+      // Browser support for this is mixed, but it degrades to restarting the chunk
+      // and that's ok
+
+      var recentEvent = this._lastEvents.boundary || this._lastEvents.pause;
+
+      if (recentEvent) {
+        this._charIndex = this.text.indexOf(recentEvent.target.text) + recentEvent.charIndex;
+      } // We can't modify the utterance object, so we have to make a new one
+
+
+      return this.stop().then(function () {
+        _this4.load(); // Instead of playing and immediately pausing, we don't start playing. Note
+        // this is a requirement because pause doesn't work consistently across
+        // browsers.
+
+
+        if (!wasPaused) _this4.play();
+      });
+    }
+  }, {
+    key: "play",
+    value: function play() {
+      var _this5 = this;
+
+      this._finishPromise = this._finishPromise || new Promise(function (res) {
+        return _this5._finishResolver = res;
+      });
+      this.utterance.addEventListener('finish', this._finishResolver); // clear the queue
+
+      speechSynthesis.cancel(); // reset pause state
+
+      speechSynthesis.resume(); // Speak
+
+      speechSynthesis.speak(this.utterance);
+      var isLocalVoice = this.utterance.voice && this.utterance.voice.localService;
+      if ((0,_util_browserSniffing_js__WEBPACK_IMPORTED_MODULE_17__.isChrome)() && !isLocalVoice) this._chromePausingBugFix();
+      return this._finishPromise;
+    }
+    /** @return {Promise} */
+
+  }, {
+    key: "stop",
+    value: function stop() {
+      // 'end' won't fire if already stopped
+      var endPromise = Promise.resolve();
+
+      if (!this.stopped) {
+        endPromise = Promise.race([(0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.promisifyEvent)(this.utterance, 'end'), // Safari triggers an error when you call cancel mid-sound
+        (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.promisifyEvent)(this.utterance, 'error')]);
+      }
+
+      this.stopped = true;
+      speechSynthesis.cancel();
+      return endPromise;
+    }
+  }, {
+    key: "finish",
+    value: function finish() {
+      var _this6 = this;
+
+      this.stop().then(function () {
+        return _this6.utterance.dispatchEvent(new Event('finish'));
+      });
+    }
+    /**
+     * @override
+     * Will fire a pause event unless already paused
+     **/
+
+  }, {
+    key: "pause",
+    value: function pause() {
+      var _this7 = this;
+
+      if (this.paused) return;
+      var pausePromise = (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.promisifyEvent)(this.utterance, 'pause');
+      speechSynthesis.pause(); // There are a few awful browser cases:
+      // 1. Pause works and fires
+      // 2. Pause doesn't work and doesn't fire
+      // 3. Pause works but doesn't fire
+
+      var pauseMightNotWork = (0,_util_browserSniffing_js__WEBPACK_IMPORTED_MODULE_17__.isFirefox)() && (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.isAndroid)();
+      var pauseMightNotFire = (0,_util_browserSniffing_js__WEBPACK_IMPORTED_MODULE_17__.isChrome)() || pauseMightNotWork;
+
+      if (pauseMightNotFire) {
+        // wait for it just in case
+        var timeoutPromise = (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.sleep)(100).then(function () {
+          return 'timeout';
+        });
+        Promise.race([pausePromise, timeoutPromise]).then(function (result) {
+          // We got our pause event; nothing to do!
+          if (result != 'timeout') return;
+
+          _this7.utterance.dispatchEvent(new CustomEvent('pause', _this7._lastEvents.start)); // if pause might not work, then we'll stop entirely and restart later
+
+
+          if (pauseMightNotWork) _this7.stop();
+        });
+      }
+    }
+  }, {
+    key: "resume",
+    value: function () {
+      var _resume = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var resumeMightNotWork, resumeMightNotFire, resumePromise, result;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (this.started) {
+                  _context.next = 3;
+                  break;
+                }
+
+                this.play();
+                return _context.abrupt("return");
+
+              case 3:
+                if (this.paused) {
+                  _context.next = 5;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 5:
+                // Browser cases:
+                // 1. Resume works + fires
+                // 2. Resume works + doesn't fire (Chrome Desktop)
+                // 3. Resume doesn't work + doesn't fire (Chrome/FF Android)
+                resumeMightNotWork = (0,_util_browserSniffing_js__WEBPACK_IMPORTED_MODULE_17__.isChrome)() && (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.isAndroid)() || (0,_util_browserSniffing_js__WEBPACK_IMPORTED_MODULE_17__.isFirefox)() && (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.isAndroid)();
+                resumeMightNotFire = (0,_util_browserSniffing_js__WEBPACK_IMPORTED_MODULE_17__.isChrome)() || resumeMightNotWork; // Try resume
+
+                resumePromise = (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.promisifyEvent)(this.utterance, 'resume');
+                speechSynthesis.resume();
+
+                if (!resumeMightNotFire) {
+                  _context.next = 20;
+                  break;
+                }
+
+                _context.next = 12;
+                return Promise.race([resumePromise, (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.sleep)(100).then(function () {
+                  return 'timeout';
+                })]);
+
+              case 12:
+                result = _context.sent;
+
+                if (!(result != 'timeout')) {
+                  _context.next = 15;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 15:
+                this.utterance.dispatchEvent(new CustomEvent('resume', {}));
+
+                if (!resumeMightNotWork) {
+                  _context.next = 20;
+                  break;
+                }
+
+                _context.next = 19;
+                return this.reload();
+
+              case 19:
+                this.play();
+
+              case 20:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function resume() {
+        return _resume.apply(this, arguments);
+      }
+
+      return resume;
+    }()
+  }, {
+    key: "setPlaybackRate",
+    value: function setPlaybackRate(rate) {
+      this.rate = rate;
+      this.reload();
+    }
+    /** @param {SpeechSynthesisVoice} voice */
+
+  }, {
+    key: "setVoice",
+    value: function setVoice(voice) {
+      this.voice = voice;
+      this.reload();
+    }
+    /**
+     * @private
+     * Chrome has a bug where it only plays 15 seconds of TTS and then
+     * suddenly stops (see https://bugs.chromium.org/p/chromium/issues/detail?id=679437 )
+     * We avoid this (as described here: https://bugs.chromium.org/p/chromium/issues/detail?id=679437#c15 )
+     * by pausing after 14 seconds and ~instantly resuming.
+     */
+
+  }, {
+    key: "_chromePausingBugFix",
+    value: function () {
+      var _chromePausingBugFix2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var _this8 = this;
+
+        var timeoutPromise, pausePromise, endPromise, result;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                timeoutPromise = (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.sleep)(14000).then(function () {
+                  return 'timeout';
+                });
+                pausePromise = (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.promisifyEvent)(this.utterance, 'pause').then(function () {
+                  return 'paused';
+                });
+                endPromise = (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.promisifyEvent)(this.utterance, 'end').then(function () {
+                  return 'ended';
+                });
+                _context2.next = 5;
+                return Promise.race([timeoutPromise, pausePromise, endPromise]);
+
+              case 5:
+                result = _context2.sent;
+
+                if (location.toString().indexOf('_debugReadAloud=true') != -1) {
+                  console.log("CHROME-PAUSE-HACK: ".concat(result));
+                }
+
+                _context2.t0 = result;
+                _context2.next = _context2.t0 === 'ended' ? 10 : _context2.t0 === 'paused' ? 11 : _context2.t0 === 'timeout' ? 13 : 19;
+                break;
+
+              case 10:
+                return _context2.abrupt("break", 19);
+
+              case 11:
+                // audio was paused; wait for resume
+                // Chrome won't let you resume the audio if 14s have passed 🤷‍
+                // We could do the same as before (but resume+pause instead of pause+resume),
+                // but that means we'd _constantly_ be running in the background. So in that
+                // case, let's just restart the chunk
+                Promise.race([(0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.promisifyEvent)(this.utterance, 'resume'), (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.sleep)(14000).then(function () {
+                  return 'timeout';
+                })]).then(function (result) {
+                  result == 'timeout' ? _this8.reload() : _this8._chromePausingBugFix();
+                });
+                return _context2.abrupt("break", 19);
+
+              case 13:
+                // We hit Chrome's secret cut off time. Pause/resume
+                // to be able to keep TTS-ing
+                speechSynthesis.pause();
+                _context2.next = 16;
+                return (0,_utils_js__WEBPACK_IMPORTED_MODULE_18__.sleep)(25);
+
+              case 16:
+                speechSynthesis.resume();
+
+                this._chromePausingBugFix();
+
+                return _context2.abrupt("break", 19);
+
+              case 19:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function _chromePausingBugFix() {
+        return _chromePausingBugFix2.apply(this, arguments);
+      }
+
+      return _chromePausingBugFix;
+    }()
+  }]);
+
+  return WebTTSSound;
+}();
+/**
+ * According to https://developers.google.com/web/updates/2017/02/media-session#implementation_notes , it needs to be at least 5 seconds
+ * long to allow usage of the media sessions api
+ */
+
+var SILENCE_6S_MP3 = 'data:audio/mp3;base64,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';
+
+/***/ }),
+
+/***/ "./src/plugins/tts/plugin.tts.js":
+/*!***************************************!*\
+  !*** ./src/plugins/tts/plugin.tts.js ***!
+  \***************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.regexp.to-string.js */ "./node_modules/core-js/modules/es.regexp.to-string.js");
+/* harmony import */ var core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "./node_modules/core-js/modules/es.regexp.exec.js");
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_string_match_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.string.match.js */ "./node_modules/core-js/modules/es.string.match.js");
+/* harmony import */ var core_js_modules_es_string_match_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_match_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.array.find.js */ "./node_modules/core-js/modules/es.array.find.js");
+/* harmony import */ var core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_find_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/es.array.concat.js */ "./node_modules/core-js/modules/es.array.concat.js");
+/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.array.map.js */ "./node_modules/core-js/modules/es.array.map.js");
+/* harmony import */ var core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.function.name.js */ "./node_modules/core-js/modules/es.function.name.js");
+/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_es_object_entries_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! core-js/modules/es.object.entries.js */ "./node_modules/core-js/modules/es.object.entries.js");
+/* harmony import */ var core_js_modules_es_object_entries_js__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_entries_js__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each.js */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! core-js/modules/es.symbol.js */ "./node_modules/core-js/modules/es.symbol.js");
+/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! core-js/modules/es.symbol.description.js */ "./node_modules/core-js/modules/es.symbol.description.js");
+/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! core-js/modules/es.symbol.iterator.js */ "./node_modules/core-js/modules/es.symbol.iterator.js");
+/* harmony import */ var core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_iterator_js__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! core-js/modules/es.array.iterator.js */ "./node_modules/core-js/modules/es.array.iterator.js");
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! core-js/modules/es.string.iterator.js */ "./node_modules/core-js/modules/es.string.iterator.js");
+/* harmony import */ var core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator_js__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator.js */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var core_js_modules_es_array_slice_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! core-js/modules/es.array.slice.js */ "./node_modules/core-js/modules/es.array.slice.js");
+/* harmony import */ var core_js_modules_es_array_slice_js__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_slice_js__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! core-js/modules/es.array.from.js */ "./node_modules/core-js/modules/es.array.from.js");
+/* harmony import */ var core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_from_js__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _FestivalTTSEngine_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./FestivalTTSEngine.js */ "./src/plugins/tts/FestivalTTSEngine.js");
+/* harmony import */ var _WebTTSEngine_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./WebTTSEngine.js */ "./src/plugins/tts/WebTTSEngine.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./utils.js */ "./src/plugins/tts/utils.js");
+/* harmony import */ var _tooltip_dict_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./tooltip_dict.js */ "./src/plugins/tts/tooltip_dict.js");
+/* harmony import */ var _BookReader_PageContainer_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../BookReader/PageContainer.js */ "./src/BookReader/PageContainer.js");
+/* provided dependency */ var jQuery = __webpack_require__(/*! jquery */ "jquery");
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "jquery");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* global BookReader */
+
+/**
+ * Plugin for Text to Speech in BookReader
+ */
+
+
+
+
+
+/** @typedef {import('./PageChunk.js').default} PageChunk */
+
+/** @typedef {import("./AbstractTTSEngine.js").default} AbstractTTSEngine */
+// Default options for TTS
+
+jQuery.extend(BookReader.defaultOptions, {
+  server: 'ia600609.us.archive.org',
+  bookPath: '',
+  enableTtsPlugin: true
+}); // Extend the constructor to add TTS properties
+
+BookReader.prototype.setup = function (super_) {
+  return function (options) {
+    super_.call(this, options);
+
+    if (this.options.enableTtsPlugin) {
+      /** @type { {[pageIndex: number]: Array<{ l: number, r: number, t: number, b: number }>} } */
+      this._ttsBoxesByIndex = {};
+      var TTSEngine = _WebTTSEngine_js__WEBPACK_IMPORTED_MODULE_21__.default.isSupported() ? _WebTTSEngine_js__WEBPACK_IMPORTED_MODULE_21__.default : _FestivalTTSEngine_js__WEBPACK_IMPORTED_MODULE_20__.default.isSupported() ? _FestivalTTSEngine_js__WEBPACK_IMPORTED_MODULE_20__.default : null;
+
+      if (/_forceTTSEngine=(festival|web)/.test(location.toString())) {
+        var engineName = location.toString().match(/_forceTTSEngine=(festival|web)/)[1];
+        TTSEngine = {
+          festival: _FestivalTTSEngine_js__WEBPACK_IMPORTED_MODULE_20__.default,
+          web: _WebTTSEngine_js__WEBPACK_IMPORTED_MODULE_21__.default
+        }[engineName];
+      }
+
+      if (TTSEngine) {
+        /** @type {AbstractTTSEngine} */
+        this.ttsEngine = new TTSEngine({
+          server: options.server,
+          bookPath: options.bookPath,
+          bookLanguage: (0,_utils_js__WEBPACK_IMPORTED_MODULE_22__.toISO6391)(options.bookLanguage),
+          onLoadingStart: this.showProgressPopup.bind(this, 'Loading audio...'),
+          onLoadingComplete: this.removeProgressPopup.bind(this),
+          onDone: this.ttsStop.bind(this),
+          beforeChunkPlay: this.ttsBeforeChunkPlay.bind(this),
+          afterChunkPlay: this.ttsSendChunkFinishedAnalyticsEvent.bind(this)
+        });
+      }
+    }
+  };
+}(BookReader.prototype.setup);
+
+BookReader.prototype.init = function (super_) {
+  return function () {
+    var _this = this;
+
+    if (this.options.enableTtsPlugin) {
+      // Bind to events
+      this.bind(BookReader.eventNames.PostInit, function () {
+        _this.$('.BRicon.read').click(function () {
+          _this.ttsToggle();
+
+          return false;
+        });
+
+        if (_this.ttsEngine) {
+          _this.ttsEngine.init();
+
+          if (/[?&]_autoReadAloud=show/.test(location.toString())) {
+            _this.ttsStart(false); // false flag is to initiate read aloud controls
+
+          }
+        }
+      }); // This is fired when the hash changes by one of the other plugins!
+      // i.e. it will fire every time the page changes -_-
+      // this.bind(BookReader.eventNames.stop, function(e, br) {
+      //     this.ttsStop();
+      // }.bind(this));
+    }
+
+    super_.call(this);
+  };
+}(BookReader.prototype.init);
+/** @override */
+
+
+BookReader.prototype._createPageContainer = function (super_) {
+  return function (index) {
+    var pageContainer = super_.call(this, index);
+
+    if (this.options.enableTtsPlugin && pageContainer.page && index in this._ttsBoxesByIndex) {
+      var pageIndex = pageContainer.page.index;
+      (0,_BookReader_PageContainer_js__WEBPACK_IMPORTED_MODULE_24__.renderBoxesInPageContainerLayer)('ttsHiliteLayer', this._ttsBoxesByIndex[pageIndex], pageContainer.page, pageContainer.$container[0]);
+    }
+
+    return pageContainer;
+  };
+}(BookReader.prototype._createPageContainer); // Extend buildMobileDrawerElement
+
+
+BookReader.prototype.buildMobileDrawerElement = function (super_) {
+  return function () {
+    var $el = super_.call(this);
+
+    if (this.options.enableTtsPlugin && this.ttsEngine) {
+      $el.find('.BRmobileMenu__moreInfoRow').after($("\n        <li>\n            <span>\n                <span class=\"DrawerIconWrapper\"><img class=\"DrawerIcon\" src=\"".concat(this.imagesBaseURL, "icon_speaker_open.svg\" alt=\"info-speaker\"/></span>\n                Read Aloud\n            </span>\n            <div>\n                <span class=\"larger\">Press to toggle read aloud</span>\n                <br/>\n                <button class=\"BRicon read\"></button>\n            </div>\n        </li>")));
+    }
+
+    return $el;
+  };
+}(BookReader.prototype.buildMobileDrawerElement); // Extend initNavbar
+
+
+BookReader.prototype.initNavbar = function (super_) {
+  return function () {
+    var _this2 = this;
+
+    var $el = super_.call(this);
+
+    if (this.options.enableTtsPlugin && this.ttsEngine) {
+      this.refs.$BRReadAloudToolbar = $("\n        <ul class=\"read-aloud\">\n          <li>\n            <select class=\"playback-speed\" name=\"playback-speed\" title=\"".concat(_tooltip_dict_js__WEBPACK_IMPORTED_MODULE_23__.en.playbackSpeed, "\">\n              <option value=\"0.25\">0.25x</option>\n              <option value=\"0.5\">0.5x</option>\n              <option value=\"0.75\">0.75x</option>\n              <option value=\"1.0\" selected>1.0x</option>\n              <option value=\"1.25\">1.25x</option>\n              <option value=\"1.5\">1.5x</option>\n              <option value=\"1.75\">1.75x</option>\n              <option value=\"2\">2x</option>\n            </select>\n          </li>\n          <li>\n            <button type=\"button\" name=\"review\" title=\"").concat(_tooltip_dict_js__WEBPACK_IMPORTED_MODULE_23__.en.review, "\">\n              <div class=\"icon icon-review\"></div>\n            </button>\n          </li>\n          <li>\n            <button type=\"button\" name=\"play\" title=\"").concat(_tooltip_dict_js__WEBPACK_IMPORTED_MODULE_23__.en.play, "\">\n              <div class=\"icon icon-play\"></div>\n              <div class=\"icon icon-pause\"></div>\n            </button>\n          </li>\n          <li>\n            <button type=\"button\" name=\"advance\" title=\"").concat(_tooltip_dict_js__WEBPACK_IMPORTED_MODULE_23__.en.advance, "\">\n              <div class=\"icon icon-advance\"></div>\n            </button>\n          </li>\n          <li>\n            <select class=\"playback-voices\" name=\"playback-voice\" style=\"display: none\" title=\"Change read aloud voices\">\n            </select>\n          </li>\n        </ul>\n      "));
+      $el.find('.BRcontrols').prepend(this.refs.$BRReadAloudToolbar);
+
+      var renderVoicesMenu = function renderVoicesMenu(voicesMenu) {
+        voicesMenu.empty();
+
+        if (_this2.ttsEngine.getVoices().length > 1) {
+          voicesMenu.append(_this2.ttsEngine.getVoices().map(function (voice) {
+            return $("<option value=\"".concat(voice.voiceURI, "\">").concat(voice.lang, " - ").concat(voice.name, "</option>"));
+          }));
+          voicesMenu.val(_this2.ttsEngine.voice.voiceURI);
+          voicesMenu.show();
+        } else {
+          voicesMenu.hide();
+        }
+      };
+
+      var voicesMenu = this.refs.$BRReadAloudToolbar.find('[name=playback-voice]');
+      renderVoicesMenu(voicesMenu);
+      voicesMenu.on("change", function (ev) {
+        return _this2.ttsEngine.setVoice(voicesMenu.val());
+      });
+      this.ttsEngine.events.on('pause resume start', function () {
+        return _this2.ttsUpdateState();
+      });
+      this.ttsEngine.events.on('voiceschanged', function () {
+        return renderVoicesMenu(voicesMenu);
+      });
+      this.refs.$BRReadAloudToolbar.find('[name=play]').on("click", this.ttsPlayPause.bind(this));
+      this.refs.$BRReadAloudToolbar.find('[name=advance]').on("click", this.ttsJumpForward.bind(this));
+      this.refs.$BRReadAloudToolbar.find('[name=review]').on("click", this.ttsJumpBackward.bind(this));
+      var $rateSelector = this.refs.$BRReadAloudToolbar.find('select[name="playback-speed"]');
+      $rateSelector.on("change", function (ev) {
+        return _this2.ttsEngine.setPlaybackRate(parseFloat($rateSelector.val()));
+      });
+      $("<li>\n          <button class=\"BRicon read js-tooltip\" title=\"".concat(_tooltip_dict_js__WEBPACK_IMPORTED_MODULE_23__.en.readAloud, "\">\n            <div class=\"icon icon-read-aloud\"></div>\n            <span class=\"tooltip\">").concat(_tooltip_dict_js__WEBPACK_IMPORTED_MODULE_23__.en.readAloud, "</span>\n          </button>\n        </li>")).insertBefore($el.find('.BRcontrols .BRicon.zoom_out').closest('li'));
+    }
+
+    return $el;
+  };
+}(BookReader.prototype.initNavbar); // ttsToggle()
+//______________________________________________________________________________
+
+
+BookReader.prototype.ttsToggle = function () {
+  if (this.autoStop) this.autoStop();
+
+  if (this.ttsEngine.playing) {
+    this.ttsStop();
+  } else {
+    this.ttsStart();
+  }
+}; // ttsStart(
+//______________________________________________________________________________
+
+
+BookReader.prototype.ttsStart = function () {
+  var startTTSEngine = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  if (this.constModeThumb == this.mode) this.switchMode(this.constMode1up);
+  this.refs.$BRReadAloudToolbar.addClass('visible');
+  this.$('.BRicon.read').addClass('unread active');
+  this.ttsSendAnalyticsEvent('Start');
+  if (startTTSEngine) this.ttsEngine.start(this.currentIndex(), this.getNumLeafs());
+};
+
+BookReader.prototype.ttsJumpForward = function () {
+  if (this.ttsEngine.paused) {
+    this.ttsEngine.resume();
+  }
+
+  this.ttsEngine.jumpForward();
+};
+
+BookReader.prototype.ttsJumpBackward = function () {
+  if (this.ttsEngine.paused) {
+    this.ttsEngine.resume();
+  }
+
+  this.ttsEngine.jumpBackward();
+};
+
+BookReader.prototype.ttsUpdateState = function () {
+  var isPlaying = !(this.ttsEngine.paused || !this.ttsEngine.playing);
+  this.$('.read-aloud [name=play]').toggleClass('playing', isPlaying);
+};
+
+BookReader.prototype.ttsPlayPause = function () {
+  if (!this.ttsEngine.playing) {
+    this.ttsToggle();
+  } else {
+    this.ttsEngine.togglePlayPause();
+    this.ttsUpdateState(this.ttsEngine.paused);
+  }
+}; // ttsStop()
+//______________________________________________________________________________
+
+
+BookReader.prototype.ttsStop = function () {
+  this.refs.$BRReadAloudToolbar.removeClass('visible');
+  this.$('.BRicon.read').removeClass('unread active');
+  this.ttsSendAnalyticsEvent('Stop');
+  this.ttsEngine.stop();
+  this.ttsRemoveHilites();
+  this.removeProgressPopup();
+};
+/**
+ * @param {PageChunk} chunk
+ * @return {PromiseLike<void>} returns once the flip is done
+ */
+
+
+BookReader.prototype.ttsBeforeChunkPlay = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(chunk) {
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return this.ttsMaybeFlipToIndex(chunk.leafIndex);
+
+          case 2:
+            this.ttsHighlightChunk(chunk);
+            this.ttsScrollToChunk(chunk);
+
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, this);
+  }));
+
+  return function (_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+/**
+ * @param {PageChunk} chunk
+ */
+
+
+BookReader.prototype.ttsSendChunkFinishedAnalyticsEvent = function (chunk) {
+  this.ttsSendAnalyticsEvent('ChunkFinished-Words', (0,_utils_js__WEBPACK_IMPORTED_MODULE_22__.approximateWordCount)(chunk.text));
+};
+/**
+ * Flip the page if the provided leaf index is not visible
+ * @param {Number} leafIndex
+ * @return {PromiseLike<void>} resolves once the flip animation has completed
+ */
+
+
+BookReader.prototype.ttsMaybeFlipToIndex = function (leafIndex) {
+  var in2PageMode = this.constMode2up == this.mode;
+  var resolve = null;
+  var promise = new Promise(function (res) {
+    return resolve = res;
+  });
+
+  if (!in2PageMode) {
+    this.jumpToIndex(leafIndex);
+    resolve();
+  } else {
+    var leafVisible = leafIndex == this.twoPage.currentIndexR || leafIndex == this.twoPage.currentIndexL;
+
+    if (leafVisible) {
+      resolve();
+    } else {
+      this.animationFinishedCallback = resolve;
+      this.jumpToIndex(leafIndex);
+    }
+  }
+
+  return promise;
+};
+/**
+ * @param {PageChunk} chunk
+ */
+
+
+BookReader.prototype.ttsHighlightChunk = function (chunk) {
+  var _this3 = this;
+
+  // The poorly-named variable leafIndex
+  var pageIndex = chunk.leafIndex;
+  this.ttsRemoveHilites(); // group by index; currently only possible to have chunks on one page :/
+
+  this._ttsBoxesByIndex = _defineProperty({}, pageIndex, chunk.lineRects.map(function (_ref2) {
+    var _ref3 = _slicedToArray(_ref2, 4),
+        l = _ref3[0],
+        b = _ref3[1],
+        r = _ref3[2],
+        t = _ref3[3];
+
+    return {
+      l: l,
+      r: r,
+      b: b,
+      t: t
+    };
+  })); // update any already created pages
+
+  var _loop = function _loop() {
+    var _Object$entries$_i = _slicedToArray(_Object$entries[_i2], 2),
+        pageIndexString = _Object$entries$_i[0],
+        boxes = _Object$entries$_i[1];
+
+    var pageIndex = parseFloat(pageIndexString);
+
+    var page = _this3._models.book.getPage(pageIndex);
+
+    var pageContainers = _this3.getActivePageContainerElementsForIndex(pageIndex);
+
+    pageContainers.forEach(function (container) {
+      return (0,_BookReader_PageContainer_js__WEBPACK_IMPORTED_MODULE_24__.renderBoxesInPageContainerLayer)('ttsHiliteLayer', boxes, page, container);
+    });
+  };
+
+  for (var _i2 = 0, _Object$entries = Object.entries(this._ttsBoxesByIndex); _i2 < _Object$entries.length; _i2++) {
+    _loop();
+  }
+};
+/**
+ * @param {PageChunk} chunk
+ */
+
+
+BookReader.prototype.ttsScrollToChunk = function (chunk) {
+  var _$$last, _$$last$;
+
+  // It behaves weird if used in thumb mode
+  if (this.constModeThumb == this.mode) return;
+  (_$$last = $(".pagediv".concat(chunk.leafIndex, " .ttsHiliteLayer rect")).last()) === null || _$$last === void 0 ? void 0 : (_$$last$ = _$$last[0]) === null || _$$last$ === void 0 ? void 0 : _$$last$.scrollIntoView({
+    // Only vertically center the highlight if we're in 1up or in full screen. In
+    // 2up, if we're not fullscreen, the whole body gets scrolled around to try to
+    // center the highlight 🙄 See:
+    // https://stackoverflow.com/questions/11039885/scrollintoview-causing-the-whole-page-to-move/11041376
+    // Note: nearest doesn't quite work great, because the ReadAloud toolbar is now
+    // full-width, and covers up the last line of the highlight.
+    block: this.constMode1up == this.mode || this.isFullscreenActive ? 'center' : 'nearest',
+    inline: 'center',
+    behavior: 'smooth'
+  });
+}; // ttsRemoveHilites()
+//______________________________________________________________________________
+
+
+BookReader.prototype.ttsRemoveHilites = function () {
+  $(this.getActivePageContainerElements()).find('.ttsHiliteLayer').remove();
+  this._ttsBoxesByIndex = {};
+};
+/**
+ * @private
+ * Send an analytics event with an optional value. Also attaches the book's language.
+ * @param {string} action
+ * @param {number} [value]
+ */
+
+
+BookReader.prototype.ttsSendAnalyticsEvent = function (action, value) {
+  if (this.archiveAnalyticsSendEvent) {
+    var extraValues = {};
+    var mediaLanguage = this.ttsEngine.opts.bookLanguage;
+    if (mediaLanguage) extraValues.mediaLanguage = mediaLanguage;
+    this.archiveAnalyticsSendEvent('BRReadAloud', action, value, extraValues);
+  }
+};
+
+/***/ }),
+
+/***/ "./src/plugins/tts/tooltip_dict.js":
+/*!*****************************************!*\
+  !*** ./src/plugins/tts/tooltip_dict.js ***!
+  \*****************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "en": function() { return /* binding */ en; },
+/* harmony export */   "es": function() { return /* binding */ es; }
+/* harmony export */ });
+var en = {
+  advance: 'Advance 10 seconds',
+  play: 'Play',
+  playbackSpeed: 'Playback speed',
+  readAloud: 'Read this book aloud',
+  review: 'Review 10 seconds'
+};
+var es = {
+  advance: 'Avance 10 segundos',
+  play: 'Jugar',
+  playbackSpeed: 'Velocidad de reproducción',
+  readAloud: 'Lee este libro en voz alta',
+  review: 'Revisar 10 segundos'
+};
+
+/***/ }),
+
+/***/ "./src/plugins/tts/utils.js":
+/*!**********************************!*\
+  !*** ./src/plugins/tts/utils.js ***!
+  \**********************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "promisifyEvent": function() { return /* binding */ promisifyEvent; },
+/* harmony export */   "approximateWordCount": function() { return /* binding */ approximateWordCount; },
+/* harmony export */   "sleep": function() { return /* binding */ sleep; },
+/* harmony export */   "isAndroid": function() { return /* binding */ isAndroid; },
+/* harmony export */   "toISO6391": function() { return /* binding */ toISO6391; }
+/* harmony export */ });
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.regexp.exec.js */ "./node_modules/core-js/modules/es.regexp.exec.js");
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_string_match_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.string.match.js */ "./node_modules/core-js/modules/es.string.match.js");
+/* harmony import */ var core_js_modules_es_string_match_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_match_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.array.map.js */ "./node_modules/core-js/modules/es.array.map.js");
+/* harmony import */ var core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_string_split_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.string.split.js */ "./node_modules/core-js/modules/es.string.split.js");
+/* harmony import */ var core_js_modules_es_string_split_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_split_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var iso_language_codes_js_data_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! iso-language-codes/js/data.js */ "./node_modules/iso-language-codes/js/data.js");
+
+
+
+
+
+
+
+/**
+ * Convert a EventTarget style event into a promise
+ * @param {EventTarget} target
+ * @param {string} eventType
+ * @return {Promise<Event>}
+ */
+
+function promisifyEvent(target, eventType) {
+  return new Promise(function (res) {
+    var resolver = function resolver(ev) {
+      target.removeEventListener(eventType, resolver);
+      res(ev);
+    };
+
+    target.addEventListener(eventType, resolver);
+  });
+}
+/**
+ * Use regex to approximate word count in a string
+ * @param {string} text
+ * @return {number}
+ */
+
+function approximateWordCount(text) {
+  var m = text.match(/\S+/g);
+  return m ? m.length : 0;
+}
+/**
+ * Waits the provided number of ms and then resolves with a promise
+ * @param {number} ms
+ * @return {Promise}
+ */
+
+function sleep(ms) {
+  return new Promise(function (res) {
+    return setTimeout(res, ms);
+  });
+}
+/**
+ * Checks whether the current browser is on android
+ * @param {string} [userAgent]
+ * @return {boolean}
+ */
+
+function isAndroid() {
+  var userAgent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : navigator.userAgent;
+  return /android/i.test(userAgent);
+}
+/**
+ * @typedef {string} ISO6391
+ * Language code in ISO 639-1 format. e.g. en, fr, zh
+ **/
+
+/** Each lang is an array, with each index mapping to a different property */
+
+var COLUMN_TO_LANG_INDEX = {
+  'Name': 0,
+  'Endonym': 1,
+  'ISO 639-1': 2,
+  'ISO 639-2/T': 3,
+  'ISO 639-2/B': 4
+};
+/**
+ * @param {string} language in some format
+ * @return {ISO6391?}
+ */
+
+function toISO6391(language) {
+  if (!language) return null;
+  language = language.toLowerCase();
+  return searchForISO6391(language, ['ISO 639-1']) || searchForISO6391(language, ['ISO 639-2/B']) || searchForISO6391(language, ['ISO 639-2/T', 'Endonym', 'Name']);
+}
+/**
+ * Searches for the given long in the given columns.
+ * @param {string} language
+ * @param {Array<keyof COLUMN_TO_LANG_INDEX>} columnsToSearch
+ * @return {ISO6391?}
+ */
+
+function searchForISO6391(language, columnsToSearch) {
+  for (var i = 0; i < iso_language_codes_js_data_js__WEBPACK_IMPORTED_MODULE_6__.default.length; i++) {
+    for (var colI = 0; colI < columnsToSearch.length; colI++) {
+      var column = columnsToSearch[colI];
+      var columnValue = iso_language_codes_js_data_js__WEBPACK_IMPORTED_MODULE_6__.default[i][COLUMN_TO_LANG_INDEX[column]];
+
+      if (columnValue.split(', ').map(function (x) {
+        return x.toLowerCase();
+      }).indexOf(language) != -1) {
+        return iso_language_codes_js_data_js__WEBPACK_IMPORTED_MODULE_6__.default[i][COLUMN_TO_LANG_INDEX['ISO 639-1']];
+      }
+    }
+  }
+
+  return null;
+}
+
+/***/ }),
+
+/***/ "./src/util/browserSniffing.js":
+/*!*************************************!*\
+  !*** ./src/util/browserSniffing.js ***!
+  \*************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isChrome": function() { return /* binding */ isChrome; },
+/* harmony export */   "isFirefox": function() { return /* binding */ isFirefox; },
+/* harmony export */   "isSafari": function() { return /* binding */ isSafari; }
+/* harmony export */ });
+/**
+ * Checks whether the current browser is a Chrome/Chromium browser
+ * Code from https://stackoverflow.com/a/4565120/2317712
+ * @param {string} [userAgent]
+ * @param {string} [vendor]
+ * @return {boolean}
+ */
+function isChrome() {
+  var userAgent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : navigator.userAgent;
+  var vendor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : navigator.vendor;
+  return /chrome/i.test(userAgent) && /google inc/i.test(vendor);
+}
+/**
+ * Checks whether the current browser is firefox
+ * @param {string} [userAgent]
+ * @return {boolean}
+ */
+
+function isFirefox() {
+  var userAgent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : navigator.userAgent;
+  return /firefox/i.test(userAgent);
+}
+/**
+ * Checks whether the current browser is safari
+ * https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent#Browser_Name
+ * @param {string} [userAgent]
+ * @return {boolean}
+ */
+
+function isSafari() {
+  var userAgent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : navigator.userAgent;
+  return /safari/i.test(userAgent) && !/chrome|chromium/i.test(userAgent);
+}
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.object.entries.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.object.entries.js ***!
+  \***********************************************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var $entries = __webpack_require__(/*! ../internals/object-to-array */ "./node_modules/core-js/internals/object-to-array.js").entries;
+
+// `Object.entries` method
+// https://tc39.es/ecma262/#sec-object.entries
+$({ target: 'Object', stat: true }, {
+  entries: function entries(O) {
+    return $entries(O);
+  }
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.string.match.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.string.match.js ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var fixRegExpWellKnownSymbolLogic = __webpack_require__(/*! ../internals/fix-regexp-well-known-symbol-logic */ "./node_modules/core-js/internals/fix-regexp-well-known-symbol-logic.js");
+var anObject = __webpack_require__(/*! ../internals/an-object */ "./node_modules/core-js/internals/an-object.js");
+var toLength = __webpack_require__(/*! ../internals/to-length */ "./node_modules/core-js/internals/to-length.js");
+var toString = __webpack_require__(/*! ../internals/to-string */ "./node_modules/core-js/internals/to-string.js");
+var requireObjectCoercible = __webpack_require__(/*! ../internals/require-object-coercible */ "./node_modules/core-js/internals/require-object-coercible.js");
+var advanceStringIndex = __webpack_require__(/*! ../internals/advance-string-index */ "./node_modules/core-js/internals/advance-string-index.js");
+var regExpExec = __webpack_require__(/*! ../internals/regexp-exec-abstract */ "./node_modules/core-js/internals/regexp-exec-abstract.js");
+
+// @@match logic
+fixRegExpWellKnownSymbolLogic('match', function (MATCH, nativeMatch, maybeCallNative) {
+  return [
+    // `String.prototype.match` method
+    // https://tc39.es/ecma262/#sec-string.prototype.match
+    function match(regexp) {
+      var O = requireObjectCoercible(this);
+      var matcher = regexp == undefined ? undefined : regexp[MATCH];
+      return matcher !== undefined ? matcher.call(regexp, O) : new RegExp(regexp)[MATCH](toString(O));
+    },
+    // `RegExp.prototype[@@match]` method
+    // https://tc39.es/ecma262/#sec-regexp.prototype-@@match
+    function (string) {
+      var rx = anObject(this);
+      var S = toString(string);
+      var res = maybeCallNative(nativeMatch, rx, S);
+
+      if (res.done) return res.value;
+
+      if (!rx.global) return regExpExec(rx, S);
+
+      var fullUnicode = rx.unicode;
+      rx.lastIndex = 0;
+      var A = [];
+      var n = 0;
+      var result;
+      while ((result = regExpExec(rx, S)) !== null) {
+        var matchStr = toString(result[0]);
+        A[n] = matchStr;
+        if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
+        n++;
+      }
+      return n === 0 ? null : A;
+    }
+  ];
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/iso-language-codes/js/data.js":
+/*!****************************************************!*\
+  !*** ./node_modules/iso-language-codes/js/data.js ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+var _default = [['Serbian', 'српски језик', 'sr', 'srp', 'srp'], ['Romanian, Moldavian, Moldovan', 'Română', 'ro', 'ron', 'rum'], ['Sichuan Yi, Nuosu', 'ꆈꌠ꒿ Nuosuhxop', 'ii', 'iii', 'iii'], ['Tahitian', 'Reo Tahiti', 'ty', 'tah', 'tah'], ['Tagalog', 'Wikang Tagalog', 'tl', 'tgl', 'tgl'], ['Yiddish', 'ייִדיש', 'yi', 'yid', 'yid'], ['Akan', 'Akan', 'ak', 'aka', 'aka'], ['Malay', 'Bahasa Melayu, بهاس ملايو‎', 'ms', 'msa', 'may'], ['Arabic', 'العربية', 'ar', 'ara', 'ara'], ['Norwegian', 'Norsk', 'no', 'nor', 'nor'], ['Ojibwa', 'ᐊᓂᔑᓈᐯᒧᐎᓐ', 'oj', 'oji', 'oji'], ['Fulah', 'Fulfulde, Pulaar, Pular', 'ff', 'ful', 'ful'], ['Persian', 'فارسی', 'fa', 'fas', 'per'], ['Albanian', 'Shqip', 'sq', 'sqi', 'alb'], ['Aymara', 'aymar aru', 'ay', 'aym', 'aym'], ['Azerbaijani', 'azərbaycan dili', 'az', 'aze', 'aze'], ['Chinese', '中文 (Zhōngwén), 汉语, 漢語', 'zh', 'zho', 'chi'], ['Cree', 'ᓀᐦᐃᔭᐍᐏᐣ', 'cr', 'cre', 'cre'], ['Estonian', 'eesti, eesti keel', 'et', 'est', 'est'], ['Guaraní', 'Avañe\'ẽ', 'gn', 'grn', 'grn'], ['Inupiaq', 'Iñupiaq, Iñupiatun', 'ik', 'ipk', 'ipk'], ['Inuktitut', 'ᐃᓄᒃᑎᑐᑦ', 'iu', 'iku', 'iku'], ['Kanuri', 'Kanuri', 'kr', 'kau', 'kau'], ['Komi', 'коми кыв', 'kv', 'kom', 'kom'], ['Kongo', 'Kikongo', 'kg', 'kon', 'kon'], ['Kurdish', 'Kurdî, کوردی‎', 'ku', 'kur', 'kur'], ['Latvian', 'latviešu valoda', 'lv', 'lav', 'lav'], ['Malagasy', 'fiteny malagasy', 'mg', 'mlg', 'mlg'], ['Mongolian', 'Монгол хэл', 'mn', 'mon', 'mon'], ['Oromo', 'Afaan Oromoo', 'om', 'orm', 'orm'], ['Pashto, Pushto', 'پښتو', 'ps', 'pus', 'pus'], ['Quechua', 'Runa Simi, Kichwa', 'qu', 'que', 'que'], ['Sardinian', 'sardu', 'sc', 'srd', 'srd'], ['Swahili', 'Kiswahili', 'sw', 'swa', 'swa'], ['Uzbek', 'Oʻzbek, Ўзбек, أۇزبېك‎', 'uz', 'uzb', 'uzb'], ['Zhuang, Chuang', 'Saɯ cueŋƅ, Saw cuengh', 'za', 'zha', 'zha'], ['Bislama', 'Bislama', 'bi', 'bis', 'bis'], ['Norwegian Bokmål', 'Norsk Bokmål', 'nb', 'nob', 'nob'], ['Norwegian Nynorsk', 'Norsk Nynorsk', 'nn', 'nno', 'nno'], ['Indonesian', 'Bahasa Indonesia', 'id', 'ind', 'ind'], ['Twi', 'Twi', 'tw', 'twi', 'twi'], ['Esperanto', 'Esperanto', 'eo', 'epo', 'epo'], ['Interlingua', 'Interlingua', 'ia', 'ina', 'ina'], ['Interlingue', 'Originally called Occidental; then Interlingue after WWII', 'ie', 'ile', 'ile'], ['Ido', 'Ido', 'io', 'ido', 'ido'], ['Volapük', 'Volapük', 'vo', 'vol', 'vol'], ['Bihari languages', 'भोजपुरी', 'bh', 'bih', 'bih'], ['Hebrew (modern)', 'עברית', 'he', 'heb', 'heb'], ['Sanskrit', 'संस्कृतम्', 'sa', 'san', 'san'], ['Church Slavic, Church Slavonic, Old Church Slavonic, Old Slavonic, Old Bulgarian', 'ѩзыкъ словѣньскъ', 'cu', 'chu', 'chu'], ['Pali', 'पाऴि', 'pi', 'pli', 'pli'], ['Avestan', 'avesta', 'ae', 'ave', 'ave'], ['Latin', 'latine, lingua latina', 'la', 'lat', 'lat'], ['Armenian', 'Հայերեն', 'hy', 'hye', 'arm'], ['Swati', 'SiSwati', 'ss', 'ssw', 'ssw'], ['Tibetan', 'བོད་ཡིག', 'bo', 'bod', 'tib'], ['South Ndebele', 'isiNdebele', 'nr', 'nbl', 'nbl'], ['Slovene', 'Slovenski Jezik, Slovenščina', 'sl', 'slv', 'slv'], ['Oriya', 'ଓଡ଼ିଆ', 'or', 'ori', 'ori'], ['North Ndebele', 'isiNdebele', 'nd', 'nde', 'nde'], ['Nauru', 'Dorerin Naoero', 'na', 'nau', 'nau'], ['Maori', 'te reo Māori', 'mi', 'mri', 'mao'], ['Marathi', 'मराठी', 'mr', 'mar', 'mar'], ['Luba-Katanga', 'Kiluba', 'lu', 'lub', 'lub'], ['Rundi', 'Ikirundi', 'rn', 'run', 'run'], ['Central Khmer', 'ខ្មែរ, ខេមរភាសា, ភាសាខ្មែរ', 'km', 'khm', 'khm'], ['Western Frisian', 'Frysk', 'fy', 'fry', 'fry'], ['Bengali', 'বাংলা', 'bn', 'ben', 'ben'], ['Avaric', 'авар мацӀ, магӀарул мацӀ', 'av', 'ava', 'ava'], ['Abkhazian', 'аҧсуа бызшәа, аҧсшәа', 'ab', 'abk', 'abk'], ['Afar', 'Afaraf', 'aa', 'aar', 'aar'], ['Afrikaans', 'Afrikaans', 'af', 'afr', 'afr'], ['Amharic', 'አማርኛ', 'am', 'amh', 'amh'], ['Aragonese', 'aragonés', 'an', 'arg', 'arg'], ['Assamese', 'অসমীয়া', 'as', 'asm', 'asm'], ['Bambara', 'bamanankan', 'bm', 'bam', 'bam'], ['Bashkir', 'башҡорт теле', 'ba', 'bak', 'bak'], ['Basque', 'euskara, euskera', 'eu', 'eus', 'baq'], ['Belarusian', 'беларуская мова', 'be', 'bel', 'bel'], ['Bosnian', 'bosanski jezik', 'bs', 'bos', 'bos'], ['Breton', 'brezhoneg', 'br', 'bre', 'bre'], ['Bulgarian', 'български език', 'bg', 'bul', 'bul'], ['Burmese', 'ဗမာစာ', 'my', 'mya', 'bur'], ['Catalan, Valencian', 'català, valencià', 'ca', 'cat', 'cat'], ['Chamorro', 'Chamoru', 'ch', 'cha', 'cha'], ['Chechen', 'нохчийн мотт', 'ce', 'che', 'che'], ['Chichewa, Chewa, Nyanja', 'chiCheŵa, chinyanja', 'ny', 'nya', 'nya'], ['Chuvash', 'чӑваш чӗлхи', 'cv', 'chv', 'chv'], ['Cornish', 'Kernewek', 'kw', 'cor', 'cor'], ['Corsican', 'corsu, lingua corsa', 'co', 'cos', 'cos'], ['Croatian', 'hrvatski jezik', 'hr', 'hrv', 'hrv'], ['Czech', 'čeština, český jazyk', 'cs', 'ces', 'cze'], ['Danish', 'dansk', 'da', 'dan', 'dan'], ['Divehi, Dhivehi, Maldivian', 'ދިވެހި', 'dv', 'div', 'div'], ['Dutch, Flemish', 'Nederlands, Vlaams', 'nl', 'nld', 'dut'], ['Dzongkha', 'རྫོང་ཁ', 'dz', 'dzo', 'dzo'], ['English', 'English', 'en', 'eng', 'eng'], ['Ewe', 'Eʋegbe', 'ee', 'ewe', 'ewe'], ['Faroese', 'føroyskt', 'fo', 'fao', 'fao'], ['Fijian', 'vosa Vakaviti', 'fj', 'fij', 'fij'], ['Finnish', 'suomi, suomen kieli', 'fi', 'fin', 'fin'], ['French', 'français, langue française', 'fr', 'fra', 'fre'], ['Galician', 'Galego', 'gl', 'glg', 'glg'], ['Georgian', 'ქართული', 'ka', 'kat', 'geo'], ['German', 'Deutsch', 'de', 'deu', 'ger'], ['Greek (modern)', 'ελληνικά', 'el', 'ell', 'gre'], ['Gujarati', 'ગુજરાતી', 'gu', 'guj', 'guj'], ['Haitian, Haitian Creole', 'Kreyòl ayisyen', 'ht', 'hat', 'hat'], ['Hausa', '(Hausa) هَوُسَ', 'ha', 'hau', 'hau'], ['Herero', 'Otjiherero', 'hz', 'her', 'her'], ['Hindi', 'हिन्दी, हिंदी', 'hi', 'hin', 'hin'], ['Hiri Motu', 'Hiri Motu', 'ho', 'hmo', 'hmo'], ['Hungarian', 'magyar', 'hu', 'hun', 'hun'], ['Irish', 'Gaeilge', 'ga', 'gle', 'gle'], ['Igbo', 'Asụsụ Igbo', 'ig', 'ibo', 'ibo'], ['Icelandic', 'Íslenska', 'is', 'isl', 'ice'], ['Italian', 'Italiano', 'it', 'ita', 'ita'], ['Japanese', '日本語 (にほんご)', 'ja', 'jpn', 'jpn'], ['Javanese', 'ꦧꦱꦗꦮ, Basa Jawa', 'jv', 'jav', 'jav'], ['Kalaallisut, Greenlandic', 'kalaallisut, kalaallit oqaasii', 'kl', 'kal', 'kal'], ['Kannada', 'ಕನ್ನಡ', 'kn', 'kan', 'kan'], ['Kashmiri', 'कश्मीरी, كشميري‎', 'ks', 'kas', 'kas'], ['Kazakh', 'қазақ тілі', 'kk', 'kaz', 'kaz'], ['Kikuyu, Gikuyu', 'Gĩkũyũ', 'ki', 'kik', 'kik'], ['Kinyarwanda', 'Ikinyarwanda', 'rw', 'kin', 'kin'], ['Kirghiz, Kyrgyz', 'Кыргызча, Кыргыз тили', 'ky', 'kir', 'kir'], ['Korean', '한국어', 'ko', 'kor', 'kor'], ['Kuanyama, Kwanyama', 'Kuanyama', 'kj', 'kua', 'kua'], ['Luxembourgish, Letzeburgesch', 'Lëtzebuergesch', 'lb', 'ltz', 'ltz'], ['Ganda', 'Luganda', 'lg', 'lug', 'lug'], ['Limburgan, Limburger, Limburgish', 'Limburgs', 'li', 'lim', 'lim'], ['Lingala', 'Lingála', 'ln', 'lin', 'lin'], ['Lao', 'ພາສາລາວ', 'lo', 'lao', 'lao'], ['Lithuanian', 'lietuvių kalba', 'lt', 'lit', 'lit'], ['Manx', 'Gaelg, Gailck', 'gv', 'glv', 'glv'], ['Macedonian', 'македонски јазик', 'mk', 'mkd', 'mac'], ['Malayalam', 'മലയാളം', 'ml', 'mal', 'mal'], ['Maltese', 'Malti', 'mt', 'mlt', 'mlt'], ['Marshallese', 'Kajin M̧ajeļ', 'mh', 'mah', 'mah'], ['Navajo, Navaho', 'Diné bizaad', 'nv', 'nav', 'nav'], ['Nepali', 'नेपाली', 'ne', 'nep', 'nep'], ['Ndonga', 'Owambo', 'ng', 'ndo', 'ndo'], ['Occitan', 'occitan, lenga d\'òc', 'oc', 'oci', 'oci'], ['Ossetian, Ossetic', 'ирон æвзаг', 'os', 'oss', 'oss'], ['Panjabi, Punjabi', 'ਪੰਜਾਬੀ', 'pa', 'pan', 'pan'], ['Polish', 'język polski, polszczyzna', 'pl', 'pol', 'pol'], ['Portuguese', 'Português', 'pt', 'por', 'por'], ['Romansh', 'Rumantsch Grischun', 'rm', 'roh', 'roh'], ['Russian', 'русский', 'ru', 'rus', 'rus'], ['Sindhi', 'सिन्धी, سنڌي، سندھی‎', 'sd', 'snd', 'snd'], ['Northern Sami', 'Davvisámegiella', 'se', 'sme', 'sme'], ['Samoan', 'gagana fa\'a Samoa', 'sm', 'smo', 'smo'], ['Sango', 'yângâ tî sängö', 'sg', 'sag', 'sag'], ['Gaelic, Scottish Gaelic', 'Gàidhlig', 'gd', 'gla', 'gla'], ['Shona', 'chiShona', 'sn', 'sna', 'sna'], ['Sinhala, Sinhalese', 'සිංහල', 'si', 'sin', 'sin'], ['Slovak', 'Slovenčina, Slovenský Jazyk', 'sk', 'slk', 'slo'], ['Somali', 'Soomaaliga, af Soomaali', 'so', 'som', 'som'], ['Southern Sotho', 'Sesotho', 'st', 'sot', 'sot'], ['Spanish, Castilian', 'Español', 'es', 'spa', 'spa'], ['Sundanese', 'Basa Sunda', 'su', 'sun', 'sun'], ['Swedish', 'Svenska', 'sv', 'swe', 'swe'], ['Tamil', 'தமிழ்', 'ta', 'tam', 'tam'], ['Telugu', 'తెలుగు', 'te', 'tel', 'tel'], ['Tajik', 'тоҷикӣ, toçikī, تاجیکی‎', 'tg', 'tgk', 'tgk'], ['Thai', 'ไทย', 'th', 'tha', 'tha'], ['Tigrinya', 'ትግርኛ', 'ti', 'tir', 'tir'], ['Turkmen', 'Türkmen, Түркмен', 'tk', 'tuk', 'tuk'], ['Tswana', 'Setswana', 'tn', 'tsn', 'tsn'], ['Tongan (Tonga Islands)', 'Faka Tonga', 'to', 'ton', 'ton'], ['Turkish', 'Türkçe', 'tr', 'tur', 'tur'], ['Tsonga', 'Xitsonga', 'ts', 'tso', 'tso'], ['Tatar', 'татар теле, tatar tele', 'tt', 'tat', 'tat'], ['Uighur, Uyghur', 'ئۇيغۇرچە‎, Uyghurche', 'ug', 'uig', 'uig'], ['Ukrainian', 'Українська', 'uk', 'ukr', 'ukr'], ['Urdu', 'اردو', 'ur', 'urd', 'urd'], ['Venda', 'Tshivenḓa', 've', 'ven', 'ven'], ['Vietnamese', 'Tiếng Việt', 'vi', 'vie', 'vie'], ['Walloon', 'Walon', 'wa', 'wln', 'wln'], ['Welsh', 'Cymraeg', 'cy', 'cym', 'wel'], ['Wolof', 'Wollof', 'wo', 'wol', 'wol'], ['Xhosa', 'isiXhosa', 'xh', 'xho', 'xho'], ['Yoruba', 'Yorùbá', 'yo', 'yor', 'yor'], ['Zulu', 'isiZulu', 'zu', 'zul', 'zul']];
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/jquery.browser/dist/jquery.browser.js":
+/*!************************************************************!*\
+  !*** ./node_modules/jquery.browser/dist/jquery.browser.js ***!
+  \************************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * jQuery Browser Plugin 0.1.0
+ * https://github.com/gabceb/jquery-browser-plugin
+ *
+ * Original jquery-browser code Copyright 2005, 2015 jQuery Foundation, Inc. and other contributors
+ * http://jquery.org/license
+ *
+ * Modifications Copyright 2015 Gabriel Cebrian
+ * https://github.com/gabceb
+ *
+ * Released under the MIT license
+ *
+ * Date: 05-07-2015
+ */
+/*global window: false */
+
+(function (factory) {
+  if (true) {
+    // AMD. Register as an anonymous module.
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "jquery")], __WEBPACK_AMD_DEFINE_RESULT__ = (function ($) {
+      return factory($);
+    }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {}
+}(function(jQuery) {
+  "use strict";
+
+  function uaMatch( ua ) {
+    // If an UA is not provided, default to the current browser UA.
+    if ( ua === undefined ) {
+      ua = window.navigator.userAgent;
+    }
+    ua = ua.toLowerCase();
+
+    var match = /(edge)\/([\w.]+)/.exec( ua ) ||
+        /(opr)[\/]([\w.]+)/.exec( ua ) ||
+        /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+        /(iemobile)[\/]([\w.]+)/.exec( ua ) ||
+        /(version)(applewebkit)[ \/]([\w.]+).*(safari)[ \/]([\w.]+)/.exec( ua ) ||
+        /(webkit)[ \/]([\w.]+).*(version)[ \/]([\w.]+).*(safari)[ \/]([\w.]+)/.exec( ua ) ||
+        /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+        /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+        /(msie) ([\w.]+)/.exec( ua ) ||
+        ua.indexOf("trident") >= 0 && /(rv)(?::| )([\w.]+)/.exec( ua ) ||
+        ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+        [];
+
+    var platform_match = /(ipad)/.exec( ua ) ||
+        /(ipod)/.exec( ua ) ||
+        /(windows phone)/.exec( ua ) ||
+        /(iphone)/.exec( ua ) ||
+        /(kindle)/.exec( ua ) ||
+        /(silk)/.exec( ua ) ||
+        /(android)/.exec( ua ) ||
+        /(win)/.exec( ua ) ||
+        /(mac)/.exec( ua ) ||
+        /(linux)/.exec( ua ) ||
+        /(cros)/.exec( ua ) ||
+        /(playbook)/.exec( ua ) ||
+        /(bb)/.exec( ua ) ||
+        /(blackberry)/.exec( ua ) ||
+        [];
+
+    var browser = {},
+        matched = {
+          browser: match[ 5 ] || match[ 3 ] || match[ 1 ] || "",
+          version: match[ 2 ] || match[ 4 ] || "0",
+          versionNumber: match[ 4 ] || match[ 2 ] || "0",
+          platform: platform_match[ 0 ] || ""
+        };
+
+    if ( matched.browser ) {
+      browser[ matched.browser ] = true;
+      browser.version = matched.version;
+      browser.versionNumber = parseInt(matched.versionNumber, 10);
+    }
+
+    if ( matched.platform ) {
+      browser[ matched.platform ] = true;
+    }
+
+    // These are all considered mobile platforms, meaning they run a mobile browser
+    if ( browser.android || browser.bb || browser.blackberry || browser.ipad || browser.iphone ||
+      browser.ipod || browser.kindle || browser.playbook || browser.silk || browser[ "windows phone" ]) {
+      browser.mobile = true;
+    }
+
+    // These are all considered desktop platforms, meaning they run a desktop browser
+    if ( browser.cros || browser.mac || browser.linux || browser.win ) {
+      browser.desktop = true;
+    }
+
+    // Chrome, Opera 15+ and Safari are webkit based browsers
+    if ( browser.chrome || browser.opr || browser.safari ) {
+      browser.webkit = true;
+    }
+
+    // IE11 has a new token so we will assign it msie to avoid breaking changes
+    if ( browser.rv || browser.iemobile) {
+      var ie = "msie";
+
+      matched.browser = ie;
+      browser[ie] = true;
+    }
+
+    // Edge is officially known as Microsoft Edge, so rewrite the key to match
+    if ( browser.edge ) {
+      delete browser.edge;
+      var msedge = "msedge";
+
+      matched.browser = msedge;
+      browser[msedge] = true;
+    }
+
+    // Blackberry browsers are marked as Safari on BlackBerry
+    if ( browser.safari && browser.blackberry ) {
+      var blackberry = "blackberry";
+
+      matched.browser = blackberry;
+      browser[blackberry] = true;
+    }
+
+    // Playbook browsers are marked as Safari on Playbook
+    if ( browser.safari && browser.playbook ) {
+      var playbook = "playbook";
+
+      matched.browser = playbook;
+      browser[playbook] = true;
+    }
+
+    // BB10 is a newer OS version of BlackBerry
+    if ( browser.bb ) {
+      var bb = "blackberry";
+
+      matched.browser = bb;
+      browser[bb] = true;
+    }
+
+    // Opera 15+ are identified as opr
+    if ( browser.opr ) {
+      var opera = "opera";
+
+      matched.browser = opera;
+      browser[opera] = true;
+    }
+
+    // Stock Android browsers are marked as Safari on Android.
+    if ( browser.safari && browser.android ) {
+      var android = "android";
+
+      matched.browser = android;
+      browser[android] = true;
+    }
+
+    // Kindle browsers are marked as Safari on Kindle
+    if ( browser.safari && browser.kindle ) {
+      var kindle = "kindle";
+
+      matched.browser = kindle;
+      browser[kindle] = true;
+    }
+
+     // Kindle Silk browsers are marked as Safari on Kindle
+    if ( browser.safari && browser.silk ) {
+      var silk = "silk";
+
+      matched.browser = silk;
+      browser[silk] = true;
+    }
+
+    // Assign the name and platform variable
+    browser.name = matched.browser;
+    browser.platform = matched.platform;
+    return browser;
+  }
+
+  // Run the matching process, also assign the function to the returned object
+  // for manual, jQuery-free use if desired
+  window.jQBrowser = uaMatch( window.navigator.userAgent );
+  window.jQBrowser.uaMatch = uaMatch;
+
+  // Only assign to jQuery.browser if jQuery is loaded
+  if ( jQuery ) {
+    jQuery.browser = window.jQBrowser;
+  }
+
+  return window.jQBrowser;
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/soundmanager2/script/soundmanager2.js":
+/*!************************************************************!*\
+  !*** ./node_modules/soundmanager2/script/soundmanager2.js ***!
+  \************************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var __WEBPACK_AMD_DEFINE_RESULT__;/** @license
+ *
+ * SoundManager 2: JavaScript Sound for the Web
+ * ----------------------------------------------
+ * http://schillmania.com/projects/soundmanager2/
+ *
+ * Copyright (c) 2007, Scott Schiller. All rights reserved.
+ * Code provided under the BSD License:
+ * http://schillmania.com/projects/soundmanager2/license.txt
+ *
+ * V2.97a.20170601
+ */
+
+/**
+ * About this file
+ * -------------------------------------------------------------------------------------
+ * This is the fully-commented source version of the SoundManager 2 API,
+ * recommended for use during development and testing.
+ *
+ * See soundmanager2-nodebug-jsmin.js for an optimized build (~11KB with gzip.)
+ * http://schillmania.com/projects/soundmanager2/doc/getstarted/#basic-inclusion
+ * Alternately, serve this file with gzip for 75% compression savings (~30KB over HTTP.)
+ *
+ * You may notice <d> and </d> comments in this source; these are delimiters for
+ * debug blocks which are removed in the -nodebug builds, further optimizing code size.
+ *
+ * Also, as you may note: Whoa, reliable cross-platform/device audio support is hard! ;)
+ */
+
+(function SM2(window, _undefined) {
+
+/* global Audio, document, window, navigator, define, module, SM2_DEFER, opera, setTimeout, setInterval, clearTimeout, sm2Debugger */
+
+'use strict';
+
+if (!window || !window.document) {
+
+  // Don't cross the [environment] streams. SM2 expects to be running in a browser, not under node.js etc.
+  // Additionally, if a browser somehow manages to fail this test, as Egon said: "It would be bad."
+
+  throw new Error('SoundManager requires a browser with window and document objects.');
+
+}
+
+var soundManager = null;
+
+/**
+ * The SoundManager constructor.
+ *
+ * @constructor
+ * @param {string} smURL Optional: Path to SWF files
+ * @param {string} smID Optional: The ID to use for the SWF container element
+ * @this {SoundManager}
+ * @return {SoundManager} The new SoundManager instance
+ */
+
+function SoundManager(smURL, smID) {
+
+  /**
+   * soundManager configuration options list
+   * defines top-level configuration properties to be applied to the soundManager instance (eg. soundManager.flashVersion)
+   * to set these properties, use the setup() method - eg., soundManager.setup({url: '/swf/', flashVersion: 9})
+   */
+
+  this.setupOptions = {
+
+    url: (smURL || null),             // path (directory) where SoundManager 2 SWFs exist, eg., /path/to/swfs/
+    flashVersion: 8,                  // flash build to use (8 or 9.) Some API features require 9.
+    debugMode: true,                  // enable debugging output (console.log() with HTML fallback)
+    debugFlash: false,                // enable debugging output inside SWF, troubleshoot Flash/browser issues
+    useConsole: true,                 // use console.log() if available (otherwise, writes to #soundmanager-debug element)
+    consoleOnly: true,                // if console is being used, do not create/write to #soundmanager-debug
+    waitForWindowLoad: false,         // force SM2 to wait for window.onload() before trying to call soundManager.onload()
+    bgColor: '#ffffff',               // SWF background color. N/A when wmode = 'transparent'
+    useHighPerformance: false,        // position:fixed flash movie can help increase js/flash speed, minimize lag
+    flashPollingInterval: null,       // msec affecting whileplaying/loading callback frequency. If null, default of 50 msec is used.
+    html5PollingInterval: null,       // msec affecting whileplaying() for HTML5 audio, excluding mobile devices. If null, native HTML5 update events are used.
+    flashLoadTimeout: 1000,           // msec to wait for flash movie to load before failing (0 = infinity)
+    wmode: null,                      // flash rendering mode - null, 'transparent', or 'opaque' (last two allow z-index to work)
+    allowScriptAccess: 'always',      // for scripting the SWF (object/embed property), 'always' or 'sameDomain'
+    useFlashBlock: false,             // *requires flashblock.css, see demos* - allow recovery from flash blockers. Wait indefinitely and apply timeout CSS to SWF, if applicable.
+    useHTML5Audio: true,              // use HTML5 Audio() where API is supported (most Safari, Chrome versions), Firefox (MP3/MP4 support varies.) Ideally, transparent vs. Flash API where possible.
+    forceUseGlobalHTML5Audio: false,  // if true, a single Audio() object is used for all sounds - and only one can play at a time.
+    ignoreMobileRestrictions: false,  // if true, SM2 will not apply global HTML5 audio rules to mobile UAs. iOS > 7 and WebViews may allow multiple Audio() instances.
+    html5Test: /^(probably|maybe)$/i, // HTML5 Audio() format support test. Use /^probably$/i; if you want to be more conservative.
+    preferFlash: false,               // overrides useHTML5audio, will use Flash for MP3/MP4/AAC if present. Potential option if HTML5 playback with these formats is quirky.
+    noSWFCache: false,                // if true, appends ?ts={date} to break aggressive SWF caching.
+    idPrefix: 'sound'                 // if an id is not provided to createSound(), this prefix is used for generated IDs - 'sound0', 'sound1' etc.
+
+  };
+
+  this.defaultOptions = {
+
+    /**
+     * the default configuration for sound objects made with createSound() and related methods
+     * eg., volume, auto-load behaviour and so forth
+     */
+
+    autoLoad: false,        // enable automatic loading (otherwise .load() will be called on demand with .play(), the latter being nicer on bandwidth - if you want to .load yourself, you also can)
+    autoPlay: false,        // enable playing of file as soon as possible (much faster if "stream" is true)
+    from: null,             // position to start playback within a sound (msec), default = beginning
+    loops: 1,               // how many times to repeat the sound (position will wrap around to 0, setPosition() will break out of loop when >0)
+    onid3: null,            // callback function for "ID3 data is added/available"
+    onerror: null,          // callback function for "load failed" (or, playback/network/decode error under HTML5.)
+    onload: null,           // callback function for "load finished"
+    whileloading: null,     // callback function for "download progress update" (X of Y bytes received)
+    onplay: null,           // callback for "play" start
+    onpause: null,          // callback for "pause"
+    onresume: null,         // callback for "resume" (pause toggle)
+    whileplaying: null,     // callback during play (position update)
+    onposition: null,       // object containing times and function callbacks for positions of interest
+    onstop: null,           // callback for "user stop"
+    onfinish: null,         // callback function for "sound finished playing"
+    multiShot: true,        // let sounds "restart" or layer on top of each other when played multiple times, rather than one-shot/one at a time
+    multiShotEvents: false, // fire multiple sound events (currently onfinish() only) when multiShot is enabled
+    position: null,         // offset (milliseconds) to seek to within loaded sound data.
+    pan: 0,                 // "pan" settings, left-to-right, -100 to 100
+    playbackRate: 1,        // rate at which to play the sound (HTML5-only)
+    stream: true,           // allows playing before entire file has loaded (recommended)
+    to: null,               // position to end playback within a sound (msec), default = end
+    type: null,             // MIME-like hint for file pattern / canPlay() tests, eg. audio/mp3
+    usePolicyFile: false,   // enable crossdomain.xml request for audio on remote domains (for ID3/waveform access)
+    volume: 100             // self-explanatory. 0-100, the latter being the max.
+
+  };
+
+  this.flash9Options = {
+
+    /**
+     * flash 9-only options,
+     * merged into defaultOptions if flash 9 is being used
+     */
+
+    onfailure: null,        // callback function for when playing fails (Flash 9, MovieStar + RTMP-only)
+    isMovieStar: null,      // "MovieStar" MPEG4 audio mode. Null (default) = auto detect MP4, AAC etc. based on URL. true = force on, ignore URL
+    usePeakData: false,     // enable left/right channel peak (level) data
+    useWaveformData: false, // enable sound spectrum (raw waveform data) - NOTE: May increase CPU load.
+    useEQData: false,       // enable sound EQ (frequency spectrum data) - NOTE: May increase CPU load.
+    onbufferchange: null,   // callback for "isBuffering" property change
+    ondataerror: null       // callback for waveform/eq data access error (flash playing audio in other tabs/domains)
+
+  };
+
+  this.movieStarOptions = {
+
+    /**
+     * flash 9.0r115+ MPEG4 audio options,
+     * merged into defaultOptions if flash 9+movieStar mode is enabled
+     */
+
+    bufferTime: 3,          // seconds of data to buffer before playback begins (null = flash default of 0.1 seconds - if AAC playback is gappy, try increasing.)
+    serverURL: null,        // rtmp: FMS or FMIS server to connect to, required when requesting media via RTMP or one of its variants
+    onconnect: null,        // rtmp: callback for connection to flash media server
+    duration: null          // rtmp: song duration (msec)
+
+  };
+
+  this.audioFormats = {
+
+    /**
+     * determines HTML5 support + flash requirements.
+     * if no support (via flash and/or HTML5) for a "required" format, SM2 will fail to start.
+     * flash fallback is used for MP3 or MP4 if HTML5 can't play it (or if preferFlash = true)
+     */
+
+    mp3: {
+      type: ['audio/mpeg; codecs="mp3"', 'audio/mpeg', 'audio/mp3', 'audio/MPA', 'audio/mpa-robust'],
+      required: true
+    },
+
+    mp4: {
+      related: ['aac', 'm4a', 'm4b'], // additional formats under the MP4 container
+      type: ['audio/mp4; codecs="mp4a.40.2"', 'audio/aac', 'audio/x-m4a', 'audio/MP4A-LATM', 'audio/mpeg4-generic'],
+      required: false
+    },
+
+    ogg: {
+      type: ['audio/ogg; codecs=vorbis'],
+      required: false
+    },
+
+    opus: {
+      type: ['audio/ogg; codecs=opus', 'audio/opus'],
+      required: false
+    },
+
+    wav: {
+      type: ['audio/wav; codecs="1"', 'audio/wav', 'audio/wave', 'audio/x-wav'],
+      required: false
+    },
+
+    flac: {
+      type: ['audio/flac'],
+      required: false
+    }
+
+  };
+
+  // HTML attributes (id + class names) for the SWF container
+
+  this.movieID = 'sm2-container';
+  this.id = (smID || 'sm2movie');
+
+  this.debugID = 'soundmanager-debug';
+  this.debugURLParam = /([#?&])debug=1/i;
+
+  // dynamic attributes
+
+  this.versionNumber = 'V2.97a.20170601';
+  this.version = null;
+  this.movieURL = null;
+  this.altURL = null;
+  this.swfLoaded = false;
+  this.enabled = false;
+  this.oMC = null;
+  this.sounds = {};
+  this.soundIDs = [];
+  this.muted = false;
+  this.didFlashBlock = false;
+  this.filePattern = null;
+
+  this.filePatterns = {
+    flash8: /\.mp3(\?.*)?$/i,
+    flash9: /\.mp3(\?.*)?$/i
+  };
+
+  // support indicators, set at init
+
+  this.features = {
+    buffering: false,
+    peakData: false,
+    waveformData: false,
+    eqData: false,
+    movieStar: false
+  };
+
+  // flash sandbox info, used primarily in troubleshooting
+
+  this.sandbox = {
+    // <d>
+    type: null,
+    types: {
+      remote: 'remote (domain-based) rules',
+      localWithFile: 'local with file access (no internet access)',
+      localWithNetwork: 'local with network (internet access only, no local access)',
+      localTrusted: 'local, trusted (local+internet access)'
+    },
+    description: null,
+    noRemote: null,
+    noLocal: null
+    // </d>
+  };
+
+  /**
+   * format support (html5/flash)
+   * stores canPlayType() results based on audioFormats.
+   * eg. { mp3: boolean, mp4: boolean }
+   * treat as read-only.
+   */
+
+  this.html5 = {
+    usingFlash: null // set if/when flash fallback is needed
+  };
+
+  // file type support hash
+  this.flash = {};
+
+  // determined at init time
+  this.html5Only = false;
+
+  // used for special cases (eg. iPad/iPhone/palm OS?)
+  this.ignoreFlash = false;
+
+  /**
+   * a few private internals (OK, a lot. :D)
+   */
+
+  var SMSound,
+  sm2 = this, globalHTML5Audio = null, flash = null, sm = 'soundManager', smc = sm + ': ', h5 = 'HTML5::', id, ua = navigator.userAgent, wl = window.location.href.toString(), doc = document, doNothing, setProperties, init, fV, on_queue = [], debugOpen = true, debugTS, didAppend = false, appendSuccess = false, didInit = false, disabled = false, windowLoaded = false, _wDS, wdCount = 0, initComplete, mixin, assign, extraOptions, addOnEvent, processOnEvents, initUserOnload, delayWaitForEI, waitForEI, rebootIntoHTML5, setVersionInfo, handleFocus, strings, initMovie, domContentLoaded, winOnLoad, didDCLoaded, getDocument, createMovie, catchError, setPolling, initDebug, debugLevels = ['log', 'info', 'warn', 'error'], defaultFlashVersion = 8, disableObject, failSafely, normalizeMovieURL, oRemoved = null, oRemovedHTML = null, str, flashBlockHandler, getSWFCSS, swfCSS, toggleDebug, loopFix, policyFix, complain, idCheck, waitingForEI = false, initPending = false, startTimer, stopTimer, timerExecute, h5TimerCount = 0, h5IntervalTimer = null, parseURL, messages = [],
+  canIgnoreFlash, needsFlash = null, featureCheck, html5OK, html5CanPlay, html5ErrorCodes, html5Ext, html5Unload, domContentLoadedIE, testHTML5, event, slice = Array.prototype.slice, useGlobalHTML5Audio = false, lastGlobalHTML5URL, hasFlash, detectFlash, badSafariFix, html5_events, showSupport, flushMessages, wrapCallback, idCounter = 0, didSetup, msecScale = 1000,
+  is_iDevice = ua.match(/(ipad|iphone|ipod)/i), isAndroid = ua.match(/android/i), isIE = ua.match(/msie|trident/i),
+  isWebkit = ua.match(/webkit/i),
+  isSafari = (ua.match(/safari/i) && !ua.match(/chrome/i)),
+  isOpera = (ua.match(/opera/i)),
+  mobileHTML5 = (ua.match(/(mobile|pre\/|xoom)/i) || is_iDevice || isAndroid),
+  isBadSafari = (!wl.match(/usehtml5audio/i) && !wl.match(/sm2-ignorebadua/i) && isSafari && !ua.match(/silk/i) && ua.match(/OS\sX\s10_6_([3-7])/i)), // Safari 4 and 5 (excluding Kindle Fire, "Silk") occasionally fail to load/play HTML5 audio on Snow Leopard 10.6.3 through 10.6.7 due to bug(s) in QuickTime X and/or other underlying frameworks. :/ Confirmed bug. https://bugs.webkit.org/show_bug.cgi?id=32159
+  hasConsole = (window.console !== _undefined && console.log !== _undefined),
+  isFocused = (doc.hasFocus !== _undefined ? doc.hasFocus() : null),
+  tryInitOnFocus = (isSafari && (doc.hasFocus === _undefined || !doc.hasFocus())),
+  okToDisable = !tryInitOnFocus,
+  flashMIME = /(mp3|mp4|mpa|m4a|m4b)/i,
+  emptyURL = 'about:blank', // safe URL to unload, or load nothing from (flash 8 + most HTML5 UAs)
+  emptyWAV = 'data:audio/wave;base64,/UklGRiYAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQIAAAD//w==', // tiny WAV for HTML5 unloading
+  overHTTP = (doc.location ? doc.location.protocol.match(/http/i) : null),
+  http = (!overHTTP ? '//' : ''),
+  // mp3, mp4, aac etc.
+  netStreamMimeTypes = /^\s*audio\/(?:x-)?(?:mpeg4|aac|flv|mov|mp4|m4v|m4a|m4b|mp4v|3gp|3g2)\s*(?:$|;)/i,
+  // Flash v9.0r115+ "moviestar" formats
+  netStreamTypes = ['mpeg4', 'aac', 'flv', 'mov', 'mp4', 'm4v', 'f4v', 'm4a', 'm4b', 'mp4v', '3gp', '3g2'],
+  netStreamPattern = new RegExp('\\.(' + netStreamTypes.join('|') + ')(\\?.*)?$', 'i');
+
+  this.mimePattern = /^\s*audio\/(?:x-)?(?:mp(?:eg|3))\s*(?:$|;)/i; // default mp3 set
+
+  // use altURL if not "online"
+  this.useAltURL = !overHTTP;
+
+  swfCSS = {
+    swfBox: 'sm2-object-box',
+    swfDefault: 'movieContainer',
+    swfError: 'swf_error', // SWF loaded, but SM2 couldn't start (other error)
+    swfTimedout: 'swf_timedout',
+    swfLoaded: 'swf_loaded',
+    swfUnblocked: 'swf_unblocked', // or loaded OK
+    sm2Debug: 'sm2_debug',
+    highPerf: 'high_performance',
+    flashDebug: 'flash_debug'
+  };
+
+  /**
+   * HTML5 error codes, per W3C
+   * Error code 1, MEDIA_ERR_ABORTED: Client aborted download at user's request.
+   * Error code 2, MEDIA_ERR_NETWORK: A network error of some description caused the user agent to stop fetching the media resource, after the resource was established to be usable.
+   * Error code 3, MEDIA_ERR_DECODE: An error of some description occurred while decoding the media resource, after the resource was established to be usable.
+   * Error code 4, MEDIA_ERR_SRC_NOT_SUPPORTED: Media (audio file) not supported ("not usable.")
+   * Reference: https://html.spec.whatwg.org/multipage/embedded-content.html#error-codes
+   */
+  html5ErrorCodes = [
+    null,
+    'MEDIA_ERR_ABORTED',
+    'MEDIA_ERR_NETWORK',
+    'MEDIA_ERR_DECODE',
+    'MEDIA_ERR_SRC_NOT_SUPPORTED'
+  ];
+
+  /**
+   * basic HTML5 Audio() support test
+   * try...catch because of IE 9 "not implemented" nonsense
+   * https://github.com/Modernizr/Modernizr/issues/224
+   */
+
+  this.hasHTML5 = (function() {
+    try {
+      // new Audio(null) for stupid Opera 9.64 case, which throws not_enough_arguments exception otherwise.
+      return (Audio !== _undefined && (isOpera && opera !== _undefined && opera.version() < 10 ? new Audio(null) : new Audio()).canPlayType !== _undefined);
+    } catch(e) {
+      return false;
+    }
+  }());
+
+  /**
+   * Public SoundManager API
+   * -----------------------
+   */
+
+  /**
+   * Configures top-level soundManager properties.
+   *
+   * @param {object} options Option parameters, eg. { flashVersion: 9, url: '/path/to/swfs/' }
+   * onready and ontimeout are also accepted parameters. call soundManager.setup() to see the full list.
+   */
+
+  this.setup = function(options) {
+
+    var noURL = (!sm2.url);
+
+    // warn if flash options have already been applied
+
+    if (options !== _undefined && didInit && needsFlash && sm2.ok() && (options.flashVersion !== _undefined || options.url !== _undefined || options.html5Test !== _undefined)) {
+      complain(str('setupLate'));
+    }
+
+    // TODO: defer: true?
+
+    assign(options);
+
+    if (!useGlobalHTML5Audio) {
+
+      if (mobileHTML5) {
+
+        // force the singleton HTML5 pattern on mobile, by default.
+        if (!sm2.setupOptions.ignoreMobileRestrictions || sm2.setupOptions.forceUseGlobalHTML5Audio) {
+          messages.push(strings.globalHTML5);
+          useGlobalHTML5Audio = true;
+        }
+
+      } else if (sm2.setupOptions.forceUseGlobalHTML5Audio) {
+
+        // only apply singleton HTML5 on desktop if forced.
+        messages.push(strings.globalHTML5);
+        useGlobalHTML5Audio = true;
+
+      }
+
+    }
+
+    if (!didSetup && mobileHTML5) {
+
+      if (sm2.setupOptions.ignoreMobileRestrictions) {
+
+        messages.push(strings.ignoreMobile);
+
+      } else {
+
+        // prefer HTML5 for mobile + tablet-like devices, probably more reliable vs. flash at this point.
+
+        // <d>
+        if (!sm2.setupOptions.useHTML5Audio || sm2.setupOptions.preferFlash) {
+          // notify that defaults are being changed.
+          sm2._wD(strings.mobileUA);
+        }
+        // </d>
+
+        sm2.setupOptions.useHTML5Audio = true;
+        sm2.setupOptions.preferFlash = false;
+
+        if (is_iDevice) {
+
+          // no flash here.
+          sm2.ignoreFlash = true;
+
+        } else if ((isAndroid && !ua.match(/android\s2\.3/i)) || !isAndroid) {
+
+          /**
+           * Android devices tend to work better with a single audio instance, specifically for chained playback of sounds in sequence.
+           * Common use case: exiting sound onfinish() -> createSound() -> play()
+           * Presuming similar restrictions for other mobile, non-Android, non-iOS devices.
+           */
+
+          // <d>
+          sm2._wD(strings.globalHTML5);
+          // </d>
+
+          useGlobalHTML5Audio = true;
+
+        }
+
+      }
+
+    }
+
+    // special case 1: "Late setup". SM2 loaded normally, but user didn't assign flash URL eg., setup({url:...}) before SM2 init. Treat as delayed init.
+
+    if (options) {
+
+      if (noURL && didDCLoaded && options.url !== _undefined) {
+        sm2.beginDelayedInit();
+      }
+
+      // special case 2: If lazy-loading SM2 (DOMContentLoaded has already happened) and user calls setup() with url: parameter, try to init ASAP.
+
+      if (!didDCLoaded && options.url !== _undefined && doc.readyState === 'complete') {
+        setTimeout(domContentLoaded, 1);
+      }
+
+    }
+
+    didSetup = true;
+
+    return sm2;
+
+  };
+
+  this.ok = function() {
+
+    return (needsFlash ? (didInit && !disabled) : (sm2.useHTML5Audio && sm2.hasHTML5));
+
+  };
+
+  this.supported = this.ok; // legacy
+
+  this.getMovie = function(movie_id) {
+
+    // safety net: some old browsers differ on SWF references, possibly related to ExternalInterface / flash version
+    return id(movie_id) || doc[movie_id] || window[movie_id];
+
+  };
+
+  /**
+   * Creates a SMSound sound object instance. Can also be overloaded, e.g., createSound('mySound', '/some.mp3');
+   *
+   * @param {object} oOptions Sound options (at minimum, url parameter is required.)
+   * @return {object} SMSound The new SMSound object.
+   */
+
+  this.createSound = function(oOptions, _url) {
+
+    var cs, cs_string, options, oSound = null;
+
+    // <d>
+    cs = sm + '.createSound(): ';
+    cs_string = cs + str(!didInit ? 'notReady' : 'notOK');
+    // </d>
+
+    if (!didInit || !sm2.ok()) {
+      complain(cs_string);
+      return false;
+    }
+
+    if (_url !== _undefined) {
+      // function overloading in JS! :) ... assume simple createSound(id, url) use case.
+      oOptions = {
+        id: oOptions,
+        url: _url
+      };
+    }
+
+    // inherit from defaultOptions
+    options = mixin(oOptions);
+
+    options.url = parseURL(options.url);
+
+    // generate an id, if needed.
+    if (options.id === _undefined) {
+      options.id = sm2.setupOptions.idPrefix + (idCounter++);
+    }
+
+    // <d>
+    if (options.id.toString().charAt(0).match(/^[0-9]$/)) {
+      sm2._wD(cs + str('badID', options.id), 2);
+    }
+
+    sm2._wD(cs + options.id + (options.url ? ' (' + options.url + ')' : ''), 1);
+    // </d>
+
+    if (idCheck(options.id, true)) {
+      sm2._wD(cs + options.id + ' exists', 1);
+      return sm2.sounds[options.id];
+    }
+
+    function make() {
+
+      options = loopFix(options);
+      sm2.sounds[options.id] = new SMSound(options);
+      sm2.soundIDs.push(options.id);
+      return sm2.sounds[options.id];
+
+    }
+
+    if (html5OK(options)) {
+
+      oSound = make();
+      // <d>
+      if (!sm2.html5Only) {
+        sm2._wD(options.id + ': Using HTML5');
+      }
+      // </d>
+      oSound._setup_html5(options);
+
+    } else {
+
+      if (sm2.html5Only) {
+        sm2._wD(options.id + ': No HTML5 support for this sound, and no Flash. Exiting.');
+        return make();
+      }
+
+      // TODO: Move HTML5/flash checks into generic URL parsing/handling function.
+
+      if (sm2.html5.usingFlash && options.url && options.url.match(/data:/i)) {
+        // data: URIs not supported by Flash, either.
+        sm2._wD(options.id + ': data: URIs not supported via Flash. Exiting.');
+        return make();
+      }
+
+      if (fV > 8) {
+        if (options.isMovieStar === null) {
+          // attempt to detect MPEG-4 formats
+          options.isMovieStar = !!(options.serverURL || (options.type ? options.type.match(netStreamMimeTypes) : false) || (options.url && options.url.match(netStreamPattern)));
+        }
+        // <d>
+        if (options.isMovieStar) {
+          sm2._wD(cs + 'using MovieStar handling');
+          if (options.loops > 1) {
+            _wDS('noNSLoop');
+          }
+        }
+        // </d>
+      }
+
+      options = policyFix(options, cs);
+      oSound = make();
+
+      if (fV === 8) {
+        flash._createSound(options.id, options.loops || 1, options.usePolicyFile);
+      } else {
+        flash._createSound(options.id, options.url, options.usePeakData, options.useWaveformData, options.useEQData, options.isMovieStar, (options.isMovieStar ? options.bufferTime : false), options.loops || 1, options.serverURL, options.duration || null, options.autoPlay, true, options.autoLoad, options.usePolicyFile);
+        if (!options.serverURL) {
+          // We are connected immediately
+          oSound.connected = true;
+          if (options.onconnect) {
+            options.onconnect.apply(oSound);
+          }
+        }
+      }
+
+      if (!options.serverURL && (options.autoLoad || options.autoPlay)) {
+        // call load for non-rtmp streams
+        oSound.load(options);
+      }
+
+    }
+
+    // rtmp will play in onconnect
+    if (!options.serverURL && options.autoPlay) {
+      oSound.play();
+    }
+
+    return oSound;
+
+  };
+
+  /**
+   * Destroys a SMSound sound object instance.
+   *
+   * @param {string} sID The ID of the sound to destroy
+   */
+
+  this.destroySound = function(sID, _bFromSound) {
+
+    // explicitly destroy a sound before normal page unload, etc.
+
+    if (!idCheck(sID)) return false;
+
+    var oS = sm2.sounds[sID], i;
+
+    oS.stop();
+
+    // Disable all callbacks after stop(), when the sound is being destroyed
+    oS._iO = {};
+
+    oS.unload();
+
+    for (i = 0; i < sm2.soundIDs.length; i++) {
+      if (sm2.soundIDs[i] === sID) {
+        sm2.soundIDs.splice(i, 1);
+        break;
+      }
+    }
+
+    if (!_bFromSound) {
+      // ignore if being called from SMSound instance
+      oS.destruct(true);
+    }
+
+    oS = null;
+    delete sm2.sounds[sID];
+
+    return true;
+
+  };
+
+  /**
+   * Calls the load() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @param {object} oOptions Optional: Sound options
+   */
+
+  this.load = function(sID, oOptions) {
+
+    if (!idCheck(sID)) return false;
+
+    return sm2.sounds[sID].load(oOptions);
+
+  };
+
+  /**
+   * Calls the unload() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   */
+
+  this.unload = function(sID) {
+
+    if (!idCheck(sID)) return false;
+
+    return sm2.sounds[sID].unload();
+
+  };
+
+  /**
+   * Calls the onPosition() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @param {number} nPosition The position to watch for
+   * @param {function} oMethod The relevant callback to fire
+   * @param {object} oScope Optional: The scope to apply the callback to
+   * @return {SMSound} The SMSound object
+   */
+
+  this.onPosition = function(sID, nPosition, oMethod, oScope) {
+
+    if (!idCheck(sID)) return false;
+
+    return sm2.sounds[sID].onposition(nPosition, oMethod, oScope);
+
+  };
+
+  // legacy/backwards-compability: lower-case method name
+  this.onposition = this.onPosition;
+
+  /**
+   * Calls the clearOnPosition() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @param {number} nPosition The position to watch for
+   * @param {function} oMethod Optional: The relevant callback to fire
+   * @return {SMSound} The SMSound object
+   */
+
+  this.clearOnPosition = function(sID, nPosition, oMethod) {
+
+    if (!idCheck(sID)) return false;
+
+    return sm2.sounds[sID].clearOnPosition(nPosition, oMethod);
+
+  };
+
+  /**
+   * Calls the play() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @param {object} oOptions Optional: Sound options
+   * @return {SMSound} The SMSound object
+   */
+
+  this.play = function(sID, oOptions) {
+
+    var result = null,
+        // legacy function-overloading use case: play('mySound', '/path/to/some.mp3');
+        overloaded = (oOptions && !(oOptions instanceof Object));
+
+    if (!didInit || !sm2.ok()) {
+      complain(sm + '.play(): ' + str(!didInit ? 'notReady' : 'notOK'));
+      return false;
+    }
+
+    if (!idCheck(sID, overloaded)) {
+
+      // no sound found for the given ID. Bail.
+      if (!overloaded) return false;
+
+      if (overloaded) {
+        oOptions = {
+          url: oOptions
+        };
+      }
+
+      if (oOptions && oOptions.url) {
+        // overloading use case, create+play: .play('someID', {url:'/path/to.mp3'});
+        sm2._wD(sm + '.play(): Attempting to create "' + sID + '"', 1);
+        oOptions.id = sID;
+        result = sm2.createSound(oOptions).play();
+      }
+
+    } else if (overloaded) {
+
+      // existing sound object case
+      oOptions = {
+        url: oOptions
+      };
+
+    }
+
+    if (result === null) {
+      // default case
+      result = sm2.sounds[sID].play(oOptions);
+    }
+
+    return result;
+
+  };
+
+  // just for convenience
+  this.start = this.play;
+
+  /**
+   * Calls the setPlaybackRate() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @return {SMSound} The SMSound object
+   */
+
+  this.setPlaybackRate = function(sID, rate, allowOverride) {
+
+    if (!idCheck(sID)) return false;
+
+    return sm2.sounds[sID].setPlaybackRate(rate, allowOverride);
+
+  };
+
+  /**
+   * Calls the setPosition() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @param {number} nMsecOffset Position (milliseconds)
+   * @return {SMSound} The SMSound object
+   */
+
+  this.setPosition = function(sID, nMsecOffset) {
+
+    if (!idCheck(sID)) return false;
+
+    return sm2.sounds[sID].setPosition(nMsecOffset);
+
+  };
+
+  /**
+   * Calls the stop() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @return {SMSound} The SMSound object
+   */
+
+  this.stop = function(sID) {
+
+    if (!idCheck(sID)) return false;
+
+    sm2._wD(sm + '.stop(' + sID + ')', 1);
+
+    return sm2.sounds[sID].stop();
+
+  };
+
+  /**
+   * Stops all currently-playing sounds.
+   */
+
+  this.stopAll = function() {
+
+    var oSound;
+    sm2._wD(sm + '.stopAll()', 1);
+
+    for (oSound in sm2.sounds) {
+      if (sm2.sounds.hasOwnProperty(oSound)) {
+        // apply only to sound objects
+        sm2.sounds[oSound].stop();
+      }
+    }
+
+  };
+
+  /**
+   * Calls the pause() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @return {SMSound} The SMSound object
+   */
+
+  this.pause = function(sID) {
+
+    if (!idCheck(sID)) return false;
+
+    return sm2.sounds[sID].pause();
+
+  };
+
+  /**
+   * Pauses all currently-playing sounds.
+   */
+
+  this.pauseAll = function() {
+
+    var i;
+    for (i = sm2.soundIDs.length - 1; i >= 0; i--) {
+      sm2.sounds[sm2.soundIDs[i]].pause();
+    }
+
+  };
+
+  /**
+   * Calls the resume() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @return {SMSound} The SMSound object
+   */
+
+  this.resume = function(sID) {
+
+    if (!idCheck(sID)) return false;
+
+    return sm2.sounds[sID].resume();
+
+  };
+
+  /**
+   * Resumes all currently-paused sounds.
+   */
+
+  this.resumeAll = function() {
+
+    var i;
+    for (i = sm2.soundIDs.length - 1; i >= 0; i--) {
+      sm2.sounds[sm2.soundIDs[i]].resume();
+    }
+
+  };
+
+  /**
+   * Calls the togglePause() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @return {SMSound} The SMSound object
+   */
+
+  this.togglePause = function(sID) {
+
+    if (!idCheck(sID)) return false;
+
+    return sm2.sounds[sID].togglePause();
+
+  };
+
+  /**
+   * Calls the setPan() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @param {number} nPan The pan value (-100 to 100)
+   * @return {SMSound} The SMSound object
+   */
+
+  this.setPan = function(sID, nPan) {
+
+    if (!idCheck(sID)) return false;
+
+    return sm2.sounds[sID].setPan(nPan);
+
+  };
+
+  /**
+   * Calls the setVolume() method of a SMSound object by ID
+   * Overloaded case: pass only volume argument eg., setVolume(50) to apply to all sounds.
+   *
+   * @param {string} sID The ID of the sound
+   * @param {number} nVol The volume value (0 to 100)
+   * @return {SMSound} The SMSound object
+   */
+
+  this.setVolume = function(sID, nVol) {
+
+    // setVolume(50) function overloading case - apply to all sounds
+
+    var i, j;
+
+    if (sID !== _undefined && !isNaN(sID) && nVol === _undefined) {
+      for (i = 0, j = sm2.soundIDs.length; i < j; i++) {
+        sm2.sounds[sm2.soundIDs[i]].setVolume(sID);
+      }
+      return false;
+    }
+
+    // setVolume('mySound', 50) case
+
+    if (!idCheck(sID)) return false;
+
+    return sm2.sounds[sID].setVolume(nVol);
+
+  };
+
+  /**
+   * Calls the mute() method of either a single SMSound object by ID, or all sound objects.
+   *
+   * @param {string} sID Optional: The ID of the sound (if omitted, all sounds will be used.)
+   */
+
+  this.mute = function(sID) {
+
+    var i = 0;
+
+    if (sID instanceof String) {
+      sID = null;
+    }
+
+    if (!sID) {
+
+      sm2._wD(sm + '.mute(): Muting all sounds');
+      for (i = sm2.soundIDs.length - 1; i >= 0; i--) {
+        sm2.sounds[sm2.soundIDs[i]].mute();
+      }
+      sm2.muted = true;
+
+    } else {
+
+      if (!idCheck(sID)) return false;
+
+      sm2._wD(sm + '.mute(): Muting "' + sID + '"');
+      return sm2.sounds[sID].mute();
+
+    }
+
+    return true;
+
+  };
+
+  /**
+   * Mutes all sounds.
+   */
+
+  this.muteAll = function() {
+
+    sm2.mute();
+
+  };
+
+  /**
+   * Calls the unmute() method of either a single SMSound object by ID, or all sound objects.
+   *
+   * @param {string} sID Optional: The ID of the sound (if omitted, all sounds will be used.)
+   */
+
+  this.unmute = function(sID) {
+
+    var i;
+
+    if (sID instanceof String) {
+      sID = null;
+    }
+
+    if (!sID) {
+
+      sm2._wD(sm + '.unmute(): Unmuting all sounds');
+      for (i = sm2.soundIDs.length - 1; i >= 0; i--) {
+        sm2.sounds[sm2.soundIDs[i]].unmute();
+      }
+      sm2.muted = false;
+
+    } else {
+
+      if (!idCheck(sID)) return false;
+
+      sm2._wD(sm + '.unmute(): Unmuting "' + sID + '"');
+
+      return sm2.sounds[sID].unmute();
+
+    }
+
+    return true;
+
+  };
+
+  /**
+   * Unmutes all sounds.
+   */
+
+  this.unmuteAll = function() {
+
+    sm2.unmute();
+
+  };
+
+  /**
+   * Calls the toggleMute() method of a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @return {SMSound} The SMSound object
+   */
+
+  this.toggleMute = function(sID) {
+
+    if (!idCheck(sID)) return false;
+
+    return sm2.sounds[sID].toggleMute();
+
+  };
+
+  /**
+   * Retrieves the memory used by the flash plugin.
+   *
+   * @return {number} The amount of memory in use
+   */
+
+  this.getMemoryUse = function() {
+
+    // flash-only
+    var ram = 0;
+
+    if (flash && fV !== 8) {
+      ram = parseInt(flash._getMemoryUse(), 10);
+    }
+
+    return ram;
+
+  };
+
+  /**
+   * Undocumented: NOPs soundManager and all SMSound objects.
+   */
+
+  this.disable = function(bNoDisable) {
+
+    // destroy all functions
+    var i;
+
+    if (bNoDisable === _undefined) {
+      bNoDisable = false;
+    }
+
+    // already disabled?
+    if (disabled) return false;
+
+    disabled = true;
+
+    _wDS('shutdown', 1);
+
+    for (i = sm2.soundIDs.length - 1; i >= 0; i--) {
+      disableObject(sm2.sounds[sm2.soundIDs[i]]);
+    }
+
+    disableObject(sm2);
+
+    // fire "complete", despite fail
+    initComplete(bNoDisable);
+
+    event.remove(window, 'load', initUserOnload);
+
+    return true;
+
+  };
+
+  /**
+   * Determines playability of a MIME type, eg. 'audio/mp3'.
+   */
+
+  this.canPlayMIME = function(sMIME) {
+
+    var result;
+
+    if (sm2.hasHTML5) {
+      result = html5CanPlay({
+        type: sMIME
+      });
+    }
+
+    if (!result && needsFlash) {
+      // if flash 9, test netStream (movieStar) types as well.
+      result = (sMIME && sm2.ok() ? !!((fV > 8 ? sMIME.match(netStreamMimeTypes) : null) || sMIME.match(sm2.mimePattern)) : null); // TODO: make less "weird" (per JSLint)
+    }
+
+    return result;
+
+  };
+
+  /**
+   * Determines playability of a URL based on audio support.
+   *
+   * @param {string} sURL The URL to test
+   * @return {boolean} URL playability
+   */
+
+  this.canPlayURL = function(sURL) {
+
+    var result;
+
+    if (sm2.hasHTML5) {
+      result = html5CanPlay({
+        url: sURL
+      });
+    }
+
+    if (!result && needsFlash) {
+      result = (sURL && sm2.ok() ? !!(sURL.match(sm2.filePattern)) : null);
+    }
+
+    return result;
+
+  };
+
+  /**
+   * Determines playability of an HTML DOM &lt;a&gt; object (or similar object literal) based on audio support.
+   *
+   * @param {object} oLink an HTML DOM &lt;a&gt; object or object literal including href and/or type attributes
+   * @return {boolean} URL playability
+   */
+
+  this.canPlayLink = function(oLink) {
+
+    if (oLink.type !== _undefined && oLink.type && sm2.canPlayMIME(oLink.type)) return true;
+
+    return sm2.canPlayURL(oLink.href);
+
+  };
+
+  /**
+   * Retrieves a SMSound object by ID.
+   *
+   * @param {string} sID The ID of the sound
+   * @return {SMSound} The SMSound object
+   */
+
+  this.getSoundById = function(sID, _suppressDebug) {
+
+    if (!sID) return null;
+
+    var result = sm2.sounds[sID];
+
+    // <d>
+    if (!result && !_suppressDebug) {
+      sm2._wD(sm + '.getSoundById(): Sound "' + sID + '" not found.', 2);
+    }
+    // </d>
+
+    return result;
+
+  };
+
+  /**
+   * Queues a callback for execution when SoundManager has successfully initialized.
+   *
+   * @param {function} oMethod The callback method to fire
+   * @param {object} oScope Optional: The scope to apply to the callback
+   */
+
+  this.onready = function(oMethod, oScope) {
+
+    var sType = 'onready',
+        result = false;
+
+    if (typeof oMethod === 'function') {
+
+      // <d>
+      if (didInit) {
+        sm2._wD(str('queue', sType));
+      }
+      // </d>
+
+      if (!oScope) {
+        oScope = window;
+      }
+
+      addOnEvent(sType, oMethod, oScope);
+      processOnEvents();
+
+      result = true;
+
+    } else {
+
+      throw str('needFunction', sType);
+
+    }
+
+    return result;
+
+  };
+
+  /**
+   * Queues a callback for execution when SoundManager has failed to initialize.
+   *
+   * @param {function} oMethod The callback method to fire
+   * @param {object} oScope Optional: The scope to apply to the callback
+   */
+
+  this.ontimeout = function(oMethod, oScope) {
+
+    var sType = 'ontimeout',
+        result = false;
+
+    if (typeof oMethod === 'function') {
+
+      // <d>
+      if (didInit) {
+        sm2._wD(str('queue', sType));
+      }
+      // </d>
+
+      if (!oScope) {
+        oScope = window;
+      }
+
+      addOnEvent(sType, oMethod, oScope);
+      processOnEvents({ type: sType });
+
+      result = true;
+
+    } else {
+
+      throw str('needFunction', sType);
+
+    }
+
+    return result;
+
+  };
+
+  /**
+   * Writes console.log()-style debug output to a console or in-browser element.
+   * Applies when debugMode = true
+   *
+   * @param {string} sText The console message
+   * @param {object} nType Optional log level (number), or object. Number case: Log type/style where 0 = 'info', 1 = 'warn', 2 = 'error'. Object case: Object to be dumped.
+   */
+
+  this._writeDebug = function(sText, sTypeOrObject) {
+
+    // pseudo-private console.log()-style output
+    // <d>
+
+    var sDID = 'soundmanager-debug', o, oItem;
+
+    if (!sm2.setupOptions.debugMode) return false;
+
+    if (hasConsole && sm2.useConsole) {
+      if (sTypeOrObject && typeof sTypeOrObject === 'object') {
+        // object passed; dump to console.
+        console.log(sText, sTypeOrObject);
+      } else if (debugLevels[sTypeOrObject] !== _undefined) {
+        console[debugLevels[sTypeOrObject]](sText);
+      } else {
+        console.log(sText);
+      }
+      if (sm2.consoleOnly) return true;
+    }
+
+    o = id(sDID);
+
+    if (!o) return false;
+
+    oItem = doc.createElement('div');
+
+    if (++wdCount % 2 === 0) {
+      oItem.className = 'sm2-alt';
+    }
+
+    if (sTypeOrObject === _undefined) {
+      sTypeOrObject = 0;
+    } else {
+      sTypeOrObject = parseInt(sTypeOrObject, 10);
+    }
+
+    oItem.appendChild(doc.createTextNode(sText));
+
+    if (sTypeOrObject) {
+      if (sTypeOrObject >= 2) {
+        oItem.style.fontWeight = 'bold';
+      }
+      if (sTypeOrObject === 3) {
+        oItem.style.color = '#ff3333';
+      }
+    }
+
+    // top-to-bottom
+    // o.appendChild(oItem);
+
+    // bottom-to-top
+    o.insertBefore(oItem, o.firstChild);
+
+    o = null;
+    // </d>
+
+    return true;
+
+  };
+
+  // <d>
+  // last-resort debugging option
+  if (wl.indexOf('sm2-debug=alert') !== -1) {
+    this._writeDebug = function(sText) {
+      window.alert(sText);
+    };
+  }
+  // </d>
+
+  // alias
+  this._wD = this._writeDebug;
+
+  /**
+   * Provides debug / state information on all SMSound objects.
+   */
+
+  this._debug = function() {
+
+    // <d>
+    var i, j;
+    _wDS('currentObj', 1);
+
+    for (i = 0, j = sm2.soundIDs.length; i < j; i++) {
+      sm2.sounds[sm2.soundIDs[i]]._debug();
+    }
+    // </d>
+
+  };
+
+  /**
+   * Restarts and re-initializes the SoundManager instance.
+   *
+   * @param {boolean} resetEvents Optional: When true, removes all registered onready and ontimeout event callbacks.
+   * @param {boolean} excludeInit Options: When true, does not call beginDelayedInit() (which would restart SM2).
+   * @return {object} soundManager The soundManager instance.
+   */
+
+  this.reboot = function(resetEvents, excludeInit) {
+
+    // reset some (or all) state, and re-init unless otherwise specified.
+
+    // <d>
+    if (sm2.soundIDs.length) {
+      sm2._wD('Destroying ' + sm2.soundIDs.length + ' SMSound object' + (sm2.soundIDs.length !== 1 ? 's' : '') + '...');
+    }
+    // </d>
+
+    var i, j, k;
+
+    for (i = sm2.soundIDs.length - 1; i >= 0; i--) {
+      sm2.sounds[sm2.soundIDs[i]].destruct();
+    }
+
+    // trash ze flash (remove from the DOM)
+
+    if (flash) {
+
+      try {
+
+        if (isIE) {
+          oRemovedHTML = flash.innerHTML;
+        }
+
+        oRemoved = flash.parentNode.removeChild(flash);
+
+      } catch(e) {
+
+        // Remove failed? May be due to flash blockers silently removing the SWF object/embed node from the DOM. Warn and continue.
+
+        _wDS('badRemove', 2);
+
+      }
+
+    }
+
+    // actually, force recreate of movie.
+
+    oRemovedHTML = oRemoved = needsFlash = flash = null;
+
+    sm2.enabled = didDCLoaded = didInit = waitingForEI = initPending = didAppend = appendSuccess = disabled = useGlobalHTML5Audio = sm2.swfLoaded = false;
+
+    sm2.soundIDs = [];
+    sm2.sounds = {};
+
+    idCounter = 0;
+    didSetup = false;
+
+    if (!resetEvents) {
+      // reset callbacks for onready, ontimeout etc. so that they will fire again on re-init
+      for (i in on_queue) {
+        if (on_queue.hasOwnProperty(i)) {
+          for (j = 0, k = on_queue[i].length; j < k; j++) {
+            on_queue[i][j].fired = false;
+          }
+        }
+      }
+    } else {
+      // remove all callbacks entirely
+      on_queue = [];
+    }
+
+    // <d>
+    if (!excludeInit) {
+      sm2._wD(sm + ': Rebooting...');
+    }
+    // </d>
+
+    // reset HTML5 and flash canPlay test results
+
+    sm2.html5 = {
+      usingFlash: null
+    };
+
+    sm2.flash = {};
+
+    // reset device-specific HTML/flash mode switches
+
+    sm2.html5Only = false;
+    sm2.ignoreFlash = false;
+
+    window.setTimeout(function() {
+
+      // by default, re-init
+
+      if (!excludeInit) {
+        sm2.beginDelayedInit();
+      }
+
+    }, 20);
+
+    return sm2;
+
+  };
+
+  this.reset = function() {
+
+    /**
+     * Shuts down and restores the SoundManager instance to its original loaded state, without an explicit reboot. All onready/ontimeout handlers are removed.
+     * After this call, SM2 may be re-initialized via soundManager.beginDelayedInit().
+     * @return {object} soundManager The soundManager instance.
+     */
+
+    _wDS('reset');
+
+    return sm2.reboot(true, true);
+
+  };
+
+  /**
+   * Undocumented: Determines the SM2 flash movie's load progress.
+   *
+   * @return {number or null} Percent loaded, or if invalid/unsupported, null.
+   */
+
+  this.getMoviePercent = function() {
+
+    /**
+     * Interesting syntax notes...
+     * Flash/ExternalInterface (ActiveX/NPAPI) bridge methods are not typeof "function" nor instanceof Function, but are still valid.
+     * Furthermore, using (flash && flash.PercentLoaded) causes IE to throw "object doesn't support this property or method".
+     * Thus, 'in' syntax must be used.
+     */
+
+    return (flash && 'PercentLoaded' in flash ? flash.PercentLoaded() : null);
+
+  };
+
+  /**
+   * Additional helper for manually invoking SM2's init process after DOM Ready / window.onload().
+   */
+
+  this.beginDelayedInit = function() {
+
+    windowLoaded = true;
+    domContentLoaded();
+
+    setTimeout(function() {
+
+      if (initPending) return false;
+
+      createMovie();
+      initMovie();
+      initPending = true;
+
+      return true;
+
+    }, 20);
+
+    delayWaitForEI();
+
+  };
+
+  /**
+   * Destroys the SoundManager instance and all SMSound instances.
+   */
+
+  this.destruct = function() {
+
+    sm2._wD(sm + '.destruct()');
+    sm2.disable(true);
+
+  };
+
+  /**
+   * SMSound() (sound object) constructor
+   * ------------------------------------
+   *
+   * @param {object} oOptions Sound options (id and url are required attributes)
+   * @return {SMSound} The new SMSound object
+   */
+
+  SMSound = function(oOptions) {
+
+    var s = this, resetProperties, add_html5_events, remove_html5_events, stop_html5_timer, start_html5_timer, attachOnPosition, onplay_called = false, onPositionItems = [], onPositionFired = 0, detachOnPosition, applyFromTo, lastURL = null, lastHTML5State, urlOmitted;
+
+    lastHTML5State = {
+      // tracks duration + position (time)
+      duration: null,
+      time: null
+    };
+
+    this.id = oOptions.id;
+
+    // legacy
+    this.sID = this.id;
+
+    this.url = oOptions.url;
+    this.options = mixin(oOptions);
+
+    // per-play-instance-specific options
+    this.instanceOptions = this.options;
+
+    // short alias
+    this._iO = this.instanceOptions;
+
+    // assign property defaults
+    this.pan = this.options.pan;
+    this.volume = this.options.volume;
+
+    // whether or not this object is using HTML5
+    this.isHTML5 = false;
+
+    // internal HTML5 Audio() object reference
+    this._a = null;
+
+    // for flash 8 special-case createSound() without url, followed by load/play with url case
+    urlOmitted = (!this.url);
+
+    /**
+     * SMSound() public methods
+     * ------------------------
+     */
+
+    this.id3 = {};
+
+    /**
+     * Writes SMSound object parameters to debug console
+     */
+
+    this._debug = function() {
+
+      // <d>
+      sm2._wD(s.id + ': Merged options:', s.options);
+      // </d>
+
+    };
+
+    /**
+     * Begins loading a sound per its *url*.
+     *
+     * @param {object} options Optional: Sound options
+     * @return {SMSound} The SMSound object
+     */
+
+    this.load = function(options) {
+
+      var oSound = null, instanceOptions;
+
+      if (options !== _undefined) {
+        s._iO = mixin(options, s.options);
+      } else {
+        options = s.options;
+        s._iO = options;
+        if (lastURL && lastURL !== s.url) {
+          _wDS('manURL');
+          s._iO.url = s.url;
+          s.url = null;
+        }
+      }
+
+      if (!s._iO.url) {
+        s._iO.url = s.url;
+      }
+
+      s._iO.url = parseURL(s._iO.url);
+
+      // ensure we're in sync
+      s.instanceOptions = s._iO;
+
+      // local shortcut
+      instanceOptions = s._iO;
+
+      sm2._wD(s.id + ': load (' + instanceOptions.url + ')');
+
+      if (!instanceOptions.url && !s.url) {
+        sm2._wD(s.id + ': load(): url is unassigned. Exiting.', 2);
+        return s;
+      }
+
+      // <d>
+      if (!s.isHTML5 && fV === 8 && !s.url && !instanceOptions.autoPlay) {
+        // flash 8 load() -> play() won't work before onload has fired.
+        sm2._wD(s.id + ': Flash 8 load() limitation: Wait for onload() before calling play().', 1);
+      }
+      // </d>
+
+      if (instanceOptions.url === s.url && s.readyState !== 0 && s.readyState !== 2) {
+        _wDS('onURL', 1);
+        // if loaded and an onload() exists, fire immediately.
+        if (s.readyState === 3 && instanceOptions.onload) {
+          // assume success based on truthy duration.
+          wrapCallback(s, function() {
+            instanceOptions.onload.apply(s, [(!!s.duration)]);
+          });
+        }
+        return s;
+      }
+
+      // reset a few state properties
+
+      s.loaded = false;
+      s.readyState = 1;
+      s.playState = 0;
+      s.id3 = {};
+
+      // TODO: If switching from HTML5 -> flash (or vice versa), stop currently-playing audio.
+
+      if (html5OK(instanceOptions)) {
+
+        oSound = s._setup_html5(instanceOptions);
+
+        if (!oSound._called_load) {
+
+          s._html5_canplay = false;
+
+          // TODO: review called_load / html5_canplay logic
+
+          // if url provided directly to load(), assign it here.
+
+          if (s.url !== instanceOptions.url) {
+
+            sm2._wD(_wDS('manURL') + ': ' + instanceOptions.url);
+
+            s._a.src = instanceOptions.url;
+
+            // TODO: review / re-apply all relevant options (volume, loop, onposition etc.)
+
+            // reset position for new URL
+            s.setPosition(0);
+
+          }
+
+          // given explicit load call, try to preload.
+
+          // early HTML5 implementation (non-standard)
+          s._a.autobuffer = 'auto';
+
+          // standard property, values: none / metadata / auto
+          // reference: http://msdn.microsoft.com/en-us/library/ie/ff974759%28v=vs.85%29.aspx
+          s._a.preload = 'auto';
+
+          s._a._called_load = true;
+
+        } else {
+
+          sm2._wD(s.id + ': Ignoring request to load again');
+
+        }
+
+      } else {
+
+        if (sm2.html5Only) {
+          sm2._wD(s.id + ': No flash support. Exiting.');
+          return s;
+        }
+
+        if (s._iO.url && s._iO.url.match(/data:/i)) {
+          // data: URIs not supported by Flash, either.
+          sm2._wD(s.id + ': data: URIs not supported via Flash. Exiting.');
+          return s;
+        }
+
+        try {
+          s.isHTML5 = false;
+          s._iO = policyFix(loopFix(instanceOptions));
+          // if we have "position", disable auto-play as we'll be seeking to that position at onload().
+          if (s._iO.autoPlay && (s._iO.position || s._iO.from)) {
+            sm2._wD(s.id + ': Disabling autoPlay because of non-zero offset case');
+            s._iO.autoPlay = false;
+          }
+          // re-assign local shortcut
+          instanceOptions = s._iO;
+          if (fV === 8) {
+            flash._load(s.id, instanceOptions.url, instanceOptions.stream, instanceOptions.autoPlay, instanceOptions.usePolicyFile);
+          } else {
+            flash._load(s.id, instanceOptions.url, !!(instanceOptions.stream), !!(instanceOptions.autoPlay), instanceOptions.loops || 1, !!(instanceOptions.autoLoad), instanceOptions.usePolicyFile);
+          }
+        } catch(e) {
+          _wDS('smError', 2);
+          debugTS('onload', false);
+          catchError({
+            type: 'SMSOUND_LOAD_JS_EXCEPTION',
+            fatal: true
+          });
+        }
+
+      }
+
+      // after all of this, ensure sound url is up to date.
+      s.url = instanceOptions.url;
+
+      return s;
+
+    };
+
+    /**
+     * Unloads a sound, canceling any open HTTP requests.
+     *
+     * @return {SMSound} The SMSound object
+     */
+
+    this.unload = function() {
+
+      // Flash 8/AS2 can't "close" a stream - fake it by loading an empty URL
+      // Flash 9/AS3: Close stream, preventing further load
+      // HTML5: Most UAs will use empty URL
+
+      if (s.readyState !== 0) {
+
+        sm2._wD(s.id + ': unload()');
+
+        if (!s.isHTML5) {
+
+          if (fV === 8) {
+            flash._unload(s.id, emptyURL);
+          } else {
+            flash._unload(s.id);
+          }
+
+        } else {
+
+          stop_html5_timer();
+
+          if (s._a) {
+
+            s._a.pause();
+
+            // update empty URL, too
+            lastURL = html5Unload(s._a);
+
+          }
+
+        }
+
+        // reset load/status flags
+        resetProperties();
+
+      }
+
+      return s;
+
+    };
+
+    /**
+     * Unloads and destroys a sound.
+     */
+
+    this.destruct = function(_bFromSM) {
+
+      sm2._wD(s.id + ': Destruct');
+
+      if (!s.isHTML5) {
+
+        // kill sound within Flash
+        // Disable the onfailure handler
+        s._iO.onfailure = null;
+        flash._destroySound(s.id);
+
+      } else {
+
+        stop_html5_timer();
+
+        if (s._a) {
+          s._a.pause();
+          html5Unload(s._a);
+          if (!useGlobalHTML5Audio) {
+            remove_html5_events();
+          }
+          // break obvious circular reference
+          s._a._s = null;
+          s._a = null;
+        }
+
+      }
+
+      if (!_bFromSM) {
+        // ensure deletion from controller
+        sm2.destroySound(s.id, true);
+      }
+
+    };
+
+    /**
+     * Begins playing a sound.
+     *
+     * @param {object} options Optional: Sound options
+     * @return {SMSound} The SMSound object
+     */
+
+    this.play = function(options, _updatePlayState) {
+
+      var fN, allowMulti, a, onready,
+          audioClone, onended, oncanplay,
+          startOK = true;
+
+      // <d>
+      fN = s.id + ': play(): ';
+      // </d>
+
+      // default to true
+      _updatePlayState = (_updatePlayState === _undefined ? true : _updatePlayState);
+
+      if (!options) {
+        options = {};
+      }
+
+      // first, use local URL (if specified)
+      if (s.url) {
+        s._iO.url = s.url;
+      }
+
+      // mix in any options defined at createSound()
+      s._iO = mixin(s._iO, s.options);
+
+      // mix in any options specific to this method
+      s._iO = mixin(options, s._iO);
+
+      s._iO.url = parseURL(s._iO.url);
+
+      s.instanceOptions = s._iO;
+
+      // RTMP-only
+      if (!s.isHTML5 && s._iO.serverURL && !s.connected) {
+        if (!s.getAutoPlay()) {
+          sm2._wD(fN + ' Netstream not connected yet - setting autoPlay');
+          s.setAutoPlay(true);
+        }
+        // play will be called in onconnect()
+        return s;
+      }
+
+      if (html5OK(s._iO)) {
+        s._setup_html5(s._iO);
+        start_html5_timer();
+      }
+
+      if (s.playState === 1 && !s.paused) {
+
+        allowMulti = s._iO.multiShot;
+
+        if (!allowMulti) {
+
+          sm2._wD(fN + 'Already playing (one-shot)', 1);
+
+          if (s.isHTML5) {
+            // go back to original position.
+            s.setPosition(s._iO.position);
+          }
+
+          return s;
+
+        }
+
+        sm2._wD(fN + 'Already playing (multi-shot)', 1);
+
+      }
+
+      // edge case: play() with explicit URL parameter
+      if (options.url && options.url !== s.url) {
+
+        // special case for createSound() followed by load() / play() with url; avoid double-load case.
+        if (!s.readyState && !s.isHTML5 && fV === 8 && urlOmitted) {
+
+          urlOmitted = false;
+
+        } else {
+
+          // load using merged options
+          s.load(s._iO);
+
+        }
+
+      }
+
+      if (!s.loaded) {
+
+        if (s.readyState === 0) {
+
+          sm2._wD(fN + 'Attempting to load');
+
+          // try to get this sound playing ASAP
+          if (!s.isHTML5 && !sm2.html5Only) {
+
+            // flash: assign directly because setAutoPlay() increments the instanceCount
+            s._iO.autoPlay = true;
+            s.load(s._iO);
+
+          } else if (s.isHTML5) {
+
+            // iOS needs this when recycling sounds, loading a new URL on an existing object.
+            s.load(s._iO);
+
+          } else {
+
+            sm2._wD(fN + 'Unsupported type. Exiting.');
+
+            return s;
+
+          }
+
+          // HTML5 hack - re-set instanceOptions?
+          s.instanceOptions = s._iO;
+
+        } else if (s.readyState === 2) {
+
+          sm2._wD(fN + 'Could not load - exiting', 2);
+
+          return s;
+
+        } else {
+
+          sm2._wD(fN + 'Loading - attempting to play...');
+
+        }
+
+      } else {
+
+        // "play()"
+        sm2._wD(fN.substr(0, fN.lastIndexOf(':')));
+
+      }
+
+      if (!s.isHTML5 && fV === 9 && s.position > 0 && s.position === s.duration) {
+        // flash 9 needs a position reset if play() is called while at the end of a sound.
+        sm2._wD(fN + 'Sound at end, resetting to position: 0');
+        options.position = 0;
+      }
+
+      /**
+       * Streams will pause when their buffer is full if they are being loaded.
+       * In this case paused is true, but the song hasn't started playing yet.
+       * If we just call resume() the onplay() callback will never be called.
+       * So only call resume() if the position is > 0.
+       * Another reason is because options like volume won't have been applied yet.
+       * For normal sounds, just resume.
+       */
+
+      if (s.paused && s.position >= 0 && (!s._iO.serverURL || s.position > 0)) {
+
+        // https://gist.github.com/37b17df75cc4d7a90bf6
+        sm2._wD(fN + 'Resuming from paused state', 1);
+        s.resume();
+
+      } else {
+
+        s._iO = mixin(options, s._iO);
+
+        /**
+         * Preload in the event of play() with position under Flash,
+         * or from/to parameters and non-RTMP case
+         */
+        if (((!s.isHTML5 && s._iO.position !== null && s._iO.position > 0) || (s._iO.from !== null && s._iO.from > 0) || s._iO.to !== null) && s.instanceCount === 0 && s.playState === 0 && !s._iO.serverURL) {
+
+          onready = function() {
+            // sound "canplay" or onload()
+            // re-apply position/from/to to instance options, and start playback
+            s._iO = mixin(options, s._iO);
+            s.play(s._iO);
+          };
+
+          // HTML5 needs to at least have "canplay" fired before seeking.
+          if (s.isHTML5 && !s._html5_canplay) {
+
+            // this hasn't been loaded yet. load it first, and then do this again.
+            sm2._wD(fN + 'Beginning load for non-zero offset case');
+
+            s.load({
+              // note: custom HTML5-only event added for from/to implementation.
+              _oncanplay: onready
+            });
+
+          } else if (!s.isHTML5 && !s.loaded && (!s.readyState || s.readyState !== 2)) {
+
+            // to be safe, preload the whole thing in Flash.
+
+            sm2._wD(fN + 'Preloading for non-zero offset case');
+
+            s.load({
+              onload: onready
+            });
+
+          }
+
+          // otherwise, we're ready to go. re-apply local options, and continue
+
+          s._iO = applyFromTo();
+
+        }
+
+        // sm2._wD(fN + 'Starting to play');
+
+        // increment instance counter, where enabled + supported
+        if (!s.instanceCount || s._iO.multiShotEvents || (s.isHTML5 && s._iO.multiShot && !useGlobalHTML5Audio) || (!s.isHTML5 && fV > 8 && !s.getAutoPlay())) {
+          s.instanceCount++;
+        }
+
+        // if first play and onposition parameters exist, apply them now
+        if (s._iO.onposition && s.playState === 0) {
+          attachOnPosition(s);
+        }
+
+        s.playState = 1;
+        s.paused = false;
+
+        s.position = (s._iO.position !== _undefined && !isNaN(s._iO.position) ? s._iO.position : 0);
+
+        if (!s.isHTML5) {
+          s._iO = policyFix(loopFix(s._iO));
+        }
+
+        if (s._iO.onplay && _updatePlayState) {
+          s._iO.onplay.apply(s);
+          onplay_called = true;
+        }
+
+        s.setVolume(s._iO.volume, true);
+        s.setPan(s._iO.pan, true);
+
+        if (s._iO.playbackRate !== 1) {
+          s.setPlaybackRate(s._iO.playbackRate);
+        }
+
+        if (!s.isHTML5) {
+
+          startOK = flash._start(s.id, s._iO.loops || 1, (fV === 9 ? s.position : s.position / msecScale), s._iO.multiShot || false);
+
+          if (fV === 9 && !startOK) {
+            // edge case: no sound hardware, or 32-channel flash ceiling hit.
+            // applies only to Flash 9, non-NetStream/MovieStar sounds.
+            // http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/media/Sound.html#play%28%29
+            sm2._wD(fN + 'No sound hardware, or 32-sound ceiling hit', 2);
+            if (s._iO.onplayerror) {
+              s._iO.onplayerror.apply(s);
+            }
+
+          }
+
+        } else if (s.instanceCount < 2) {
+
+            // HTML5 single-instance case
+
+            start_html5_timer();
+
+            a = s._setup_html5();
+
+            s.setPosition(s._iO.position);
+
+            a.play();
+
+          } else {
+
+            // HTML5 multi-shot case
+
+            sm2._wD(s.id + ': Cloning Audio() for instance #' + s.instanceCount + '...');
+
+            audioClone = new Audio(s._iO.url);
+
+            onended = function() {
+              event.remove(audioClone, 'ended', onended);
+              s._onfinish(s);
+              // cleanup
+              html5Unload(audioClone);
+              audioClone = null;
+            };
+
+            oncanplay = function() {
+              event.remove(audioClone, 'canplay', oncanplay);
+              try {
+                audioClone.currentTime = s._iO.position / msecScale;
+              } catch(err) {
+                complain(s.id + ': multiShot play() failed to apply position of ' + (s._iO.position / msecScale));
+              }
+              audioClone.play();
+            };
+
+            event.add(audioClone, 'ended', onended);
+
+            // apply volume to clones, too
+            if (s._iO.volume !== _undefined) {
+              audioClone.volume = Math.max(0, Math.min(1, s._iO.volume / 100));
+            }
+
+            // playing multiple muted sounds? if you do this, you're weird ;) - but let's cover it.
+            if (s.muted) {
+              audioClone.muted = true;
+            }
+
+            if (s._iO.position) {
+              // HTML5 audio can't seek before onplay() event has fired.
+              // wait for canplay, then seek to position and start playback.
+              event.add(audioClone, 'canplay', oncanplay);
+            } else {
+              // begin playback at currentTime: 0
+              audioClone.play();
+            }
+
+          }
+
+      }
+
+      return s;
+
+    };
+
+    // just for convenience
+    this.start = this.play;
+
+    /**
+     * Stops playing a sound (and optionally, all sounds)
+     *
+     * @param {boolean} bAll Optional: Whether to stop all sounds
+     * @return {SMSound} The SMSound object
+     */
+
+    this.stop = function(bAll) {
+
+      var instanceOptions = s._iO,
+          originalPosition;
+
+      if (s.playState === 1) {
+
+        sm2._wD(s.id + ': stop()');
+
+        s._onbufferchange(0);
+        s._resetOnPosition(0);
+        s.paused = false;
+
+        if (!s.isHTML5) {
+          s.playState = 0;
+        }
+
+        // remove onPosition listeners, if any
+        detachOnPosition();
+
+        // and "to" position, if set
+        if (instanceOptions.to) {
+          s.clearOnPosition(instanceOptions.to);
+        }
+
+        if (!s.isHTML5) {
+
+          flash._stop(s.id, bAll);
+
+          // hack for netStream: just unload
+          if (instanceOptions.serverURL) {
+            s.unload();
+          }
+
+        } else if (s._a) {
+
+            originalPosition = s.position;
+
+            // act like Flash, though
+            s.setPosition(0);
+
+            // hack: reflect old position for onstop() (also like Flash)
+            s.position = originalPosition;
+
+            // html5 has no stop()
+            // NOTE: pausing means iOS requires interaction to resume.
+            s._a.pause();
+
+            s.playState = 0;
+
+            // and update UI
+            s._onTimer();
+
+            stop_html5_timer();
+
+          }
+
+        s.instanceCount = 0;
+        s._iO = {};
+
+        if (instanceOptions.onstop) {
+          instanceOptions.onstop.apply(s);
+        }
+
+      }
+
+      return s;
+
+    };
+
+    /**
+     * Undocumented/internal: Sets autoPlay for RTMP.
+     *
+     * @param {boolean} autoPlay state
+     */
+
+    this.setAutoPlay = function(autoPlay) {
+
+      sm2._wD(s.id + ': Autoplay turned ' + (autoPlay ? 'on' : 'off'));
+      s._iO.autoPlay = autoPlay;
+
+      if (!s.isHTML5) {
+        flash._setAutoPlay(s.id, autoPlay);
+        if (autoPlay) {
+          // only increment the instanceCount if the sound isn't loaded (TODO: verify RTMP)
+          if (!s.instanceCount && s.readyState === 1) {
+            s.instanceCount++;
+            sm2._wD(s.id + ': Incremented instance count to ' + s.instanceCount);
+          }
+        }
+      }
+
+    };
+
+    /**
+     * Undocumented/internal: Returns the autoPlay boolean.
+     *
+     * @return {boolean} The current autoPlay value
+     */
+
+    this.getAutoPlay = function() {
+
+      return s._iO.autoPlay;
+
+    };
+
+    /**
+     * Sets the playback rate of a sound (HTML5-only.)
+     *
+     * @param {number} playbackRate (+/-)
+     * @return {SMSound} The SMSound object
+     */
+
+    this.setPlaybackRate = function(playbackRate) {
+
+      // Per Mozilla, limit acceptable values to prevent playback from stopping (unless allowOverride is truthy.)
+      // https://developer.mozilla.org/en-US/Apps/Build/Audio_and_video_delivery/WebAudio_playbackRate_explained
+      var normalizedRate = Math.max(0.5, Math.min(4, playbackRate));
+
+      // <d>
+      if (normalizedRate !== playbackRate) {
+        sm2._wD(s.id + ': setPlaybackRate(' + playbackRate + '): limiting rate to ' + normalizedRate, 2);
+      }
+      // </d>
+
+      if (s.isHTML5) {
+        try {
+          s._iO.playbackRate = normalizedRate;
+          s._a.playbackRate = normalizedRate;
+        } catch(e) {
+          sm2._wD(s.id + ': setPlaybackRate(' + normalizedRate + ') failed: ' + e.message, 2);
+        }
+      }
+
+      return s;
+
+    };
+
+    /**
+     * Sets the position of a sound.
+     *
+     * @param {number} nMsecOffset Position (milliseconds)
+     * @return {SMSound} The SMSound object
+     */
+
+    this.setPosition = function(nMsecOffset) {
+
+      if (nMsecOffset === _undefined) {
+        nMsecOffset = 0;
+      }
+
+      var position, position1K,
+          // Use the duration from the instance options, if we don't have a track duration yet.
+          // position >= 0 and <= current available (loaded) duration
+          offset = (s.isHTML5 ? Math.max(nMsecOffset, 0) : Math.min(s.duration || s._iO.duration, Math.max(nMsecOffset, 0)));
+
+      s.position = offset;
+      position1K = s.position / msecScale;
+      s._resetOnPosition(s.position);
+      s._iO.position = offset;
+
+      if (!s.isHTML5) {
+
+        position = (fV === 9 ? s.position : position1K);
+
+        if (s.readyState && s.readyState !== 2) {
+          // if paused or not playing, will not resume (by playing)
+          flash._setPosition(s.id, position, (s.paused || !s.playState), s._iO.multiShot);
+        }
+
+      } else if (s._a) {
+
+        // Set the position in the canplay handler if the sound is not ready yet
+        if (s._html5_canplay) {
+
+          if (s._a.currentTime.toFixed(3) !== position1K.toFixed(3)) {
+
+            /**
+             * DOM/JS errors/exceptions to watch out for:
+             * if seek is beyond (loaded?) position, "DOM exception 11"
+             * "INDEX_SIZE_ERR": DOM exception 1
+             */
+            sm2._wD(s.id + ': setPosition(' + position1K + ')');
+
+            try {
+              s._a.currentTime = position1K;
+              if (s.playState === 0 || s.paused) {
+                // allow seek without auto-play/resume
+                s._a.pause();
+              }
+            } catch(e) {
+              sm2._wD(s.id + ': setPosition(' + position1K + ') failed: ' + e.message, 2);
+            }
+
+          }
+
+        } else if (position1K) {
+
+          // warn on non-zero seek attempts
+          sm2._wD(s.id + ': setPosition(' + position1K + '): Cannot seek yet, sound not ready', 2);
+          return s;
+
+        }
+
+        if (s.paused) {
+
+          // if paused, refresh UI right away by forcing update
+          s._onTimer(true);
+
+        }
+
+      }
+
+      return s;
+
+    };
+
+    /**
+     * Pauses sound playback.
+     *
+     * @return {SMSound} The SMSound object
+     */
+
+    this.pause = function(_bCallFlash) {
+
+      if (s.paused || (s.playState === 0 && s.readyState !== 1)) return s;
+
+      sm2._wD(s.id + ': pause()');
+      s.paused = true;
+
+      if (!s.isHTML5) {
+        if (_bCallFlash || _bCallFlash === _undefined) {
+          flash._pause(s.id, s._iO.multiShot);
+        }
+      } else {
+        s._setup_html5().pause();
+        stop_html5_timer();
+      }
+
+      if (s._iO.onpause) {
+        s._iO.onpause.apply(s);
+      }
+
+      return s;
+
+    };
+
+    /**
+     * Resumes sound playback.
+     *
+     * @return {SMSound} The SMSound object
+     */
+
+    /**
+     * When auto-loaded streams pause on buffer full they have a playState of 0.
+     * We need to make sure that the playState is set to 1 when these streams "resume".
+     * When a paused stream is resumed, we need to trigger the onplay() callback if it
+     * hasn't been called already. In this case since the sound is being played for the
+     * first time, I think it's more appropriate to call onplay() rather than onresume().
+     */
+
+    this.resume = function() {
+
+      var instanceOptions = s._iO;
+
+      if (!s.paused) return s;
+
+      sm2._wD(s.id + ': resume()');
+      s.paused = false;
+      s.playState = 1;
+
+      if (!s.isHTML5) {
+
+        if (instanceOptions.isMovieStar && !instanceOptions.serverURL) {
+          // Bizarre Webkit bug (Chrome reported via 8tracks.com dudes): AAC content paused for 30+ seconds(?) will not resume without a reposition.
+          s.setPosition(s.position);
+        }
+
+        // flash method is toggle-based (pause/resume)
+        flash._pause(s.id, instanceOptions.multiShot);
+
+      } else {
+
+        s._setup_html5().play();
+        start_html5_timer();
+
+      }
+
+      if (!onplay_called && instanceOptions.onplay) {
+
+        instanceOptions.onplay.apply(s);
+        onplay_called = true;
+
+      } else if (instanceOptions.onresume) {
+
+        instanceOptions.onresume.apply(s);
+
+      }
+
+      return s;
+
+    };
+
+    /**
+     * Toggles sound playback.
+     *
+     * @return {SMSound} The SMSound object
+     */
+
+    this.togglePause = function() {
+
+      sm2._wD(s.id + ': togglePause()');
+
+      if (s.playState === 0) {
+        s.play({
+          position: (fV === 9 && !s.isHTML5 ? s.position : s.position / msecScale)
+        });
+        return s;
+      }
+
+      if (s.paused) {
+        s.resume();
+      } else {
+        s.pause();
+      }
+
+      return s;
+
+    };
+
+    /**
+     * Sets the panning (L-R) effect.
+     *
+     * @param {number} nPan The pan value (-100 to 100)
+     * @return {SMSound} The SMSound object
+     */
+
+    this.setPan = function(nPan, bInstanceOnly) {
+
+      if (nPan === _undefined) {
+        nPan = 0;
+      }
+
+      if (bInstanceOnly === _undefined) {
+        bInstanceOnly = false;
+      }
+
+      if (!s.isHTML5) {
+        flash._setPan(s.id, nPan);
+      } // else { no HTML5 pan? }
+
+      s._iO.pan = nPan;
+
+      if (!bInstanceOnly) {
+        s.pan = nPan;
+        s.options.pan = nPan;
+      }
+
+      return s;
+
+    };
+
+    /**
+     * Sets the volume.
+     *
+     * @param {number} nVol The volume value (0 to 100)
+     * @return {SMSound} The SMSound object
+     */
+
+    this.setVolume = function(nVol, _bInstanceOnly) {
+
+      /**
+       * Note: Setting volume has no effect on iOS "special snowflake" devices.
+       * Hardware volume control overrides software, and volume
+       * will always return 1 per Apple docs. (iOS 4 + 5.)
+       * http://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/HTML-canvas-guide/AddingSoundtoCanvasAnimations/AddingSoundtoCanvasAnimations.html
+       */
+
+      if (nVol === _undefined) {
+        nVol = 100;
+      }
+
+      if (_bInstanceOnly === _undefined) {
+        _bInstanceOnly = false;
+      }
+
+      if (!s.isHTML5) {
+
+        flash._setVolume(s.id, (sm2.muted && !s.muted) || s.muted ? 0 : nVol);
+
+      } else if (s._a) {
+
+        if (sm2.muted && !s.muted) {
+          s.muted = true;
+          s._a.muted = true;
+        }
+
+        // valid range for native HTML5 Audio(): 0-1
+        s._a.volume = Math.max(0, Math.min(1, nVol / 100));
+
+      }
+
+      s._iO.volume = nVol;
+
+      if (!_bInstanceOnly) {
+        s.volume = nVol;
+        s.options.volume = nVol;
+      }
+
+      return s;
+
+    };
+
+    /**
+     * Mutes the sound.
+     *
+     * @return {SMSound} The SMSound object
+     */
+
+    this.mute = function() {
+
+      s.muted = true;
+
+      if (!s.isHTML5) {
+        flash._setVolume(s.id, 0);
+      } else if (s._a) {
+        s._a.muted = true;
+      }
+
+      return s;
+
+    };
+
+    /**
+     * Unmutes the sound.
+     *
+     * @return {SMSound} The SMSound object
+     */
+
+    this.unmute = function() {
+
+      s.muted = false;
+      var hasIO = (s._iO.volume !== _undefined);
+
+      if (!s.isHTML5) {
+        flash._setVolume(s.id, hasIO ? s._iO.volume : s.options.volume);
+      } else if (s._a) {
+        s._a.muted = false;
+      }
+
+      return s;
+
+    };
+
+    /**
+     * Toggles the muted state of a sound.
+     *
+     * @return {SMSound} The SMSound object
+     */
+
+    this.toggleMute = function() {
+
+      return (s.muted ? s.unmute() : s.mute());
+
+    };
+
+    /**
+     * Registers a callback to be fired when a sound reaches a given position during playback.
+     *
+     * @param {number} nPosition The position to watch for
+     * @param {function} oMethod The relevant callback to fire
+     * @param {object} oScope Optional: The scope to apply the callback to
+     * @return {SMSound} The SMSound object
+     */
+
+    this.onPosition = function(nPosition, oMethod, oScope) {
+
+      // TODO: basic dupe checking?
+
+      onPositionItems.push({
+        position: parseInt(nPosition, 10),
+        method: oMethod,
+        scope: (oScope !== _undefined ? oScope : s),
+        fired: false
+      });
+
+      return s;
+
+    };
+
+    // legacy/backwards-compability: lower-case method name
+    this.onposition = this.onPosition;
+
+    /**
+     * Removes registered callback(s) from a sound, by position and/or callback.
+     *
+     * @param {number} nPosition The position to clear callback(s) for
+     * @param {function} oMethod Optional: Identify one callback to be removed when multiple listeners exist for one position
+     * @return {SMSound} The SMSound object
+     */
+
+    this.clearOnPosition = function(nPosition, oMethod) {
+
+      var i;
+
+      nPosition = parseInt(nPosition, 10);
+
+      if (isNaN(nPosition)) {
+        // safety check
+        return;
+      }
+
+      for (i = 0; i < onPositionItems.length; i++) {
+
+        if (nPosition === onPositionItems[i].position) {
+          // remove this item if no method was specified, or, if the method matches
+
+          if (!oMethod || (oMethod === onPositionItems[i].method)) {
+
+            if (onPositionItems[i].fired) {
+              // decrement "fired" counter, too
+              onPositionFired--;
+            }
+
+            onPositionItems.splice(i, 1);
+
+          }
+
+        }
+
+      }
+
+    };
+
+    this._processOnPosition = function() {
+
+      var i, item, j = onPositionItems.length;
+
+      if (!j || !s.playState || onPositionFired >= j) return false;
+
+      for (i = j - 1; i >= 0; i--) {
+
+        item = onPositionItems[i];
+
+        if (!item.fired && s.position >= item.position) {
+
+          item.fired = true;
+          onPositionFired++;
+          item.method.apply(item.scope, [item.position]);
+
+          //  reset j -- onPositionItems.length can be changed in the item callback above... occasionally breaking the loop.
+          j = onPositionItems.length;
+
+        }
+
+      }
+
+      return true;
+
+    };
+
+    this._resetOnPosition = function(nPosition) {
+
+      // reset "fired" for items interested in this position
+      var i, item, j = onPositionItems.length;
+
+      if (!j) return false;
+
+      for (i = j - 1; i >= 0; i--) {
+
+        item = onPositionItems[i];
+
+        if (item.fired && nPosition <= item.position) {
+          item.fired = false;
+          onPositionFired--;
+        }
+
+      }
+
+      return true;
+
+    };
+
+    /**
+     * SMSound() private internals
+     * --------------------------------
+     */
+
+    applyFromTo = function() {
+
+      var instanceOptions = s._iO,
+          f = instanceOptions.from,
+          t = instanceOptions.to,
+          start, end;
+
+      end = function() {
+
+        // end has been reached.
+        sm2._wD(s.id + ': "To" time of ' + t + ' reached.');
+
+        // detach listener
+        s.clearOnPosition(t, end);
+
+        // stop should clear this, too
+        s.stop();
+
+      };
+
+      start = function() {
+
+        sm2._wD(s.id + ': Playing "from" ' + f);
+
+        // add listener for end
+        if (t !== null && !isNaN(t)) {
+          s.onPosition(t, end);
+        }
+
+      };
+
+      if (f !== null && !isNaN(f)) {
+
+        // apply to instance options, guaranteeing correct start position.
+        instanceOptions.position = f;
+
+        // multiShot timing can't be tracked, so prevent that.
+        instanceOptions.multiShot = false;
+
+        start();
+
+      }
+
+      // return updated instanceOptions including starting position
+      return instanceOptions;
+
+    };
+
+    attachOnPosition = function() {
+
+      var item,
+          op = s._iO.onposition;
+
+      // attach onposition things, if any, now.
+
+      if (op) {
+
+        for (item in op) {
+          if (op.hasOwnProperty(item)) {
+            s.onPosition(parseInt(item, 10), op[item]);
+          }
+        }
+
+      }
+
+    };
+
+    detachOnPosition = function() {
+
+      var item,
+          op = s._iO.onposition;
+
+      // detach any onposition()-style listeners.
+
+      if (op) {
+
+        for (item in op) {
+          if (op.hasOwnProperty(item)) {
+            s.clearOnPosition(parseInt(item, 10));
+          }
+        }
+
+      }
+
+    };
+
+    start_html5_timer = function() {
+
+      if (s.isHTML5) {
+        startTimer(s);
+      }
+
+    };
+
+    stop_html5_timer = function() {
+
+      if (s.isHTML5) {
+        stopTimer(s);
+      }
+
+    };
+
+    resetProperties = function(retainPosition) {
+
+      if (!retainPosition) {
+        onPositionItems = [];
+        onPositionFired = 0;
+      }
+
+      onplay_called = false;
+
+      s._hasTimer = null;
+      s._a = null;
+      s._html5_canplay = false;
+      s.bytesLoaded = null;
+      s.bytesTotal = null;
+      s.duration = (s._iO && s._iO.duration ? s._iO.duration : null);
+      s.durationEstimate = null;
+      s.buffered = [];
+
+      // legacy: 1D array
+      s.eqData = [];
+
+      s.eqData.left = [];
+      s.eqData.right = [];
+
+      s.failures = 0;
+      s.isBuffering = false;
+      s.instanceOptions = {};
+      s.instanceCount = 0;
+      s.loaded = false;
+      s.metadata = {};
+
+      // 0 = uninitialised, 1 = loading, 2 = failed/error, 3 = loaded/success
+      s.readyState = 0;
+
+      s.muted = false;
+      s.paused = false;
+
+      s.peakData = {
+        left: 0,
+        right: 0
+      };
+
+      s.waveformData = {
+        left: [],
+        right: []
+      };
+
+      s.playState = 0;
+      s.position = null;
+
+      s.id3 = {};
+
+    };
+
+    resetProperties();
+
+    /**
+     * Pseudo-private SMSound internals
+     * --------------------------------
+     */
+
+    this._onTimer = function(bForce) {
+
+      /**
+       * HTML5-only _whileplaying() etc.
+       * called from both HTML5 native events, and polling/interval-based timers
+       * mimics flash and fires only when time/duration change, so as to be polling-friendly
+       */
+
+      var duration, isNew = false, time, x = {};
+
+      if (s._hasTimer || bForce) {
+
+        // TODO: May not need to track readyState (1 = loading)
+
+        if (s._a && (bForce || ((s.playState > 0 || s.readyState === 1) && !s.paused))) {
+
+          duration = s._get_html5_duration();
+
+          if (duration !== lastHTML5State.duration) {
+
+            lastHTML5State.duration = duration;
+            s.duration = duration;
+            isNew = true;
+
+          }
+
+          // TODO: investigate why this goes wack if not set/re-set each time.
+          s.durationEstimate = s.duration;
+
+          time = (s._a.currentTime * msecScale || 0);
+
+          if (time !== lastHTML5State.time) {
+
+            lastHTML5State.time = time;
+            isNew = true;
+
+          }
+
+          if (isNew || bForce) {
+
+            s._whileplaying(time, x, x, x, x);
+
+          }
+
+        }/* else {
+
+          // sm2._wD('_onTimer: Warn for "'+s.id+'": '+(!s._a?'Could not find element. ':'')+(s.playState === 0?'playState bad, 0?':'playState = '+s.playState+', OK'));
+
+          return false;
+
+        }*/
+
+      }
+
+      return isNew;
+
+    };
+
+    this._get_html5_duration = function() {
+
+      var instanceOptions = s._iO,
+          // if audio object exists, use its duration - else, instance option duration (if provided - it's a hack, really, and should be retired) OR null
+          d = (s._a && s._a.duration ? s._a.duration * msecScale : (instanceOptions && instanceOptions.duration ? instanceOptions.duration : null)),
+          result = (d && !isNaN(d) && d !== Infinity ? d : null);
+
+      return result;
+
+    };
+
+    this._apply_loop = function(a, nLoops) {
+
+      /**
+       * boolean instead of "loop", for webkit? - spec says string. http://www.w3.org/TR/html-markup/audio.html#audio.attrs.loop
+       * note that loop is either off or infinite under HTML5, unlike Flash which allows arbitrary loop counts to be specified.
+       */
+
+      // <d>
+      if (!a.loop && nLoops > 1) {
+        sm2._wD('Note: Native HTML5 looping is infinite.', 1);
+      }
+      // </d>
+
+      a.loop = (nLoops > 1 ? 'loop' : '');
+
+    };
+
+    this._setup_html5 = function(options) {
+
+      var instanceOptions = mixin(s._iO, options),
+          a = useGlobalHTML5Audio ? globalHTML5Audio : s._a,
+          dURL = decodeURI(instanceOptions.url),
+          sameURL;
+
+      /**
+       * "First things first, I, Poppa..." (reset the previous state of the old sound, if playing)
+       * Fixes case with devices that can only play one sound at a time
+       * Otherwise, other sounds in mid-play will be terminated without warning and in a stuck state
+       */
+
+      if (useGlobalHTML5Audio) {
+
+        if (dURL === decodeURI(lastGlobalHTML5URL)) {
+          // global HTML5 audio: re-use of URL
+          sameURL = true;
+        }
+
+      } else if (dURL === decodeURI(lastURL)) {
+
+        // options URL is the same as the "last" URL, and we used (loaded) it
+        sameURL = true;
+
+      }
+
+      if (a) {
+
+        if (a._s) {
+
+          if (useGlobalHTML5Audio) {
+
+            if (a._s && a._s.playState && !sameURL) {
+
+              // global HTML5 audio case, and loading a new URL. stop the currently-playing one.
+              a._s.stop();
+
+            }
+
+          } else if (!useGlobalHTML5Audio && dURL === decodeURI(lastURL)) {
+
+            // non-global HTML5 reuse case: same url, ignore request
+            s._apply_loop(a, instanceOptions.loops);
+
+            return a;
+
+          }
+
+        }
+
+        if (!sameURL) {
+
+          // don't retain onPosition() stuff with new URLs.
+
+          if (lastURL) {
+            resetProperties(false);
+          }
+
+          // assign new HTML5 URL
+
+          a.src = instanceOptions.url;
+
+          s.url = instanceOptions.url;
+
+          lastURL = instanceOptions.url;
+
+          lastGlobalHTML5URL = instanceOptions.url;
+
+          a._called_load = false;
+
+        }
+
+      } else {
+
+        if (instanceOptions.autoLoad || instanceOptions.autoPlay) {
+
+          s._a = new Audio(instanceOptions.url);
+          s._a.load();
+
+        } else {
+
+          // null for stupid Opera 9.64 case
+          s._a = (isOpera && opera.version() < 10 ? new Audio(null) : new Audio());
+
+        }
+
+        // assign local reference
+        a = s._a;
+
+        a._called_load = false;
+
+        if (useGlobalHTML5Audio) {
+
+          globalHTML5Audio = a;
+
+        }
+
+      }
+
+      s.isHTML5 = true;
+
+      // store a ref on the track
+      s._a = a;
+
+      // store a ref on the audio
+      a._s = s;
+
+      add_html5_events();
+
+      s._apply_loop(a, instanceOptions.loops);
+
+      if (instanceOptions.autoLoad || instanceOptions.autoPlay) {
+
+        s.load();
+
+      } else {
+
+        // early HTML5 implementation (non-standard)
+        a.autobuffer = false;
+
+        // standard ('none' is also an option.)
+        a.preload = 'auto';
+
+      }
+
+      return a;
+
+    };
+
+    add_html5_events = function() {
+
+      if (s._a._added_events) return false;
+
+      var f;
+
+      function add(oEvt, oFn, bCapture) {
+        return s._a ? s._a.addEventListener(oEvt, oFn, bCapture || false) : null;
+      }
+
+      s._a._added_events = true;
+
+      for (f in html5_events) {
+        if (html5_events.hasOwnProperty(f)) {
+          add(f, html5_events[f]);
+        }
+      }
+
+      return true;
+
+    };
+
+    remove_html5_events = function() {
+
+      // Remove event listeners
+
+      var f;
+
+      function remove(oEvt, oFn, bCapture) {
+        return (s._a ? s._a.removeEventListener(oEvt, oFn, bCapture || false) : null);
+      }
+
+      sm2._wD(s.id + ': Removing event listeners');
+      s._a._added_events = false;
+
+      for (f in html5_events) {
+        if (html5_events.hasOwnProperty(f)) {
+          remove(f, html5_events[f]);
+        }
+      }
+
+    };
+
+    /**
+     * Pseudo-private event internals
+     * ------------------------------
+     */
+
+    this._onload = function(nSuccess) {
+
+      var fN,
+          // check for duration to prevent false positives from flash 8 when loading from cache.
+          loadOK = !!nSuccess || (!s.isHTML5 && fV === 8 && s.duration);
+
+      // <d>
+      fN = s.id + ': ';
+      sm2._wD(fN + (loadOK ? 'onload()' : 'Failed to load / invalid sound?' + (!s.duration ? ' Zero-length duration reported.' : ' -') + ' (' + s.url + ')'), (loadOK ? 1 : 2));
+
+      if (!loadOK && !s.isHTML5) {
+        if (sm2.sandbox.noRemote === true) {
+          sm2._wD(fN + str('noNet'), 1);
+        }
+        if (sm2.sandbox.noLocal === true) {
+          sm2._wD(fN + str('noLocal'), 1);
+        }
+      }
+      // </d>
+
+      s.loaded = loadOK;
+      s.readyState = (loadOK ? 3 : 2);
+      s._onbufferchange(0);
+
+      if (!loadOK && !s.isHTML5) {
+        // note: no error code from Flash.
+        s._onerror();
+      }
+
+      if (s._iO.onload) {
+        wrapCallback(s, function() {
+          s._iO.onload.apply(s, [loadOK]);
+        });
+      }
+
+      return true;
+
+    };
+
+    this._onerror = function(errorCode, description) {
+
+      // https://html.spec.whatwg.org/multipage/embedded-content.html#error-codes
+      if (s._iO.onerror) {
+        wrapCallback(s, function() {
+          s._iO.onerror.apply(s, [errorCode, description]);
+        });
+      }
+
+    };
+
+    this._onbufferchange = function(nIsBuffering) {
+
+      // ignore if not playing
+      if (s.playState === 0) return false;
+
+      if ((nIsBuffering && s.isBuffering) || (!nIsBuffering && !s.isBuffering)) return false;
+
+      s.isBuffering = (nIsBuffering === 1);
+
+      if (s._iO.onbufferchange) {
+        sm2._wD(s.id + ': Buffer state change: ' + nIsBuffering);
+        s._iO.onbufferchange.apply(s, [nIsBuffering]);
+      }
+
+      return true;
+
+    };
+
+    /**
+     * Playback may have stopped due to buffering, or related reason.
+     * This state can be encountered on iOS < 6 when auto-play is blocked.
+     */
+
+    this._onsuspend = function() {
+
+      if (s._iO.onsuspend) {
+        sm2._wD(s.id + ': Playback suspended');
+        s._iO.onsuspend.apply(s);
+      }
+
+      return true;
+
+    };
+
+    /**
+     * flash 9/movieStar + RTMP-only method, should fire only once at most
+     * at this point we just recreate failed sounds rather than trying to reconnect
+     */
+
+    this._onfailure = function(msg, level, code) {
+
+      s.failures++;
+      sm2._wD(s.id + ': Failure (' + s.failures + '): ' + msg);
+
+      if (s._iO.onfailure && s.failures === 1) {
+        s._iO.onfailure(msg, level, code);
+      } else {
+        sm2._wD(s.id + ': Ignoring failure');
+      }
+
+    };
+
+    /**
+     * flash 9/movieStar + RTMP-only method for unhandled warnings/exceptions from Flash
+     * e.g., RTMP "method missing" warning (non-fatal) for getStreamLength on server
+     */
+
+    this._onwarning = function(msg, level, code) {
+
+      if (s._iO.onwarning) {
+        s._iO.onwarning(msg, level, code);
+      }
+
+    };
+
+    this._onfinish = function() {
+
+      // store local copy before it gets trashed...
+      var io_onfinish = s._iO.onfinish;
+
+      s._onbufferchange(0);
+      s._resetOnPosition(0);
+
+      // reset some state items
+      if (s.instanceCount) {
+
+        s.instanceCount--;
+
+        if (!s.instanceCount) {
+
+          // remove onPosition listeners, if any
+          detachOnPosition();
+
+          // reset instance options
+          s.playState = 0;
+          s.paused = false;
+          s.instanceCount = 0;
+          s.instanceOptions = {};
+          s._iO = {};
+          stop_html5_timer();
+
+          // reset position, too
+          if (s.isHTML5) {
+            s.position = 0;
+          }
+
+        }
+
+        if (!s.instanceCount || s._iO.multiShotEvents) {
+          // fire onfinish for last, or every instance
+          if (io_onfinish) {
+            sm2._wD(s.id + ': onfinish()');
+            wrapCallback(s, function() {
+              io_onfinish.apply(s);
+            });
+          }
+        }
+
+      }
+
+    };
+
+    this._whileloading = function(nBytesLoaded, nBytesTotal, nDuration, nBufferLength) {
+
+      var instanceOptions = s._iO;
+
+      s.bytesLoaded = nBytesLoaded;
+      s.bytesTotal = nBytesTotal;
+      s.duration = Math.floor(nDuration);
+      s.bufferLength = nBufferLength;
+
+      if (!s.isHTML5 && !instanceOptions.isMovieStar) {
+
+        if (instanceOptions.duration) {
+          // use duration from options, if specified and larger. nobody should be specifying duration in options, actually, and it should be retired.
+          s.durationEstimate = (s.duration > instanceOptions.duration) ? s.duration : instanceOptions.duration;
+        } else {
+          s.durationEstimate = parseInt((s.bytesTotal / s.bytesLoaded) * s.duration, 10);
+        }
+
+      } else {
+
+        s.durationEstimate = s.duration;
+
+      }
+
+      // for flash, reflect sequential-load-style buffering
+      if (!s.isHTML5) {
+        s.buffered = [{
+          start: 0,
+          end: s.duration
+        }];
+      }
+
+      // allow whileloading to fire even if "load" fired under HTML5, due to HTTP range/partials
+      if ((s.readyState !== 3 || s.isHTML5) && instanceOptions.whileloading) {
+        instanceOptions.whileloading.apply(s);
+      }
+
+    };
+
+    this._whileplaying = function(nPosition, oPeakData, oWaveformDataLeft, oWaveformDataRight, oEQData) {
+
+      var instanceOptions = s._iO,
+          eqLeft;
+
+      // flash safety net
+      if (isNaN(nPosition) || nPosition === null) return false;
+
+      // Safari HTML5 play() may return small -ve values when starting from position: 0, eg. -50.120396875. Unexpected/invalid per W3, I think. Normalize to 0.
+      s.position = Math.max(0, nPosition);
+
+      s._processOnPosition();
+
+      if (!s.isHTML5 && fV > 8) {
+
+        if (instanceOptions.usePeakData && oPeakData !== _undefined && oPeakData) {
+          s.peakData = {
+            left: oPeakData.leftPeak,
+            right: oPeakData.rightPeak
+          };
+        }
+
+        if (instanceOptions.useWaveformData && oWaveformDataLeft !== _undefined && oWaveformDataLeft) {
+          s.waveformData = {
+            left: oWaveformDataLeft.split(','),
+            right: oWaveformDataRight.split(',')
+          };
+        }
+
+        if (instanceOptions.useEQData) {
+          if (oEQData !== _undefined && oEQData && oEQData.leftEQ) {
+            eqLeft = oEQData.leftEQ.split(',');
+            s.eqData = eqLeft;
+            s.eqData.left = eqLeft;
+            if (oEQData.rightEQ !== _undefined && oEQData.rightEQ) {
+              s.eqData.right = oEQData.rightEQ.split(',');
+            }
+          }
+        }
+
+      }
+
+      if (s.playState === 1) {
+
+        // special case/hack: ensure buffering is false if loading from cache (and not yet started)
+        if (!s.isHTML5 && fV === 8 && !s.position && s.isBuffering) {
+          s._onbufferchange(0);
+        }
+
+        if (instanceOptions.whileplaying) {
+          // flash may call after actual finish
+          instanceOptions.whileplaying.apply(s);
+        }
+
+      }
+
+      return true;
+
+    };
+
+    this._oncaptiondata = function(oData) {
+
+      /**
+       * internal: flash 9 + NetStream (MovieStar/RTMP-only) feature
+       *
+       * @param {object} oData
+       */
+
+      sm2._wD(s.id + ': Caption data received.');
+
+      s.captiondata = oData;
+
+      if (s._iO.oncaptiondata) {
+        s._iO.oncaptiondata.apply(s, [oData]);
+      }
+
+    };
+
+    this._onmetadata = function(oMDProps, oMDData) {
+
+      /**
+       * internal: flash 9 + NetStream (MovieStar/RTMP-only) feature
+       * RTMP may include song title, MovieStar content may include encoding info
+       *
+       * @param {array} oMDProps (names)
+       * @param {array} oMDData (values)
+       */
+
+      sm2._wD(s.id + ': Metadata received.');
+
+      var oData = {}, i, j;
+
+      for (i = 0, j = oMDProps.length; i < j; i++) {
+        oData[oMDProps[i]] = oMDData[i];
+      }
+
+      s.metadata = oData;
+
+      if (s._iO.onmetadata) {
+        s._iO.onmetadata.call(s, s.metadata);
+      }
+
+    };
+
+    this._onid3 = function(oID3Props, oID3Data) {
+
+      /**
+       * internal: flash 8 + flash 9 ID3 feature
+       * may include artist, song title etc.
+       *
+       * @param {array} oID3Props (names)
+       * @param {array} oID3Data (values)
+       */
+
+      sm2._wD(s.id + ': ID3 data received.');
+
+      var oData = [], i, j;
+
+      for (i = 0, j = oID3Props.length; i < j; i++) {
+        oData[oID3Props[i]] = oID3Data[i];
+      }
+
+      s.id3 = mixin(s.id3, oData);
+
+      if (s._iO.onid3) {
+        s._iO.onid3.apply(s);
+      }
+
+    };
+
+    // flash/RTMP-only
+
+    this._onconnect = function(bSuccess) {
+
+      bSuccess = (bSuccess === 1);
+      sm2._wD(s.id + ': ' + (bSuccess ? 'Connected.' : 'Failed to connect? - ' + s.url), (bSuccess ? 1 : 2));
+      s.connected = bSuccess;
+
+      if (bSuccess) {
+
+        s.failures = 0;
+
+        if (idCheck(s.id)) {
+          if (s.getAutoPlay()) {
+            // only update the play state if auto playing
+            s.play(_undefined, s.getAutoPlay());
+          } else if (s._iO.autoLoad) {
+            s.load();
+          }
+        }
+
+        if (s._iO.onconnect) {
+          s._iO.onconnect.apply(s, [bSuccess]);
+        }
+
+      }
+
+    };
+
+    this._ondataerror = function(sError) {
+
+      // flash 9 wave/eq data handler
+      // hack: called at start, and end from flash at/after onfinish()
+      if (s.playState > 0) {
+        sm2._wD(s.id + ': Data error: ' + sError);
+        if (s._iO.ondataerror) {
+          s._iO.ondataerror.apply(s);
+        }
+      }
+
+    };
+
+    // <d>
+    this._debug();
+    // </d>
+
+  }; // SMSound()
+
+  /**
+   * Private SoundManager internals
+   * ------------------------------
+   */
+
+  getDocument = function() {
+
+    return (doc.body || doc.getElementsByTagName('div')[0]);
+
+  };
+
+  id = function(sID) {
+
+    return doc.getElementById(sID);
+
+  };
+
+  mixin = function(oMain, oAdd) {
+
+    // non-destructive merge
+    var o1 = (oMain || {}), o2, o;
+
+    // if unspecified, o2 is the default options object
+    o2 = (oAdd === _undefined ? sm2.defaultOptions : oAdd);
+
+    for (o in o2) {
+
+      if (o2.hasOwnProperty(o) && o1[o] === _undefined) {
+
+        if (typeof o2[o] !== 'object' || o2[o] === null) {
+
+          // assign directly
+          o1[o] = o2[o];
+
+        } else {
+
+          // recurse through o2
+          o1[o] = mixin(o1[o], o2[o]);
+
+        }
+
+      }
+
+    }
+
+    return o1;
+
+  };
+
+  wrapCallback = function(oSound, callback) {
+
+    /**
+     * 03/03/2013: Fix for Flash Player 11.6.602.171 + Flash 8 (flashVersion = 8) SWF issue
+     * setTimeout() fix for certain SMSound callbacks like onload() and onfinish(), where subsequent calls like play() and load() fail when Flash Player 11.6.602.171 is installed, and using soundManager with flashVersion = 8 (which is the default).
+     * Not sure of exact cause. Suspect race condition and/or invalid (NaN-style) position argument trickling down to the next JS -> Flash _start() call, in the play() case.
+     * Fix: setTimeout() to yield, plus safer null / NaN checking on position argument provided to Flash.
+     * https://getsatisfaction.com/schillmania/topics/recent_chrome_update_seems_to_have_broken_my_sm2_audio_player
+     */
+    if (!oSound.isHTML5 && fV === 8) {
+      window.setTimeout(callback, 0);
+    } else {
+      callback();
+    }
+
+  };
+
+  // additional soundManager properties that soundManager.setup() will accept
+
+  extraOptions = {
+    onready: 1,
+    ontimeout: 1,
+    defaultOptions: 1,
+    flash9Options: 1,
+    movieStarOptions: 1
+  };
+
+  assign = function(o, oParent) {
+
+    /**
+     * recursive assignment of properties, soundManager.setup() helper
+     * allows property assignment based on whitelist
+     */
+
+    var i,
+        result = true,
+        hasParent = (oParent !== _undefined),
+        setupOptions = sm2.setupOptions,
+        bonusOptions = extraOptions;
+
+    // <d>
+
+    // if soundManager.setup() called, show accepted parameters.
+
+    if (o === _undefined) {
+
+      result = [];
+
+      for (i in setupOptions) {
+
+        if (setupOptions.hasOwnProperty(i)) {
+          result.push(i);
+        }
+
+      }
+
+      for (i in bonusOptions) {
+
+        if (bonusOptions.hasOwnProperty(i)) {
+
+          if (typeof sm2[i] === 'object') {
+            result.push(i + ': {...}');
+          } else if (sm2[i] instanceof Function) {
+            result.push(i + ': function() {...}');
+          } else {
+            result.push(i);
+          }
+
+        }
+
+      }
+
+      sm2._wD(str('setup', result.join(', ')));
+
+      return false;
+
+    }
+
+    // </d>
+
+    for (i in o) {
+
+      if (o.hasOwnProperty(i)) {
+
+        // if not an {object} we want to recurse through...
+
+        if (typeof o[i] !== 'object' || o[i] === null || o[i] instanceof Array || o[i] instanceof RegExp) {
+
+          // check "allowed" options
+
+          if (hasParent && bonusOptions[oParent] !== _undefined) {
+
+            // valid recursive / nested object option, eg., { defaultOptions: { volume: 50 } }
+            sm2[oParent][i] = o[i];
+
+          } else if (setupOptions[i] !== _undefined) {
+
+            // special case: assign to setupOptions object, which soundManager property references
+            sm2.setupOptions[i] = o[i];
+
+            // assign directly to soundManager, too
+            sm2[i] = o[i];
+
+          } else if (bonusOptions[i] === _undefined) {
+
+            // invalid or disallowed parameter. complain.
+            complain(str((sm2[i] === _undefined ? 'setupUndef' : 'setupError'), i), 2);
+
+            result = false;
+
+          } else if (sm2[i] instanceof Function) {
+
+            /**
+             * valid extraOptions (bonusOptions) parameter.
+             * is it a method, like onready/ontimeout? call it.
+             * multiple parameters should be in an array, eg. soundManager.setup({onready: [myHandler, myScope]});
+             */
+            sm2[i].apply(sm2, (o[i] instanceof Array ? o[i] : [o[i]]));
+
+          } else {
+
+            // good old-fashioned direct assignment
+            sm2[i] = o[i];
+
+          }
+
+        } else if (bonusOptions[i] === _undefined) {
+
+          // recursion case, eg., { defaultOptions: { ... } }
+
+          // invalid or disallowed parameter. complain.
+          complain(str((sm2[i] === _undefined ? 'setupUndef' : 'setupError'), i), 2);
+
+          result = false;
+
+        } else {
+
+          // recurse through object
+          return assign(o[i], i);
+
+        }
+
+      }
+
+    }
+
+    return result;
+
+  };
+
+  function preferFlashCheck(kind) {
+
+    // whether flash should play a given type
+    return (sm2.preferFlash && hasFlash && !sm2.ignoreFlash && (sm2.flash[kind] !== _undefined && sm2.flash[kind]));
+
+  }
+
+  /**
+   * Internal DOM2-level event helpers
+   * ---------------------------------
+   */
+
+  event = (function() {
+
+    // normalize event methods
+    var old = (window.attachEvent),
+    evt = {
+      add: (old ? 'attachEvent' : 'addEventListener'),
+      remove: (old ? 'detachEvent' : 'removeEventListener')
+    };
+
+    // normalize "on" event prefix, optional capture argument
+    function getArgs(oArgs) {
+
+      var args = slice.call(oArgs),
+          len = args.length;
+
+      if (old) {
+        // prefix
+        args[1] = 'on' + args[1];
+        if (len > 3) {
+          // no capture
+          args.pop();
+        }
+      } else if (len === 3) {
+        args.push(false);
+      }
+
+      return args;
+
+    }
+
+    function apply(args, sType) {
+
+      // normalize and call the event method, with the proper arguments
+      var element = args.shift(),
+          method = [evt[sType]];
+
+      if (old) {
+        // old IE can't do apply().
+        element[method](args[0], args[1]);
+      } else {
+        element[method].apply(element, args);
+      }
+
+    }
+
+    function add() {
+      apply(getArgs(arguments), 'add');
+    }
+
+    function remove() {
+      apply(getArgs(arguments), 'remove');
+    }
+
+    return {
+      add: add,
+      remove: remove
+    };
+
+  }());
+
+  /**
+   * Internal HTML5 event handling
+   * -----------------------------
+   */
+
+  function html5_event(oFn) {
+
+    // wrap html5 event handlers so we don't call them on destroyed and/or unloaded sounds
+
+    return function(e) {
+
+      var s = this._s,
+          result;
+
+      if (!s || !s._a) {
+        // <d>
+        if (s && s.id) {
+          sm2._wD(s.id + ': Ignoring ' + e.type);
+        } else {
+          sm2._wD(h5 + 'Ignoring ' + e.type);
+        }
+        // </d>
+        result = null;
+      } else {
+        result = oFn.call(this, e);
+      }
+
+      return result;
+
+    };
+
+  }
+
+  html5_events = {
+
+    // HTML5 event-name-to-handler map
+
+    abort: html5_event(function() {
+
+      sm2._wD(this._s.id + ': abort');
+
+    }),
+
+    // enough has loaded to play
+
+    canplay: html5_event(function() {
+
+      var s = this._s,
+          position1K;
+
+      if (s._html5_canplay) {
+        // this event has already fired. ignore.
+        return;
+      }
+
+      s._html5_canplay = true;
+      sm2._wD(s.id + ': canplay');
+      s._onbufferchange(0);
+
+      // position according to instance options
+      position1K = (s._iO.position !== _undefined && !isNaN(s._iO.position) ? s._iO.position / msecScale : null);
+
+      // set the position if position was provided before the sound loaded
+      if (this.currentTime !== position1K) {
+        sm2._wD(s.id + ': canplay: Setting position to ' + position1K);
+        try {
+          this.currentTime = position1K;
+        } catch(ee) {
+          sm2._wD(s.id + ': canplay: Setting position of ' + position1K + ' failed: ' + ee.message, 2);
+        }
+      }
+
+      // hack for HTML5 from/to case
+      if (s._iO._oncanplay) {
+        s._iO._oncanplay();
+      }
+
+    }),
+
+    canplaythrough: html5_event(function() {
+
+      var s = this._s;
+
+      if (!s.loaded) {
+        s._onbufferchange(0);
+        s._whileloading(s.bytesLoaded, s.bytesTotal, s._get_html5_duration());
+        s._onload(true);
+      }
+
+    }),
+
+    durationchange: html5_event(function() {
+
+      // durationchange may fire at various times, probably the safest way to capture accurate/final duration.
+
+      var s = this._s,
+          duration;
+
+      duration = s._get_html5_duration();
+
+      if (!isNaN(duration) && duration !== s.duration) {
+
+        sm2._wD(this._s.id + ': durationchange (' + duration + ')' + (s.duration ? ', previously ' + s.duration : ''));
+
+        s.durationEstimate = s.duration = duration;
+
+      }
+
+    }),
+
+    // TODO: Reserved for potential use
+    /*
+    emptied: html5_event(function() {
+
+      sm2._wD(this._s.id + ': emptied');
+
+    }),
+    */
+
+    ended: html5_event(function() {
+
+      var s = this._s;
+
+      sm2._wD(s.id + ': ended');
+
+      s._onfinish();
+
+    }),
+
+    error: html5_event(function() {
+
+      var description = (html5ErrorCodes[this.error.code] || null);
+      sm2._wD(this._s.id + ': HTML5 error, code ' + this.error.code + (description ? ' (' + description + ')' : ''));
+      this._s._onload(false);
+      this._s._onerror(this.error.code, description);
+
+    }),
+
+    loadeddata: html5_event(function() {
+
+      var s = this._s;
+
+      sm2._wD(s.id + ': loadeddata');
+
+      // safari seems to nicely report progress events, eventually totalling 100%
+      if (!s._loaded && !isSafari) {
+        s.duration = s._get_html5_duration();
+      }
+
+    }),
+
+    loadedmetadata: html5_event(function() {
+
+      sm2._wD(this._s.id + ': loadedmetadata');
+
+    }),
+
+    loadstart: html5_event(function() {
+
+      sm2._wD(this._s.id + ': loadstart');
+      // assume buffering at first
+      this._s._onbufferchange(1);
+
+    }),
+
+    play: html5_event(function() {
+
+      // sm2._wD(this._s.id + ': play()');
+      // once play starts, no buffering
+      this._s._onbufferchange(0);
+
+    }),
+
+    playing: html5_event(function() {
+
+      sm2._wD(this._s.id + ': playing ' + String.fromCharCode(9835));
+      // once play starts, no buffering
+      this._s._onbufferchange(0);
+
+    }),
+
+    progress: html5_event(function(e) {
+
+      // note: can fire repeatedly after "loaded" event, due to use of HTTP range/partials
+
+      var s = this._s,
+          i, j, progStr, buffered = 0,
+          isProgress = (e.type === 'progress'),
+          ranges = e.target.buffered,
+          // firefox 3.6 implements e.loaded/total (bytes)
+          loaded = (e.loaded || 0),
+          total = (e.total || 1);
+
+      // reset the "buffered" (loaded byte ranges) array
+      s.buffered = [];
+
+      if (ranges && ranges.length) {
+
+        // if loaded is 0, try TimeRanges implementation as % of load
+        // https://developer.mozilla.org/en/DOM/TimeRanges
+
+        // re-build "buffered" array
+        // HTML5 returns seconds. SM2 API uses msec for setPosition() etc., whether Flash or HTML5.
+        for (i = 0, j = ranges.length; i < j; i++) {
+          s.buffered.push({
+            start: ranges.start(i) * msecScale,
+            end: ranges.end(i) * msecScale
+          });
+        }
+
+        // use the last value locally
+        buffered = (ranges.end(0) - ranges.start(0)) * msecScale;
+
+        // linear case, buffer sum; does not account for seeking and HTTP partials / byte ranges
+        loaded = Math.min(1, buffered / (e.target.duration * msecScale));
+
+        // <d>
+        if (isProgress && ranges.length > 1) {
+          progStr = [];
+          j = ranges.length;
+          for (i = 0; i < j; i++) {
+            progStr.push((e.target.buffered.start(i) * msecScale) + '-' + (e.target.buffered.end(i) * msecScale));
+          }
+          sm2._wD(this._s.id + ': progress, timeRanges: ' + progStr.join(', '));
+        }
+
+        if (isProgress && !isNaN(loaded)) {
+          sm2._wD(this._s.id + ': progress, ' + Math.floor(loaded * 100) + '% loaded');
+        }
+        // </d>
+
+      }
+
+      if (!isNaN(loaded)) {
+
+        // TODO: prevent calls with duplicate values.
+        s._whileloading(loaded, total, s._get_html5_duration());
+        if (loaded && total && loaded === total) {
+          // in case "onload" doesn't fire (eg. gecko 1.9.2)
+          html5_events.canplaythrough.call(this, e);
+        }
+
+      }
+
+    }),
+
+    ratechange: html5_event(function() {
+
+      sm2._wD(this._s.id + ': ratechange');
+
+    }),
+
+    suspend: html5_event(function(e) {
+
+      // download paused/stopped, may have finished (eg. onload)
+      var s = this._s;
+
+      sm2._wD(this._s.id + ': suspend');
+      html5_events.progress.call(this, e);
+      s._onsuspend();
+
+    }),
+
+    stalled: html5_event(function() {
+
+      sm2._wD(this._s.id + ': stalled');
+
+    }),
+
+    timeupdate: html5_event(function() {
+
+      this._s._onTimer();
+
+    }),
+
+    waiting: html5_event(function() {
+
+      var s = this._s;
+
+      // see also: seeking
+      sm2._wD(this._s.id + ': waiting');
+
+      // playback faster than download rate, etc.
+      s._onbufferchange(1);
+
+    })
+
+  };
+
+  html5OK = function(iO) {
+
+    // playability test based on URL or MIME type
+
+    var result;
+
+    if (!iO || (!iO.type && !iO.url && !iO.serverURL)) {
+
+      // nothing to check
+      result = false;
+
+    } else if (iO.serverURL || (iO.type && preferFlashCheck(iO.type))) {
+
+      // RTMP, or preferring flash
+      result = false;
+
+    } else {
+
+      // Use type, if specified. Pass data: URIs to HTML5. If HTML5-only mode, no other options, so just give 'er
+      result = ((iO.type ? html5CanPlay({ type: iO.type }) : html5CanPlay({ url: iO.url }) || sm2.html5Only || iO.url.match(/data:/i)));
+
+    }
+
+    return result;
+
+  };
+
+  html5Unload = function(oAudio) {
+
+    /**
+     * Internal method: Unload media, and cancel any current/pending network requests.
+     * Firefox can load an empty URL, which allegedly destroys the decoder and stops the download.
+     * https://developer.mozilla.org/En/Using_audio_and_video_in_Firefox#Stopping_the_download_of_media
+     * However, Firefox has been seen loading a relative URL from '' and thus requesting the hosting page on unload.
+     * Other UA behaviour is unclear, so everyone else gets an about:blank-style URL.
+     */
+
+    var url;
+
+    if (oAudio) {
+
+      // Firefox and Chrome accept short WAVe data: URIs. Chome dislikes audio/wav, but accepts audio/wav for data: MIME.
+      // Desktop Safari complains / fails on data: URI, so it gets about:blank.
+      url = (isSafari ? emptyURL : (sm2.html5.canPlayType('audio/wav') ? emptyWAV : emptyURL));
+
+      oAudio.src = url;
+
+      // reset some state, too
+      if (oAudio._called_unload !== _undefined) {
+        oAudio._called_load = false;
+      }
+
+    }
+
+    if (useGlobalHTML5Audio) {
+
+      // ensure URL state is trashed, also
+      lastGlobalHTML5URL = null;
+
+    }
+
+    return url;
+
+  };
+
+  html5CanPlay = function(o) {
+
+    /**
+     * Try to find MIME, test and return truthiness
+     * o = {
+     *  url: '/path/to/an.mp3',
+     *  type: 'audio/mp3'
+     * }
+     */
+
+    if (!sm2.useHTML5Audio || !sm2.hasHTML5) return false;
+
+    var url = (o.url || null),
+        mime = (o.type || null),
+        aF = sm2.audioFormats,
+        result,
+        offset,
+        fileExt,
+        item;
+
+    // account for known cases like audio/mp3
+
+    if (mime && sm2.html5[mime] !== _undefined) return (sm2.html5[mime] && !preferFlashCheck(mime));
+
+    if (!html5Ext) {
+
+      html5Ext = [];
+
+      for (item in aF) {
+
+        if (aF.hasOwnProperty(item)) {
+
+          html5Ext.push(item);
+
+          if (aF[item].related) {
+            html5Ext = html5Ext.concat(aF[item].related);
+          }
+
+        }
+
+      }
+
+      html5Ext = new RegExp('\\.(' + html5Ext.join('|') + ')(\\?.*)?$', 'i');
+
+    }
+
+    // TODO: Strip URL queries, etc.
+    fileExt = (url ? url.toLowerCase().match(html5Ext) : null);
+
+    if (!fileExt || !fileExt.length) {
+
+      if (!mime) {
+
+        result = false;
+
+      } else {
+
+        // audio/mp3 -> mp3, result should be known
+        offset = mime.indexOf(';');
+
+        // strip "audio/X; codecs..."
+        fileExt = (offset !== -1 ? mime.substr(0, offset) : mime).substr(6);
+
+      }
+
+    } else {
+
+      // match the raw extension name - "mp3", for example
+      fileExt = fileExt[1];
+
+    }
+
+    if (fileExt && sm2.html5[fileExt] !== _undefined) {
+
+      // result known
+      result = (sm2.html5[fileExt] && !preferFlashCheck(fileExt));
+
+    } else {
+
+      mime = 'audio/' + fileExt;
+      result = sm2.html5.canPlayType({ type: mime });
+
+      sm2.html5[fileExt] = result;
+
+      // sm2._wD('canPlayType, found result: ' + result);
+      result = (result && sm2.html5[mime] && !preferFlashCheck(mime));
+    }
+
+    return result;
+
+  };
+
+  testHTML5 = function() {
+
+    /**
+     * Internal: Iterates over audioFormats, determining support eg. audio/mp3, audio/mpeg and so on
+     * assigns results to html5[] and flash[].
+     */
+
+    if (!sm2.useHTML5Audio || !sm2.hasHTML5) {
+
+      // without HTML5, we need Flash.
+      sm2.html5.usingFlash = true;
+      needsFlash = true;
+
+      return false;
+
+    }
+
+    // double-whammy: Opera 9.64 throws WRONG_ARGUMENTS_ERR if no parameter passed to Audio(), and Webkit + iOS happily tries to load "null" as a URL. :/
+    var a = (Audio !== _undefined ? (isOpera && opera.version() < 10 ? new Audio(null) : new Audio()) : null),
+        item, lookup, support = {}, aF, i;
+
+    function cp(m) {
+
+      var canPlay, j,
+          result = false,
+          isOK = false;
+
+      if (!a || typeof a.canPlayType !== 'function') return result;
+
+      if (m instanceof Array) {
+
+        // iterate through all mime types, return any successes
+
+        for (i = 0, j = m.length; i < j; i++) {
+
+          if (sm2.html5[m[i]] || a.canPlayType(m[i]).match(sm2.html5Test)) {
+
+            isOK = true;
+            sm2.html5[m[i]] = true;
+
+            // note flash support, too
+            sm2.flash[m[i]] = !!(m[i].match(flashMIME));
+
+          }
+
+        }
+
+        result = isOK;
+
+      } else {
+
+        canPlay = (a && typeof a.canPlayType === 'function' ? a.canPlayType(m) : false);
+        result = !!(canPlay && (canPlay.match(sm2.html5Test)));
+
+      }
+
+      return result;
+
+    }
+
+    // test all registered formats + codecs
+
+    aF = sm2.audioFormats;
+
+    for (item in aF) {
+
+      if (aF.hasOwnProperty(item)) {
+
+        lookup = 'audio/' + item;
+
+        support[item] = cp(aF[item].type);
+
+        // write back generic type too, eg. audio/mp3
+        support[lookup] = support[item];
+
+        // assign flash
+        if (item.match(flashMIME)) {
+
+          sm2.flash[item] = true;
+          sm2.flash[lookup] = true;
+
+        } else {
+
+          sm2.flash[item] = false;
+          sm2.flash[lookup] = false;
+
+        }
+
+        // assign result to related formats, too
+
+        if (aF[item] && aF[item].related) {
+
+          for (i = aF[item].related.length - 1; i >= 0; i--) {
+
+            // eg. audio/m4a
+            support['audio/' + aF[item].related[i]] = support[item];
+            sm2.html5[aF[item].related[i]] = support[item];
+            sm2.flash[aF[item].related[i]] = support[item];
+
+          }
+
+        }
+
+      }
+
+    }
+
+    support.canPlayType = (a ? cp : null);
+    sm2.html5 = mixin(sm2.html5, support);
+
+    sm2.html5.usingFlash = featureCheck();
+    needsFlash = sm2.html5.usingFlash;
+
+    return true;
+
+  };
+
+  strings = {
+
+    // <d>
+    notReady: 'Unavailable - wait until onready() has fired.',
+    notOK: 'Audio support is not available.',
+    domError: sm + 'exception caught while appending SWF to DOM.',
+    spcWmode: 'Removing wmode, preventing known SWF loading issue(s)',
+    swf404: smc + 'Verify that %s is a valid path.',
+    tryDebug: 'Try ' + sm + '.debugFlash = true for more security details (output goes to SWF.)',
+    checkSWF: 'See SWF output for more debug info.',
+    localFail: smc + 'Non-HTTP page (' + doc.location.protocol + ' URL?) Review Flash player security settings for this special case:\nhttp://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html\nMay need to add/allow path, eg. c:/sm2/ or /users/me/sm2/',
+    waitFocus: smc + 'Special case: Waiting for SWF to load with window focus...',
+    waitForever: smc + 'Waiting indefinitely for Flash (will recover if unblocked)...',
+    waitSWF: smc + 'Waiting for 100% SWF load...',
+    needFunction: smc + 'Function object expected for %s',
+    badID: 'Sound ID "%s" should be a string, starting with a non-numeric character',
+    currentObj: smc + '_debug(): Current sound objects',
+    waitOnload: smc + 'Waiting for window.onload()',
+    docLoaded: smc + 'Document already loaded',
+    onload: smc + 'initComplete(): calling soundManager.onload()',
+    onloadOK: sm + '.onload() complete',
+    didInit: smc + 'init(): Already called?',
+    secNote: 'Flash security note: Network/internet URLs will not load due to security restrictions. Access can be configured via Flash Player Global Security Settings Page: http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html',
+    badRemove: smc + 'Failed to remove Flash node.',
+    shutdown: sm + '.disable(): Shutting down',
+    queue: smc + 'Queueing %s handler',
+    smError: 'SMSound.load(): Exception: JS-Flash communication failed, or JS error.',
+    fbTimeout: 'No flash response, applying .' + swfCSS.swfTimedout + ' CSS...',
+    fbLoaded: 'Flash loaded',
+    fbHandler: smc + 'flashBlockHandler()',
+    manURL: 'SMSound.load(): Using manually-assigned URL',
+    onURL: sm + '.load(): current URL already assigned.',
+    badFV: sm + '.flashVersion must be 8 or 9. "%s" is invalid. Reverting to %s.',
+    as2loop: 'Note: Setting stream:false so looping can work (flash 8 limitation)',
+    noNSLoop: 'Note: Looping not implemented for MovieStar formats',
+    needfl9: 'Note: Switching to flash 9, required for MP4 formats.',
+    mfTimeout: 'Setting flashLoadTimeout = 0 (infinite) for off-screen, mobile flash case',
+    needFlash: smc + 'Fatal error: Flash is needed to play some required formats, but is not available.',
+    gotFocus: smc + 'Got window focus.',
+    policy: 'Enabling usePolicyFile for data access',
+    setup: sm + '.setup(): allowed parameters: %s',
+    setupError: sm + '.setup(): "%s" cannot be assigned with this method.',
+    setupUndef: sm + '.setup(): Could not find option "%s"',
+    setupLate: sm + '.setup(): url, flashVersion and html5Test property changes will not take effect until reboot().',
+    noURL: smc + 'Flash URL required. Call soundManager.setup({url:...}) to get started.',
+    sm2Loaded: 'SoundManager 2: Ready. ' + String.fromCharCode(10003),
+    reset: sm + '.reset(): Removing event callbacks',
+    mobileUA: 'Mobile UA detected, preferring HTML5 by default.',
+    globalHTML5: 'Using singleton HTML5 Audio() pattern for this device.',
+    ignoreMobile: 'Ignoring mobile restrictions for this device.'
+    // </d>
+
+  };
+
+  str = function() {
+
+    // internal string replace helper.
+    // arguments: o [,items to replace]
+    // <d>
+
+    var args,
+        i, j, o,
+        sstr;
+
+    // real array, please
+    args = slice.call(arguments);
+
+    // first argument
+    o = args.shift();
+
+    sstr = (strings && strings[o] ? strings[o] : '');
+
+    if (sstr && args && args.length) {
+      for (i = 0, j = args.length; i < j; i++) {
+        sstr = sstr.replace('%s', args[i]);
+      }
+    }
+
+    return sstr;
+    // </d>
+
+  };
+
+  loopFix = function(sOpt) {
+
+    // flash 8 requires stream = false for looping to work
+    if (fV === 8 && sOpt.loops > 1 && sOpt.stream) {
+      _wDS('as2loop');
+      sOpt.stream = false;
+    }
+
+    return sOpt;
+
+  };
+
+  policyFix = function(sOpt, sPre) {
+
+    if (sOpt && !sOpt.usePolicyFile && (sOpt.onid3 || sOpt.usePeakData || sOpt.useWaveformData || sOpt.useEQData)) {
+      sm2._wD((sPre || '') + str('policy'));
+      sOpt.usePolicyFile = true;
+    }
+
+    return sOpt;
+
+  };
+
+  complain = function(sMsg) {
+
+    // <d>
+    if (hasConsole && console.warn !== _undefined) {
+      console.warn(sMsg);
+    } else {
+      sm2._wD(sMsg);
+    }
+    // </d>
+
+  };
+
+  doNothing = function() {
+
+    return false;
+
+  };
+
+  disableObject = function(o) {
+
+    var oProp;
+
+    for (oProp in o) {
+      if (o.hasOwnProperty(oProp) && typeof o[oProp] === 'function') {
+        o[oProp] = doNothing;
+      }
+    }
+
+    oProp = null;
+
+  };
+
+  failSafely = function(bNoDisable) {
+
+    // general failure exception handler
+
+    if (bNoDisable === _undefined) {
+      bNoDisable = false;
+    }
+
+    if (disabled || bNoDisable) {
+      sm2.disable(bNoDisable);
+    }
+
+  };
+
+  normalizeMovieURL = function(movieURL) {
+
+    var urlParams = null, url;
+
+    if (movieURL) {
+
+      if (movieURL.match(/\.swf(\?.*)?$/i)) {
+
+        urlParams = movieURL.substr(movieURL.toLowerCase().lastIndexOf('.swf?') + 4);
+
+        // assume user knows what they're doing
+        if (urlParams) return movieURL;
+
+      } else if (movieURL.lastIndexOf('/') !== movieURL.length - 1) {
+
+        // append trailing slash, if needed
+        movieURL += '/';
+
+      }
+
+    }
+
+    url = (movieURL && movieURL.lastIndexOf('/') !== -1 ? movieURL.substr(0, movieURL.lastIndexOf('/') + 1) : './') + sm2.movieURL;
+
+    if (sm2.noSWFCache) {
+      url += ('?ts=' + new Date().getTime());
+    }
+
+    return url;
+
+  };
+
+  setVersionInfo = function() {
+
+    // short-hand for internal use
+
+    fV = parseInt(sm2.flashVersion, 10);
+
+    if (fV !== 8 && fV !== 9) {
+      sm2._wD(str('badFV', fV, defaultFlashVersion));
+      sm2.flashVersion = fV = defaultFlashVersion;
+    }
+
+    // debug flash movie, if applicable
+
+    var isDebug = (sm2.debugMode || sm2.debugFlash ? '_debug.swf' : '.swf');
+
+    if (sm2.useHTML5Audio && !sm2.html5Only && sm2.audioFormats.mp4.required && fV < 9) {
+      sm2._wD(str('needfl9'));
+      sm2.flashVersion = fV = 9;
+    }
+
+    sm2.version = sm2.versionNumber + (sm2.html5Only ? ' (HTML5-only mode)' : (fV === 9 ? ' (AS3/Flash 9)' : ' (AS2/Flash 8)'));
+
+    // set up default options
+    if (fV > 8) {
+
+      // +flash 9 base options
+      sm2.defaultOptions = mixin(sm2.defaultOptions, sm2.flash9Options);
+      sm2.features.buffering = true;
+
+      // +moviestar support
+      sm2.defaultOptions = mixin(sm2.defaultOptions, sm2.movieStarOptions);
+      sm2.filePatterns.flash9 = new RegExp('\\.(mp3|' + netStreamTypes.join('|') + ')(\\?.*)?$', 'i');
+      sm2.features.movieStar = true;
+
+    } else {
+
+      sm2.features.movieStar = false;
+
+    }
+
+    // regExp for flash canPlay(), etc.
+    sm2.filePattern = sm2.filePatterns[(fV !== 8 ? 'flash9' : 'flash8')];
+
+    // if applicable, use _debug versions of SWFs
+    sm2.movieURL = (fV === 8 ? 'soundmanager2.swf' : 'soundmanager2_flash9.swf').replace('.swf', isDebug);
+
+    sm2.features.peakData = sm2.features.waveformData = sm2.features.eqData = (fV > 8);
+
+  };
+
+  setPolling = function(bPolling, bHighPerformance) {
+
+    if (!flash) {
+      return;
+    }
+
+    flash._setPolling(bPolling, bHighPerformance);
+
+  };
+
+  initDebug = function() {
+
+    // starts debug mode, creating output <div> for UAs without console object
+
+    // allow force of debug mode via URL
+    // <d>
+    if (sm2.debugURLParam.test(wl)) {
+      sm2.setupOptions.debugMode = sm2.debugMode = true;
+    }
+
+    if (id(sm2.debugID)) {
+      return;
+    }
+
+    var oD, oDebug, oTarget, oToggle, tmp;
+
+    if (sm2.debugMode && !id(sm2.debugID) && (!hasConsole || !sm2.useConsole || !sm2.consoleOnly)) {
+
+      oD = doc.createElement('div');
+      oD.id = sm2.debugID + '-toggle';
+
+      oToggle = {
+        position: 'fixed',
+        bottom: '0px',
+        right: '0px',
+        width: '1.2em',
+        height: '1.2em',
+        lineHeight: '1.2em',
+        margin: '2px',
+        textAlign: 'center',
+        border: '1px solid #999',
+        cursor: 'pointer',
+        background: '#fff',
+        color: '#333',
+        zIndex: 10001
+      };
+
+      oD.appendChild(doc.createTextNode('-'));
+      oD.onclick = toggleDebug;
+      oD.title = 'Toggle SM2 debug console';
+
+      if (ua.match(/msie 6/i)) {
+        oD.style.position = 'absolute';
+        oD.style.cursor = 'hand';
+      }
+
+      for (tmp in oToggle) {
+        if (oToggle.hasOwnProperty(tmp)) {
+          oD.style[tmp] = oToggle[tmp];
+        }
+      }
+
+      oDebug = doc.createElement('div');
+      oDebug.id = sm2.debugID;
+      oDebug.style.display = (sm2.debugMode ? 'block' : 'none');
+
+      if (sm2.debugMode && !id(oD.id)) {
+        try {
+          oTarget = getDocument();
+          oTarget.appendChild(oD);
+        } catch(e2) {
+          throw new Error(str('domError') + ' \n' + e2.toString());
+        }
+        oTarget.appendChild(oDebug);
+      }
+
+    }
+
+    oTarget = null;
+    // </d>
+
+  };
+
+  idCheck = this.getSoundById;
+
+  // <d>
+  _wDS = function(o, errorLevel) {
+
+    return (!o ? '' : sm2._wD(str(o), errorLevel));
+
+  };
+
+  toggleDebug = function() {
+
+    var o = id(sm2.debugID),
+    oT = id(sm2.debugID + '-toggle');
+
+    if (!o) {
+      return;
+    }
+
+    if (debugOpen) {
+      // minimize
+      oT.innerHTML = '+';
+      o.style.display = 'none';
+    } else {
+      oT.innerHTML = '-';
+      o.style.display = 'block';
+    }
+
+    debugOpen = !debugOpen;
+
+  };
+
+  debugTS = function(sEventType, bSuccess, sMessage) {
+
+    // troubleshooter debug hooks
+
+    if (window.sm2Debugger !== _undefined) {
+      try {
+        sm2Debugger.handleEvent(sEventType, bSuccess, sMessage);
+      } catch(e) {
+        // oh well
+        return false;
+      }
+    }
+
+    return true;
+
+  };
+  // </d>
+
+  getSWFCSS = function() {
+
+    var css = [];
+
+    if (sm2.debugMode) {
+      css.push(swfCSS.sm2Debug);
+    }
+
+    if (sm2.debugFlash) {
+      css.push(swfCSS.flashDebug);
+    }
+
+    if (sm2.useHighPerformance) {
+      css.push(swfCSS.highPerf);
+    }
+
+    return css.join(' ');
+
+  };
+
+  flashBlockHandler = function() {
+
+    // *possible* flash block situation.
+
+    var name = str('fbHandler'),
+        p = sm2.getMoviePercent(),
+        css = swfCSS,
+        error = {
+          type: 'FLASHBLOCK'
+        };
+
+    if (sm2.html5Only) {
+      // no flash, or unused
+      return;
+    }
+
+    if (!sm2.ok()) {
+
+      if (needsFlash) {
+        // make the movie more visible, so user can fix
+        sm2.oMC.className = getSWFCSS() + ' ' + css.swfDefault + ' ' + (p === null ? css.swfTimedout : css.swfError);
+        sm2._wD(name + ': ' + str('fbTimeout') + (p ? ' (' + str('fbLoaded') + ')' : ''));
+      }
+
+      sm2.didFlashBlock = true;
+
+      // fire onready(), complain lightly
+      processOnEvents({
+        type: 'ontimeout',
+        ignoreInit: true,
+        error: error
+      });
+
+      catchError(error);
+
+    } else {
+
+      // SM2 loaded OK (or recovered)
+
+      // <d>
+      if (sm2.didFlashBlock) {
+        sm2._wD(name + ': Unblocked');
+      }
+      // </d>
+
+      if (sm2.oMC) {
+        sm2.oMC.className = [getSWFCSS(), css.swfDefault, css.swfLoaded + (sm2.didFlashBlock ? ' ' + css.swfUnblocked : '')].join(' ');
+      }
+
+    }
+
+  };
+
+  addOnEvent = function(sType, oMethod, oScope) {
+
+    if (on_queue[sType] === _undefined) {
+      on_queue[sType] = [];
+    }
+
+    on_queue[sType].push({
+      method: oMethod,
+      scope: (oScope || null),
+      fired: false
+    });
+
+  };
+
+  processOnEvents = function(oOptions) {
+
+    // if unspecified, assume OK/error
+
+    if (!oOptions) {
+      oOptions = {
+        type: (sm2.ok() ? 'onready' : 'ontimeout')
+      };
+    }
+
+    // not ready yet.
+    if (!didInit && oOptions && !oOptions.ignoreInit) return false;
+
+    // invalid case
+    if (oOptions.type === 'ontimeout' && (sm2.ok() || (disabled && !oOptions.ignoreInit))) return false;
+
+    var status = {
+          success: (oOptions && oOptions.ignoreInit ? sm2.ok() : !disabled)
+        },
+
+        // queue specified by type, or none
+        srcQueue = (oOptions && oOptions.type ? on_queue[oOptions.type] || [] : []),
+
+        queue = [], i, j,
+        args = [status],
+        canRetry = (needsFlash && !sm2.ok());
+
+    if (oOptions.error) {
+      args[0].error = oOptions.error;
+    }
+
+    for (i = 0, j = srcQueue.length; i < j; i++) {
+      if (srcQueue[i].fired !== true) {
+        queue.push(srcQueue[i]);
+      }
+    }
+
+    if (queue.length) {
+
+      // sm2._wD(sm + ': Firing ' + queue.length + ' ' + oOptions.type + '() item' + (queue.length === 1 ? '' : 's'));
+      for (i = 0, j = queue.length; i < j; i++) {
+
+        if (queue[i].scope) {
+          queue[i].method.apply(queue[i].scope, args);
+        } else {
+          queue[i].method.apply(this, args);
+        }
+
+        if (!canRetry) {
+          // useFlashBlock and SWF timeout case doesn't count here.
+          queue[i].fired = true;
+
+        }
+
+      }
+
+    }
+
+    return true;
+
+  };
+
+  initUserOnload = function() {
+
+    window.setTimeout(function() {
+
+      if (sm2.useFlashBlock) {
+        flashBlockHandler();
+      }
+
+      processOnEvents();
+
+      // call user-defined "onload", scoped to window
+
+      if (typeof sm2.onload === 'function') {
+        _wDS('onload', 1);
+        sm2.onload.apply(window);
+        _wDS('onloadOK', 1);
+      }
+
+      if (sm2.waitForWindowLoad) {
+        event.add(window, 'load', initUserOnload);
+      }
+
+    }, 1);
+
+  };
+
+  detectFlash = function() {
+
+    /**
+     * Hat tip: Flash Detect library (BSD, (C) 2007) by Carl "DocYes" S. Yestrau
+     * http://featureblend.com/javascript-flash-detection-library.html / http://featureblend.com/license.txt
+     */
+
+    // this work has already been done.
+    if (hasFlash !== _undefined) return hasFlash;
+
+    var hasPlugin = false, n = navigator, obj, type, types, AX = window.ActiveXObject;
+
+    // MS Edge 14 throws an "Unspecified Error" because n.plugins is inaccessible due to permissions
+    var nP;
+
+    try {
+      nP = n.plugins;
+    } catch(e) {
+      nP = undefined;
+    }
+
+    if (nP && nP.length) {
+
+      type = 'application/x-shockwave-flash';
+      types = n.mimeTypes;
+
+      if (types && types[type] && types[type].enabledPlugin && types[type].enabledPlugin.description) {
+        hasPlugin = true;
+      }
+
+    } else if (AX !== _undefined && !ua.match(/MSAppHost/i)) {
+
+      // Windows 8 Store Apps (MSAppHost) are weird (compatibility?) and won't complain here, but will barf if Flash/ActiveX object is appended to the DOM.
+      try {
+        obj = new AX('ShockwaveFlash.ShockwaveFlash');
+      } catch(e) {
+        // oh well
+        obj = null;
+      }
+
+      hasPlugin = (!!obj);
+
+      // cleanup, because it is ActiveX after all
+      obj = null;
+
+    }
+
+    hasFlash = hasPlugin;
+
+    return hasPlugin;
+
+  };
+
+  featureCheck = function() {
+
+    var flashNeeded,
+        item,
+        formats = sm2.audioFormats,
+        // iPhone <= 3.1 has broken HTML5 audio(), but firmware 3.2 (original iPad) + iOS4 works.
+        isSpecial = (is_iDevice && !!(ua.match(/os (1|2|3_0|3_1)\s/i)));
+
+    if (isSpecial) {
+
+      // has Audio(), but is broken; let it load links directly.
+      sm2.hasHTML5 = false;
+
+      // ignore flash case, however
+      sm2.html5Only = true;
+
+      // hide the SWF, if present
+      if (sm2.oMC) {
+        sm2.oMC.style.display = 'none';
+      }
+
+    } else if (sm2.useHTML5Audio) {
+
+        if (!sm2.html5 || !sm2.html5.canPlayType) {
+          sm2._wD('SoundManager: No HTML5 Audio() support detected.');
+          sm2.hasHTML5 = false;
+        }
+
+        // <d>
+        if (isBadSafari) {
+          sm2._wD(smc + 'Note: Buggy HTML5 Audio in Safari on this OS X release, see https://bugs.webkit.org/show_bug.cgi?id=32159 - ' + (!hasFlash ? ' would use flash fallback for MP3/MP4, but none detected.' : 'will use flash fallback for MP3/MP4, if available'), 1);
+        }
+        // </d>
+
+      }
+
+    if (sm2.useHTML5Audio && sm2.hasHTML5) {
+
+      // sort out whether flash is optional, required or can be ignored.
+
+      // innocent until proven guilty.
+      canIgnoreFlash = true;
+
+      for (item in formats) {
+
+        if (formats.hasOwnProperty(item)) {
+
+          if (formats[item].required) {
+
+            if (!sm2.html5.canPlayType(formats[item].type)) {
+
+              // 100% HTML5 mode is not possible.
+              canIgnoreFlash = false;
+              flashNeeded = true;
+
+            } else if (sm2.preferFlash && (sm2.flash[item] || sm2.flash[formats[item].type])) {
+
+              // flash may be required, or preferred for this format.
+              flashNeeded = true;
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+    // sanity check...
+    if (sm2.ignoreFlash) {
+      flashNeeded = false;
+      canIgnoreFlash = true;
+    }
+
+    sm2.html5Only = (sm2.hasHTML5 && sm2.useHTML5Audio && !flashNeeded);
+
+    return (!sm2.html5Only);
+
+  };
+
+  parseURL = function(url) {
+
+    /**
+     * Internal: Finds and returns the first playable URL (or failing that, the first URL.)
+     * @param {string or array} url A single URL string, OR, an array of URL strings or {url:'/path/to/resource', type:'audio/mp3'} objects.
+     */
+
+    var i, j, urlResult = 0, result;
+
+    if (url instanceof Array) {
+
+      // find the first good one
+      for (i = 0, j = url.length; i < j; i++) {
+
+        if (url[i] instanceof Object) {
+
+          // MIME check
+          if (sm2.canPlayMIME(url[i].type)) {
+            urlResult = i;
+            break;
+          }
+
+        } else if (sm2.canPlayURL(url[i])) {
+
+          // URL string check
+          urlResult = i;
+          break;
+
+        }
+
+      }
+
+      // normalize to string
+      if (url[urlResult].url) {
+        url[urlResult] = url[urlResult].url;
+      }
+
+      result = url[urlResult];
+
+    } else {
+
+      // single URL case
+      result = url;
+
+    }
+
+    return result;
+
+  };
+
+
+  startTimer = function(oSound) {
+
+    /**
+     * attach a timer to this sound, and start an interval if needed
+     */
+
+    if (!oSound._hasTimer) {
+
+      oSound._hasTimer = true;
+
+      if (!mobileHTML5 && sm2.html5PollingInterval) {
+
+        if (h5IntervalTimer === null && h5TimerCount === 0) {
+
+          h5IntervalTimer = setInterval(timerExecute, sm2.html5PollingInterval);
+
+        }
+
+        h5TimerCount++;
+
+      }
+
+    }
+
+  };
+
+  stopTimer = function(oSound) {
+
+    /**
+     * detach a timer
+     */
+
+    if (oSound._hasTimer) {
+
+      oSound._hasTimer = false;
+
+      if (!mobileHTML5 && sm2.html5PollingInterval) {
+
+        // interval will stop itself at next execution.
+
+        h5TimerCount--;
+
+      }
+
+    }
+
+  };
+
+  timerExecute = function() {
+
+    /**
+     * manual polling for HTML5 progress events, ie., whileplaying()
+     * (can achieve greater precision than conservative default HTML5 interval)
+     */
+
+    var i;
+
+    if (h5IntervalTimer !== null && !h5TimerCount) {
+
+      // no active timers, stop polling interval.
+
+      clearInterval(h5IntervalTimer);
+
+      h5IntervalTimer = null;
+
+      return;
+
+    }
+
+    // check all HTML5 sounds with timers
+
+    for (i = sm2.soundIDs.length - 1; i >= 0; i--) {
+
+      if (sm2.sounds[sm2.soundIDs[i]].isHTML5 && sm2.sounds[sm2.soundIDs[i]]._hasTimer) {
+        sm2.sounds[sm2.soundIDs[i]]._onTimer();
+      }
+
+    }
+
+  };
+
+  catchError = function(options) {
+
+    options = (options !== _undefined ? options : {});
+
+    if (typeof sm2.onerror === 'function') {
+      sm2.onerror.apply(window, [{
+        type: (options.type !== _undefined ? options.type : null)
+      }]);
+    }
+
+    if (options.fatal !== _undefined && options.fatal) {
+      sm2.disable();
+    }
+
+  };
+
+  badSafariFix = function() {
+
+    // special case: "bad" Safari (OS X 10.3 - 10.7) must fall back to flash for MP3/MP4
+    if (!isBadSafari || !detectFlash()) {
+      // doesn't apply
+      return;
+    }
+
+    var aF = sm2.audioFormats, i, item;
+
+    for (item in aF) {
+
+      if (aF.hasOwnProperty(item)) {
+
+        if (item === 'mp3' || item === 'mp4') {
+
+          sm2._wD(sm + ': Using flash fallback for ' + item + ' format');
+          sm2.html5[item] = false;
+
+          // assign result to related formats, too
+          if (aF[item] && aF[item].related) {
+            for (i = aF[item].related.length - 1; i >= 0; i--) {
+              sm2.html5[aF[item].related[i]] = false;
+            }
+          }
+
+        }
+
+      }
+
+    }
+
+  };
+
+  /**
+   * Pseudo-private flash/ExternalInterface methods
+   * ----------------------------------------------
+   */
+
+  this._setSandboxType = function(sandboxType) {
+
+    // <d>
+    // Security sandbox according to Flash plugin
+    var sb = sm2.sandbox;
+
+    sb.type = sandboxType;
+    sb.description = sb.types[(sb.types[sandboxType] !== _undefined ? sandboxType : 'unknown')];
+
+    if (sb.type === 'localWithFile') {
+
+      sb.noRemote = true;
+      sb.noLocal = false;
+      _wDS('secNote', 2);
+
+    } else if (sb.type === 'localWithNetwork') {
+
+      sb.noRemote = false;
+      sb.noLocal = true;
+
+    } else if (sb.type === 'localTrusted') {
+
+      sb.noRemote = false;
+      sb.noLocal = false;
+
+    }
+    // </d>
+
+  };
+
+  this._externalInterfaceOK = function(swfVersion) {
+
+    // flash callback confirming flash loaded, EI working etc.
+    // swfVersion: SWF build string
+
+    if (sm2.swfLoaded) {
+      return;
+    }
+
+    var e;
+
+    debugTS('swf', true);
+    debugTS('flashtojs', true);
+    sm2.swfLoaded = true;
+    tryInitOnFocus = false;
+
+    if (isBadSafari) {
+      badSafariFix();
+    }
+
+    // complain if JS + SWF build/version strings don't match, excluding +DEV builds
+    // <d>
+    if (!swfVersion || swfVersion.replace(/\+dev/i, '') !== sm2.versionNumber.replace(/\+dev/i, '')) {
+
+      e = sm + ': Fatal: JavaScript file build "' + sm2.versionNumber + '" does not match Flash SWF build "' + swfVersion + '" at ' + sm2.url + '. Ensure both are up-to-date.';
+
+      // escape flash -> JS stack so this error fires in window.
+      setTimeout(function() {
+        throw new Error(e);
+      }, 0);
+
+      // exit, init will fail with timeout
+      return;
+
+    }
+    // </d>
+
+    // IE needs a larger timeout
+    setTimeout(init, isIE ? 100 : 1);
+
+  };
+
+  /**
+   * Private initialization helpers
+   * ------------------------------
+   */
+
+  createMovie = function(movieID, movieURL) {
+
+    // ignore if already connected
+    if (didAppend && appendSuccess) return false;
+
+    function initMsg() {
+
+      // <d>
+
+      var options = [],
+          title,
+          msg = [],
+          delimiter = ' + ';
+
+      title = 'SoundManager ' + sm2.version + (!sm2.html5Only && sm2.useHTML5Audio ? (sm2.hasHTML5 ? ' + HTML5 audio' : ', no HTML5 audio support') : '');
+
+      if (!sm2.html5Only) {
+
+        if (sm2.preferFlash) {
+          options.push('preferFlash');
+        }
+
+        if (sm2.useHighPerformance) {
+          options.push('useHighPerformance');
+        }
+
+        if (sm2.flashPollingInterval) {
+          options.push('flashPollingInterval (' + sm2.flashPollingInterval + 'ms)');
+        }
+
+        if (sm2.html5PollingInterval) {
+          options.push('html5PollingInterval (' + sm2.html5PollingInterval + 'ms)');
+        }
+
+        if (sm2.wmode) {
+          options.push('wmode (' + sm2.wmode + ')');
+        }
+
+        if (sm2.debugFlash) {
+          options.push('debugFlash');
+        }
+
+        if (sm2.useFlashBlock) {
+          options.push('flashBlock');
+        }
+
+      } else if (sm2.html5PollingInterval) {
+          options.push('html5PollingInterval (' + sm2.html5PollingInterval + 'ms)');
+        }
+
+      if (options.length) {
+        msg = msg.concat([options.join(delimiter)]);
+      }
+
+      sm2._wD(title + (msg.length ? delimiter + msg.join(', ') : ''), 1);
+
+      showSupport();
+
+      // </d>
+
+    }
+
+    if (sm2.html5Only) {
+
+      // 100% HTML5 mode
+      setVersionInfo();
+
+      initMsg();
+      sm2.oMC = id(sm2.movieID);
+      init();
+
+      // prevent multiple init attempts
+      didAppend = true;
+
+      appendSuccess = true;
+
+      return false;
+
+    }
+
+    // flash path
+    var remoteURL = (movieURL || sm2.url),
+    localURL = (sm2.altURL || remoteURL),
+    swfTitle = 'JS/Flash audio component (SoundManager 2)',
+    oTarget = getDocument(),
+    extraClass = getSWFCSS(),
+    isRTL = null,
+    html = doc.getElementsByTagName('html')[0],
+    oEmbed, oMovie, tmp, movieHTML, oEl, s, x, sClass;
+
+    isRTL = (html && html.dir && html.dir.match(/rtl/i));
+    movieID = (movieID === _undefined ? sm2.id : movieID);
+
+    function param(name, value) {
+      return '<param name="' + name + '" value="' + value + '" />';
+    }
+
+    // safety check for legacy (change to Flash 9 URL)
+    setVersionInfo();
+    sm2.url = normalizeMovieURL(overHTTP ? remoteURL : localURL);
+    movieURL = sm2.url;
+
+    sm2.wmode = (!sm2.wmode && sm2.useHighPerformance ? 'transparent' : sm2.wmode);
+
+    if (sm2.wmode !== null && (ua.match(/msie 8/i) || (!isIE && !sm2.useHighPerformance)) && navigator.platform.match(/win32|win64/i)) {
+      /**
+       * extra-special case: movie doesn't load until scrolled into view when using wmode = anything but 'window' here
+       * does not apply when using high performance (position:fixed means on-screen), OR infinite flash load timeout
+       * wmode breaks IE 8 on Vista + Win7 too in some cases, as of January 2011 (?)
+       */
+      messages.push(strings.spcWmode);
+      sm2.wmode = null;
+    }
+
+    oEmbed = {
+      name: movieID,
+      id: movieID,
+      src: movieURL,
+      quality: 'high',
+      allowScriptAccess: sm2.allowScriptAccess,
+      bgcolor: sm2.bgColor,
+      pluginspage: http + 'www.macromedia.com/go/getflashplayer',
+      title: swfTitle,
+      type: 'application/x-shockwave-flash',
+      wmode: sm2.wmode,
+      // http://help.adobe.com/en_US/as3/mobile/WS4bebcd66a74275c36cfb8137124318eebc6-7ffd.html
+      hasPriority: 'true'
+    };
+
+    if (sm2.debugFlash) {
+      oEmbed.FlashVars = 'debug=1';
+    }
+
+    if (!sm2.wmode) {
+      // don't write empty attribute
+      delete oEmbed.wmode;
+    }
+
+    if (isIE) {
+
+      // IE is "special".
+      oMovie = doc.createElement('div');
+      movieHTML = [
+        '<object id="' + movieID + '" data="' + movieURL + '" type="' + oEmbed.type + '" title="' + oEmbed.title + '" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0">',
+        param('movie', movieURL),
+        param('AllowScriptAccess', sm2.allowScriptAccess),
+        param('quality', oEmbed.quality),
+        (sm2.wmode ? param('wmode', sm2.wmode) : ''),
+        param('bgcolor', sm2.bgColor),
+        param('hasPriority', 'true'),
+        (sm2.debugFlash ? param('FlashVars', oEmbed.FlashVars) : ''),
+        '</object>'
+      ].join('');
+
+    } else {
+
+      oMovie = doc.createElement('embed');
+      for (tmp in oEmbed) {
+        if (oEmbed.hasOwnProperty(tmp)) {
+          oMovie.setAttribute(tmp, oEmbed[tmp]);
+        }
+      }
+
+    }
+
+    initDebug();
+    extraClass = getSWFCSS();
+    oTarget = getDocument();
+
+    if (oTarget) {
+
+      sm2.oMC = (id(sm2.movieID) || doc.createElement('div'));
+
+      if (!sm2.oMC.id) {
+
+        sm2.oMC.id = sm2.movieID;
+        sm2.oMC.className = swfCSS.swfDefault + ' ' + extraClass;
+        s = null;
+        oEl = null;
+
+        if (!sm2.useFlashBlock) {
+          if (sm2.useHighPerformance) {
+            // on-screen at all times
+            s = {
+              position: 'fixed',
+              width: '8px',
+              height: '8px',
+              // >= 6px for flash to run fast, >= 8px to start up under Firefox/win32 in some cases. odd? yes.
+              bottom: '0px',
+              left: '0px',
+              overflow: 'hidden'
+            };
+          } else {
+            // hide off-screen, lower priority
+            s = {
+              position: 'absolute',
+              width: '6px',
+              height: '6px',
+              top: '-9999px',
+              left: '-9999px'
+            };
+            if (isRTL) {
+              s.left = Math.abs(parseInt(s.left, 10)) + 'px';
+            }
+          }
+        }
+
+        if (isWebkit) {
+          // soundcloud-reported render/crash fix, safari 5
+          sm2.oMC.style.zIndex = 10000;
+        }
+
+        if (!sm2.debugFlash) {
+          for (x in s) {
+            if (s.hasOwnProperty(x)) {
+              sm2.oMC.style[x] = s[x];
+            }
+          }
+        }
+
+        try {
+
+          if (!isIE) {
+            sm2.oMC.appendChild(oMovie);
+          }
+
+          oTarget.appendChild(sm2.oMC);
+
+          if (isIE) {
+            oEl = sm2.oMC.appendChild(doc.createElement('div'));
+            oEl.className = swfCSS.swfBox;
+            oEl.innerHTML = movieHTML;
+          }
+
+          appendSuccess = true;
+
+        } catch(e) {
+
+          throw new Error(str('domError') + ' \n' + e.toString());
+
+        }
+
+      } else {
+
+        // SM2 container is already in the document (eg. flashblock use case)
+        sClass = sm2.oMC.className;
+        sm2.oMC.className = (sClass ? sClass + ' ' : swfCSS.swfDefault) + (extraClass ? ' ' + extraClass : '');
+        sm2.oMC.appendChild(oMovie);
+
+        if (isIE) {
+          oEl = sm2.oMC.appendChild(doc.createElement('div'));
+          oEl.className = swfCSS.swfBox;
+          oEl.innerHTML = movieHTML;
+        }
+
+        appendSuccess = true;
+
+      }
+
+    }
+
+    didAppend = true;
+
+    initMsg();
+
+    // sm2._wD(sm + ': Trying to load ' + movieURL + (!overHTTP && sm2.altURL ? ' (alternate URL)' : ''), 1);
+
+    return true;
+
+  };
+
+  initMovie = function() {
+
+    if (sm2.html5Only) {
+      createMovie();
+      return false;
+    }
+
+    // attempt to get, or create, movie (may already exist)
+    if (flash) return false;
+
+    if (!sm2.url) {
+
+      /**
+       * Something isn't right - we've reached init, but the soundManager url property has not been set.
+       * User has not called setup({url: ...}), or has not set soundManager.url (legacy use case) directly before init time.
+       * Notify and exit. If user calls setup() with a url: property, init will be restarted as in the deferred loading case.
+       */
+
+       _wDS('noURL');
+       return false;
+
+    }
+
+    // inline markup case
+    flash = sm2.getMovie(sm2.id);
+
+    if (!flash) {
+
+      if (!oRemoved) {
+
+        // try to create
+        createMovie(sm2.id, sm2.url);
+
+      } else {
+
+        // try to re-append removed movie after reboot()
+        if (!isIE) {
+          sm2.oMC.appendChild(oRemoved);
+        } else {
+          sm2.oMC.innerHTML = oRemovedHTML;
+        }
+
+        oRemoved = null;
+        didAppend = true;
+
+      }
+
+      flash = sm2.getMovie(sm2.id);
+
+    }
+
+    if (typeof sm2.oninitmovie === 'function') {
+      setTimeout(sm2.oninitmovie, 1);
+    }
+
+    // <d>
+    flushMessages();
+    // </d>
+
+    return true;
+
+  };
+
+  delayWaitForEI = function() {
+
+    setTimeout(waitForEI, 1000);
+
+  };
+
+  rebootIntoHTML5 = function() {
+
+    // special case: try for a reboot with preferFlash: false, if 100% HTML5 mode is possible and useFlashBlock is not enabled.
+
+    window.setTimeout(function() {
+
+      complain(smc + 'useFlashBlock is false, 100% HTML5 mode is possible. Rebooting with preferFlash: false...');
+
+      sm2.setup({
+        preferFlash: false
+      }).reboot();
+
+      // if for some reason you want to detect this case, use an ontimeout() callback and look for html5Only and didFlashBlock == true.
+      sm2.didFlashBlock = true;
+
+      sm2.beginDelayedInit();
+
+    }, 1);
+
+  };
+
+  waitForEI = function() {
+
+    var p,
+        loadIncomplete = false;
+
+    if (!sm2.url) {
+      // No SWF url to load (noURL case) - exit for now. Will be retried when url is set.
+      return;
+    }
+
+    if (waitingForEI) {
+      return;
+    }
+
+    waitingForEI = true;
+    event.remove(window, 'load', delayWaitForEI);
+
+    if (hasFlash && tryInitOnFocus && !isFocused) {
+      // Safari won't load flash in background tabs, only when focused.
+      _wDS('waitFocus');
+      return;
+    }
+
+    if (!didInit) {
+      p = sm2.getMoviePercent();
+      if (p > 0 && p < 100) {
+        loadIncomplete = true;
+      }
+    }
+
+    setTimeout(function() {
+
+      p = sm2.getMoviePercent();
+
+      if (loadIncomplete) {
+        // special case: if movie *partially* loaded, retry until it's 100% before assuming failure.
+        waitingForEI = false;
+        sm2._wD(str('waitSWF'));
+        window.setTimeout(delayWaitForEI, 1);
+        return;
+      }
+
+      // <d>
+      if (!didInit) {
+
+        sm2._wD(sm + ': No Flash response within expected time. Likely causes: ' + (p === 0 ? 'SWF load failed, ' : '') + 'Flash blocked or JS-Flash security error.' + (sm2.debugFlash ? ' ' + str('checkSWF') : ''), 2);
+
+        if (!overHTTP && p) {
+
+          _wDS('localFail', 2);
+
+          if (!sm2.debugFlash) {
+            _wDS('tryDebug', 2);
+          }
+
+        }
+
+        if (p === 0) {
+
+          // if 0 (not null), probably a 404.
+          sm2._wD(str('swf404', sm2.url), 1);
+
+        }
+
+        debugTS('flashtojs', false, ': Timed out' + (overHTTP ? ' (Check flash security or flash blockers)' : ' (No plugin/missing SWF?)'));
+
+      }
+      // </d>
+
+      // give up / time-out, depending
+
+      if (!didInit && okToDisable) {
+
+        if (p === null) {
+
+          // SWF failed to report load progress. Possibly blocked.
+
+          if (sm2.useFlashBlock || sm2.flashLoadTimeout === 0) {
+
+            if (sm2.useFlashBlock) {
+
+              flashBlockHandler();
+
+            }
+
+            _wDS('waitForever');
+
+          } else if (!sm2.useFlashBlock && canIgnoreFlash) {
+
+            // no custom flash block handling, but SWF has timed out. Will recover if user unblocks / allows SWF load.
+            rebootIntoHTML5();
+
+          } else {
+
+            _wDS('waitForever');
+
+            // fire any regular registered ontimeout() listeners.
+            processOnEvents({
+              type: 'ontimeout',
+              ignoreInit: true,
+              error: {
+                type: 'INIT_FLASHBLOCK'
+              }
+            });
+
+          }
+
+        } else if (sm2.flashLoadTimeout === 0) {
+
+          // SWF loaded? Shouldn't be a blocking issue, then.
+
+          _wDS('waitForever');
+
+        } else if (!sm2.useFlashBlock && canIgnoreFlash) {
+
+          rebootIntoHTML5();
+
+        } else {
+
+          failSafely(true);
+
+        }
+
+      }
+
+    }, sm2.flashLoadTimeout);
+
+  };
+
+  handleFocus = function() {
+
+    function cleanup() {
+      event.remove(window, 'focus', handleFocus);
+    }
+
+    if (isFocused || !tryInitOnFocus) {
+      // already focused, or not special Safari background tab case
+      cleanup();
+      return true;
+    }
+
+    okToDisable = true;
+    isFocused = true;
+    _wDS('gotFocus');
+
+    // allow init to restart
+    waitingForEI = false;
+
+    // kick off ExternalInterface timeout, now that the SWF has started
+    delayWaitForEI();
+
+    cleanup();
+    return true;
+
+  };
+
+  flushMessages = function() {
+
+    // <d>
+
+    // SM2 pre-init debug messages
+    if (messages.length) {
+      sm2._wD('SoundManager 2: ' + messages.join(' '), 1);
+      messages = [];
+    }
+
+    // </d>
+
+  };
+
+  showSupport = function() {
+
+    // <d>
+
+    flushMessages();
+
+    var item, tests = [];
+
+    if (sm2.useHTML5Audio && sm2.hasHTML5) {
+      for (item in sm2.audioFormats) {
+        if (sm2.audioFormats.hasOwnProperty(item)) {
+          tests.push(item + ' = ' + sm2.html5[item] + (!sm2.html5[item] && needsFlash && sm2.flash[item] ? ' (using flash)' : (sm2.preferFlash && sm2.flash[item] && needsFlash ? ' (preferring flash)' : (!sm2.html5[item] ? ' (' + (sm2.audioFormats[item].required ? 'required, ' : '') + 'and no flash support)' : ''))));
+        }
+      }
+      sm2._wD('SoundManager 2 HTML5 support: ' + tests.join(', '), 1);
+    }
+
+    // </d>
+
+  };
+
+  initComplete = function(bNoDisable) {
+
+    if (didInit) return false;
+
+    if (sm2.html5Only) {
+      // all good.
+      _wDS('sm2Loaded', 1);
+      didInit = true;
+      initUserOnload();
+      debugTS('onload', true);
+      return true;
+    }
+
+    var wasTimeout = (sm2.useFlashBlock && sm2.flashLoadTimeout && !sm2.getMoviePercent()),
+        result = true,
+        error;
+
+    if (!wasTimeout) {
+      didInit = true;
+    }
+
+    error = {
+      type: (!hasFlash && needsFlash ? 'NO_FLASH' : 'INIT_TIMEOUT')
+    };
+
+    sm2._wD('SoundManager 2 ' + (disabled ? 'failed to load' : 'loaded') + ' (' + (disabled ? 'Flash security/load error' : 'OK') + ') ' + String.fromCharCode(disabled ? 10006 : 10003), disabled ? 2 : 1);
+
+    if (disabled || bNoDisable) {
+
+      if (sm2.useFlashBlock && sm2.oMC) {
+        sm2.oMC.className = getSWFCSS() + ' ' + (sm2.getMoviePercent() === null ? swfCSS.swfTimedout : swfCSS.swfError);
+      }
+
+      processOnEvents({
+        type: 'ontimeout',
+        error: error,
+        ignoreInit: true
+      });
+
+      debugTS('onload', false);
+      catchError(error);
+
+      result = false;
+
+    } else {
+
+      debugTS('onload', true);
+
+    }
+
+    if (!disabled) {
+
+      if (sm2.waitForWindowLoad && !windowLoaded) {
+
+        _wDS('waitOnload');
+        event.add(window, 'load', initUserOnload);
+
+      } else {
+
+        // <d>
+        if (sm2.waitForWindowLoad && windowLoaded) {
+          _wDS('docLoaded');
+        }
+        // </d>
+
+        initUserOnload();
+
+      }
+
+    }
+
+    return result;
+
+  };
+
+  /**
+   * apply top-level setupOptions object as local properties, eg., this.setupOptions.flashVersion -> this.flashVersion (soundManager.flashVersion)
+   * this maintains backward compatibility, and allows properties to be defined separately for use by soundManager.setup().
+   */
+
+  setProperties = function() {
+
+    var i,
+        o = sm2.setupOptions;
+
+    for (i in o) {
+
+      if (o.hasOwnProperty(i)) {
+
+        // assign local property if not already defined
+
+        if (sm2[i] === _undefined) {
+
+          sm2[i] = o[i];
+
+        } else if (sm2[i] !== o[i]) {
+
+          // legacy support: write manually-assigned property (eg., soundManager.url) back to setupOptions to keep things in sync
+          sm2.setupOptions[i] = sm2[i];
+
+        }
+
+      }
+
+    }
+
+  };
+
+
+  init = function() {
+
+    // called after onload()
+
+    if (didInit) {
+      _wDS('didInit');
+      return false;
+    }
+
+    function cleanup() {
+      event.remove(window, 'load', sm2.beginDelayedInit);
+    }
+
+    if (sm2.html5Only) {
+
+      if (!didInit) {
+        // we don't need no steenking flash!
+        cleanup();
+        sm2.enabled = true;
+        initComplete();
+      }
+
+      return true;
+
+    }
+
+    // flash path
+    initMovie();
+
+    try {
+
+      // attempt to talk to Flash
+      flash._externalInterfaceTest(false);
+
+      /**
+       * Apply user-specified polling interval, OR, if "high performance" set, faster vs. default polling
+       * (determines frequency of whileloading/whileplaying callbacks, effectively driving UI framerates)
+       */
+      setPolling(true, (sm2.flashPollingInterval || (sm2.useHighPerformance ? 10 : 50)));
+
+      if (!sm2.debugMode) {
+        // stop the SWF from making debug output calls to JS
+        flash._disableDebug();
+      }
+
+      sm2.enabled = true;
+      debugTS('jstoflash', true);
+
+      if (!sm2.html5Only) {
+        // prevent browser from showing cached page state (or rather, restoring "suspended" page state) via back button, because flash may be dead
+        // http://www.webkit.org/blog/516/webkit-page-cache-ii-the-unload-event/
+        event.add(window, 'unload', doNothing);
+      }
+
+    } catch(e) {
+
+      sm2._wD('js/flash exception: ' + e.toString());
+
+      debugTS('jstoflash', false);
+
+      catchError({
+        type: 'JS_TO_FLASH_EXCEPTION',
+        fatal: true
+      });
+
+      // don't disable, for reboot()
+      failSafely(true);
+
+      initComplete();
+
+      return false;
+
+    }
+
+    initComplete();
+
+    // disconnect events
+    cleanup();
+
+    return true;
+
+  };
+
+  domContentLoaded = function() {
+
+    if (didDCLoaded) return false;
+
+    didDCLoaded = true;
+
+    // assign top-level soundManager properties eg. soundManager.url
+    setProperties();
+
+    initDebug();
+
+    if (!hasFlash && sm2.hasHTML5) {
+
+      sm2._wD('SoundManager 2: No Flash detected' + (!sm2.useHTML5Audio ? ', enabling HTML5.' : '. Trying HTML5-only mode.'), 1);
+
+      sm2.setup({
+        useHTML5Audio: true,
+        // make sure we aren't preferring flash, either
+        // TODO: preferFlash should not matter if flash is not installed. Currently, stuff breaks without the below tweak.
+        preferFlash: false
+      });
+
+    }
+
+    testHTML5();
+
+    if (!hasFlash && needsFlash) {
+
+      messages.push(strings.needFlash);
+
+      // TODO: Fatal here vs. timeout approach, etc.
+      // hack: fail sooner.
+      sm2.setup({
+        flashLoadTimeout: 1
+      });
+
+    }
+
+    if (doc.removeEventListener) {
+      doc.removeEventListener('DOMContentLoaded', domContentLoaded, false);
+    }
+
+    initMovie();
+
+    return true;
+
+  };
+
+  domContentLoadedIE = function() {
+
+    if (doc.readyState === 'complete') {
+      domContentLoaded();
+      doc.detachEvent('onreadystatechange', domContentLoadedIE);
+    }
+
+    return true;
+
+  };
+
+  winOnLoad = function() {
+
+    // catch edge case of initComplete() firing after window.load()
+    windowLoaded = true;
+
+    // catch case where DOMContentLoaded has been sent, but we're still in doc.readyState = 'interactive'
+    domContentLoaded();
+
+    event.remove(window, 'load', winOnLoad);
+
+  };
+
+  // sniff up-front
+  detectFlash();
+
+  // focus and window load, init (primarily flash-driven)
+  event.add(window, 'focus', handleFocus);
+  event.add(window, 'load', delayWaitForEI);
+  event.add(window, 'load', winOnLoad);
+
+  if (doc.addEventListener) {
+
+    doc.addEventListener('DOMContentLoaded', domContentLoaded, false);
+
+  } else if (doc.attachEvent) {
+
+    doc.attachEvent('onreadystatechange', domContentLoadedIE);
+
+  } else {
+
+    // no add/attachevent support - safe to assume no JS -> Flash either
+    debugTS('onload', false);
+    catchError({
+      type: 'NO_DOM2_EVENTS',
+      fatal: true
+    });
+
+  }
+
+} // SoundManager()
+
+// SM2_DEFER details: http://www.schillmania.com/projects/soundmanager2/doc/getstarted/#lazy-loading
+
+if (window.SM2_DEFER === _undefined || !SM2_DEFER) {
+  soundManager = new SoundManager();
+}
+
+/**
+ * SoundManager public interfaces
+ * ------------------------------
+ */
+
+if ( true && module && typeof module.exports === 'object') {
+
+  /**
+   * commonJS module
+   */
+
+  module.exports.SoundManager = SoundManager;
+  module.exports.soundManager = soundManager;
+
+} else if (true) {
+
+  /**
+   * AMD - requireJS
+   * basic usage:
+   * require(["/path/to/soundmanager2.js"], function(SoundManager) {
+   *   SoundManager.getInstance().setup({
+   *     url: '/swf/',
+   *     onready: function() { ... }
+   *   })
+   * });
+   *
+   * SM2_DEFER usage:
+   * window.SM2_DEFER = true;
+   * require(["/path/to/soundmanager2.js"], function(SoundManager) {
+   *   SoundManager.getInstance(function() {
+   *     var soundManager = new SoundManager.constructor();
+   *     soundManager.setup({
+   *       url: '/swf/',
+   *       ...
+   *     });
+   *     ...
+   *     soundManager.beginDelayedInit();
+   *     return soundManager;
+   *   })
+   * });
+   */
+
+  !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
+    /**
+     * Retrieve the global instance of SoundManager.
+     * If a global instance does not exist it can be created using a callback.
+     *
+     * @param {Function} smBuilder Optional: Callback used to create a new SoundManager instance
+     * @return {SoundManager} The global SoundManager instance
+     */
+    function getInstance(smBuilder) {
+      if (!window.soundManager && smBuilder instanceof Function) {
+        var instance = smBuilder(SoundManager);
+        if (instance instanceof SoundManager) {
+          window.soundManager = instance;
+        }
+      }
+      return window.soundManager;
+    }
+    return {
+      constructor: SoundManager,
+      getInstance: getInstance
+    };
+  }).call(exports, __webpack_require__, exports, module),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+}
+
+// standard browser case
+
+// constructor
+window.SoundManager = SoundManager;
+
+/**
+ * note: SM2 requires a window global due to Flash, which makes calls to window.soundManager.
+ * Flash may not always be needed, but this is not known until async init and SM2 may even "reboot" into Flash mode.
+ */
+
+// public API, flash callbacks etc.
+window.soundManager = soundManager;
+
+}(window));
+
+
+/***/ })
+
+},
+/******/ function(__webpack_require__) { // webpackRuntimeModules
+/******/ var __webpack_exec__ = function(moduleId) { return __webpack_require__(__webpack_require__.s = moduleId); }
+/******/ var __webpack_exports__ = (__webpack_exec__("./src/plugins/tts/plugin.tts.js"));
+/******/ }
+]);
 //# sourceMappingURL=plugin.tts.js.map
