@@ -1,34 +1,91 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>BookReader Demos</title>
+<head>
+    <title>bookreader demo</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
-  </head>
-  <body>
-    <ul>
-      <li><a href="BookReaderDemo/demo-simple.html">Simple</a></li>
-      <li><a href="BookReaderDemo/view_mode.html">Set initial view mode</a></li>
-      <li><a href="BookReaderDemo/toggle_controls.html">Toggle and override individual controls</a></li>
-      <li><a href="BookReaderDemo/demo-fullscreen.html">Fullscreen with mobile nav</a></li>
-      <li><a href="BookReaderDemo/demo-fullscreen-mobile.html">Inline on page, with mobile nav on fullscreen</a></li>
-      <li><a href="BookReaderDemo/demo-vendor-fullscreen.html">Vendor native fullscreen</a></li>
-      <li><a href="BookReaderDemo/demo-advanced.html">Advanced</a></li>
-      <li><a href="BookReaderDemo/demo-preview-pages.html">Preview Pages</a></li>
-      <li><a href="BookReaderDemo/demo-embed.html">Embed</a></li>
-      <li><a href="BookReaderDemo/demo-multiple.html">Multiple on same page</a></li>
-      <!-- plugin.search.js -->
-      <li><a href="BookReaderDemo/demo-internetarchive.html?ocaid=theworksofplato01platiala">From Internet Archive</a></li>
-      <!-- plugin.search.js -->
-      <li><a href="BookReaderDemo/demo-internetarchive.html?ocaid=adventuresofoli00dick">From Internet Archive - a book with CHAPTERS</a></li>
-      <li><a href="BookReaderDemo/demo-iiif.html">IIIF</a></li>
-      <li><a href="BookReaderDemo/demo-autoplay.html">Autoplay (kiosk mode)</a></li>
-      <li><a href="BookReaderDemo/demo-plugin-menu-toggle.html">Plugin: Full screen menu toggle</a></li>
-      <li><a href="BookReaderDemo/immersion-mode.html">Start in immersion (fullscreen) mode</a></li>
-      <!-- plugin.search.js -->
-      <li><a href="BookReaderDemo/immersion-1up.html">Start in immersion mode on 1up default item</a></li>
-      <li><a href="BookReaderDemo/viewmode-cycle.html">Replace view mode buttons with view mode cycler</a></li>
-     </ul>
-  </body>
+
+    <link rel="stylesheet" href="../BookReader/BookReader.css"/>
+
+    <script src="../BookReader/webcomponents-bundle.js"></script>
+    <script src="../BookReader/jquery-1.10.1.js"></script>
+    <script type="text/javascript" src="settings.js"></script>
+
+    <script src="../BookReader/BookReader.js"></script>
+
+    <!-- Plugins -->
+    <script src="../BookReader/plugins/plugin.iframe.js"></script>
+
+    <style>
+        html, body, #BookReader {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body style="background-color: #939598;">
+
+<div id="BookReader">
+    Internet Archive BookReader Demo<br/>
+
+    <noscript>
+        <p>
+            The BookReader requires JavaScript to be enabled. Please check that your browser supports JavaScript and
+            that it is enabled in the browser settings. You can also try one of the <a
+                href="https://archive.org/details/goodytwoshoes00newyiala"> other formats of the book</a>.
+        </p>
+    </noscript>
+</div>
+
+
+<script type="text/javascript">
+    const params = new URLSearchParams(window.location.search)
+    const recordId = params.get("recordId")
+
+    function myFunc(success) {
+        var options = {
+            data: success,
+
+            // Book title and the URL used for the book title link
+            bookTitle: 'Simple BookReader Presentation',
+            bookUrl: 'https://archive.org/details/BookReader',
+            bookUrlText: 'DEMO KNYGA',
+            bookUrlTitle: 'DEMO KNYGA',
+
+            // bookTitle: params.get('bookTitle'),
+            // bookUrl: 'https://archive.org/details/BookReader',
+            // bookUrlText: params['title'],
+            // bookUrlTitle: 'DEMO KNYGA',
+
+            // thumbnail is optional, but it is used in the info dialog
+            thumbnail: 'http://localhost:3000/bookreader/Red_zin_Edge_of_Time_14_p001.jpg',
+            // Metadata is optional, but it is used in the info dialog
+            metadata: [
+                {label: 'Title', value: 'Open Library BookReader Presentation'},
+                {label: 'Author', value: 'Internet Archive'},
+                {label: 'Demo Info', value: 'This demo shows how one could use BookReader with their own content.'},
+            ],
+
+            // Override the path used to find UI images
+            imagesBaseURL: '../BookReader/images/',
+
+            ui: 'embed', // embed, full (responsive)
+
+            el: '#BookReader',
+        };
+        var br = new BookReader(options);
+        br.init();
+    }
+
+
+    fetch(`${DJANGO_URL}/api/records/${recordId}/image_paths/`)
+        .then(data => data.json())
+        .then(success => myFunc(success));
+
+</script>
+
+</body>
 </html>
