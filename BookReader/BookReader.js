@@ -6274,6 +6274,7 @@ var DEFAULT_OPTIONS = {
       iconClassName: 'magnify plus'
     },
     fullScreen: {
+      // TODO disable fullscreen.
       visible: false,
       label: 'Toggle fullscreen',
       className: 'full',
