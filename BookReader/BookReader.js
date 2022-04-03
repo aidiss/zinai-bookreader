@@ -5689,6 +5689,8 @@ var Toolbar = /*#__PURE__*/function () {
   }, {
     key: "initToolbar",
     value: function initToolbar(mode, ui) {
+      // TODO, this removes the top toolbar
+      return;
       var br = this.br;
       br.refs.$br.append(this.buildToolbarElement());
       br.$('.BRnavCntl').addClass('BRup');
@@ -6272,7 +6274,7 @@ var DEFAULT_OPTIONS = {
       iconClassName: 'magnify plus'
     },
     fullScreen: {
-      visible: true,
+      visible: false,
       label: 'Toggle fullscreen',
       className: 'full',
       iconClassName: 'fullscreen'
