@@ -69,6 +69,8 @@ export class Toolbar {
    * @param {string} ui
    */
   initToolbar(mode, ui) {
+    // TODO, this removes the top toolbar
+    return ;
     const { br } = this;
     br.refs.$br.append(this.buildToolbarElement());
 
