@@ -266,7 +266,8 @@ export const DEFAULT_OPTIONS = {
       iconClassName: 'magnify plus'
     },
     fullScreen: {
-      visible: true,
+      // TODO disable fullscreen.
+      visible: false,
       label: 'Toggle fullscreen',
       className: 'full',
       iconClassName: 'fullscreen'
